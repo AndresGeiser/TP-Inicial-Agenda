@@ -34,7 +34,7 @@ public class ReporteAgenda
 			this.reporte = (JasperReport) JRLoader.loadObjectFromFile( "reportes" + File.separator + "ReporteAgenda.jasper" );
 			this.reporteLleno = JasperFillManager.fillReport(this.reporte, parametersMap, 
 					new JRBeanCollectionDataSource(personas));
-    		log.info("Se cargó correctamente el reporte");
+    		log.info("Se cargo correctamente el reporte");
 		}
 		catch( JRException ex ) 
 		{
