@@ -125,6 +125,21 @@ public class VentanaPersona extends JFrame
 	{
 		return txtTelefono;
 	}
+	
+	public JTextField getTxtCorreo() 
+	{
+		return txtCorreo;
+	}
+	
+	public JTextField getTxtCumple() 
+	{
+		return txtFecha;
+	}
+	
+	public JComboBox<String> getTipo() 
+	{
+		return cbxTipo;
+	}
 
 	public JButton getBtnAgregarPersona() 
 	{

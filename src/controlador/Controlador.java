@@ -6,6 +6,7 @@ import java.util.List;
 
 import modelo.Agenda;
 import reportes.ReporteAgenda;
+import vista.Contacto;
 import vista.VentanaPersona;
 import vista.Vista;
 import dto.PersonaDTO;
@@ -35,7 +36,12 @@ public class Controlador implements ActionListener
 		private void guardarPersona(ActionEvent p) {
 			String nombre = this.ventanaPersona.getTxtNombre().getText();
 			String tel = ventanaPersona.getTxtTelefono().getText();
-			PersonaDTO nuevaPersona = new PersonaDTO(0, nombre, tel);
+			String correo = ventanaPersona.getTxtCorreo().getText();
+			String tipo = ventanaPersona.getTipo().getSelectedItem().toString();
+			String cumple = ventanaPersona.getTxtCumple().getText();
+
+			
+			PersonaDTO nuevaPersona = new PersonaDTO(0, nombre, tel,correo,tipo,cumple);
 			this.agenda.agregarPersona(nuevaPersona);
 			this.refrescarTabla();
 			this.ventanaPersona.cerrar();
@@ -48,10 +54,12 @@ public class Controlador implements ActionListener
 
 		public void borrarPersona(ActionEvent s)
 		{
-			int[] filasSeleccionadas = this.vista.getTablaPersonas().getSelectedRows();
-			for (int fila : filasSeleccionadas)
-			{
-				this.agenda.borrarPersona(this.personasEnTabla.get(fila));
+			Contacto[] contactos = this.vista.getContactos();
+			
+			for (int i = 0; i < contactos.length; i++) {
+				if(contactos[i].estaSeleccionado()) {
+					this.agenda.borrarPersona(this.personasEnTabla.get(i));
+				}
 			}
 			
 			this.refrescarTabla();
