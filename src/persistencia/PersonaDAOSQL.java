@@ -103,7 +103,7 @@ public class PersonaDAOSQL implements PersonaDAO
 		int id = resultSet.getInt("idPersona");
 		String nombre = resultSet.getString("Nombre");
 		String tel = resultSet.getString("Telefono");
-		String tipo = "Tipo";
+		String tipo = resultSet.getString("Tipo_Contacto");
 		String correo = resultSet.getString("Correo");	
 		String cumple = resultSet.getString("Fecha_Cumple");
 		return new PersonaDTO(id, nombre, tel, correo, tipo, cumple);

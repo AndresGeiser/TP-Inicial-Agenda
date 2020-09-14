@@ -6,6 +6,7 @@ import java.util.List;
 
 import modelo.Agenda;
 import reportes.ReporteAgenda;
+import vista.Contacto;
 import vista.VentanaPersona;
 import vista.Vista;
 import dto.PersonaDTO;
@@ -53,10 +54,12 @@ public class Controlador implements ActionListener
 
 		public void borrarPersona(ActionEvent s)
 		{
-			int[] filasSeleccionadas = this.vista.getTablaPersonas().getSelectedRows();
-			for (int fila : filasSeleccionadas)
-			{
-				this.agenda.borrarPersona(this.personasEnTabla.get(fila));
+			Contacto[] contactos = this.vista.getContactos();
+			
+			for (int i = 0; i < contactos.length; i++) {
+				if(contactos[i].estaSeleccionado()) {
+					this.agenda.borrarPersona(this.personasEnTabla.get(i));
+				}
 			}
 			
 			this.refrescarTabla();

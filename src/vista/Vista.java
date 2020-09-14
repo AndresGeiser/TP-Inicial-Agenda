@@ -1,30 +1,36 @@
 package vista;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+
+import dto.PersonaDTO;
+import persistencia.Conexion;
+
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import dto.PersonaDTO;
-
 import javax.swing.JButton;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.ImageIcon;
 
-import persistencia.Conexion;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 
 public class Vista
 {
-	private JFrame frame;
-	private JTable tablaPersonas;
+	private JFrame frmAgenda;
+	private JPanel panelContactos;
 	private JButton btnAgregar;
+	private JButton btnEditar;
 	private JButton btnBorrar;
 	private JButton btnReporte;
-	private DefaultTableModel modelPersonas;
-	private  String[] nombreColumnas = {"Nombre y apellido","Telefono"};
+
 
 	public Vista() 
 	{
@@ -35,57 +41,125 @@ public class Vista
 
 	private void initialize() 
 	{
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmAgenda = new JFrame();
+		frmAgenda.setTitle("Agenda");
+		frmAgenda.setResizable(false);
+		frmAgenda.getContentPane().setBackground(Color.DARK_GRAY);
+		frmAgenda.setBounds(100, 100, 605, 650);
+		frmAgenda.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmAgenda.getContentPane().setLayout(null);
+		frmAgenda.setLocationRelativeTo(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 434, 262);
-		frame.getContentPane().add(panel);
-		panel.setLayout(null);
 		
-		JScrollPane spPersonas = new JScrollPane();
-		spPersonas.setBounds(10, 11, 414, 182);
-		panel.add(spPersonas);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setBounds(10, 11, 485, 590);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
+		frmAgenda.getContentPane().add(scrollPane);
 		
-		modelPersonas = new DefaultTableModel(null,nombreColumnas);
-		tablaPersonas = new JTable(modelPersonas);
+		panelContactos = new JPanel();
+		panelContactos.setBackground(new Color( 74, 72, 75 ));
+		scrollPane.setViewportView(panelContactos);
+		panelContactos.setPreferredSize(new Dimension(0, 0));
+		panelContactos.setLayout(null);
 		
-		tablaPersonas.getColumnModel().getColumn(0).setPreferredWidth(103);
-		tablaPersonas.getColumnModel().getColumn(0).setResizable(false);
-		tablaPersonas.getColumnModel().getColumn(1).setPreferredWidth(100);
-		tablaPersonas.getColumnModel().getColumn(1).setResizable(false);
 		
-		spPersonas.setViewportView(tablaPersonas);
+		btnAgregar = new JButton("");
+		btnAgregar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnAgregar.setToolTipText("Agregar contacto");
+		btnAgregar.setFocusable(false);
+		btnAgregar.setBackground(new Color( 74, 72, 75 ));
+		btnAgregar.setBorderPainted(false);
+		btnAgregar.setIcon(new ImageIcon(Vista.class.getResource("/icons/agregar.png")));
+		btnAgregar.setBounds(505, 11, 70, 70);
+		btnAgregar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				btnAgregar.setBackground(new Color(107, 105, 108));
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				btnAgregar.setBackground(new Color( 74, 72, 75 ));
+			}
+		});
+		frmAgenda.getContentPane().add(btnAgregar);
 		
-		btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(10, 228, 89, 23);
-		panel.add(btnAgregar);
+		btnBorrar = new JButton("");
+		btnBorrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnBorrar.setIcon(new ImageIcon(Vista.class.getResource("/icons/borrar.png")));
+		btnBorrar.setToolTipText("Eliminar contacto");
+		btnBorrar.setFocusable(false);
+		btnBorrar.setBorderPainted(false);
+		btnBorrar.setBackground(new Color( 223, 84, 84 ));
+		btnBorrar.setBounds(505, 450, 70, 70);
+		btnBorrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				btnBorrar.setBackground(new Color(236, 130, 130));
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				btnBorrar.setBackground(new Color( 223, 84, 84 ));
+			}
+		});
+		frmAgenda.getContentPane().add(btnBorrar);
 		
-		JButton btnEditar = new JButton("Editar");
-		btnEditar.setBounds(109, 228, 89, 23);
-		panel.add(btnEditar);
+		btnReporte = new JButton("");
+		btnReporte.setIcon(new ImageIcon(Vista.class.getResource("/icons/reporte.png")));
+		btnReporte.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnReporte.setToolTipText("Generar reporte");
+		btnReporte.setFocusable(false);
+		btnReporte.setBorderPainted(false);
+		btnReporte.setBackground(new Color(255, 153, 51));
+		btnReporte.setBounds(505, 531, 70, 70);
+		btnReporte.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				btnReporte.setBackground(new Color(252, 183, 113));
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				btnReporte.setBackground(new Color(255, 153, 51));
+			}
+		});
+		frmAgenda.getContentPane().add(btnReporte);
 		
-		btnBorrar = new JButton("Borrar");
-		btnBorrar.setBounds(208, 228, 89, 23);
-		panel.add(btnBorrar);
-		
-		btnReporte = new JButton("Reporte");
-		btnReporte.setBounds(307, 228, 89, 23);
-		panel.add(btnReporte);
+		btnEditar = new JButton("");
+		btnEditar.setIcon(new ImageIcon(Vista.class.getResource("/icons/editar.png")));
+		btnEditar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnEditar.setToolTipText("Editar contacto");
+		btnEditar.setFocusable(false);
+		btnEditar.setBorderPainted(false);
+		btnEditar.setBackground(new Color(74, 72, 75));
+		btnEditar.setBounds(505, 92, 70, 70);
+		btnEditar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				btnEditar.setBackground(new Color(107, 105, 108));
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				btnEditar.setBackground(new Color( 74, 72, 75 ));
+			}
+		});
+		frmAgenda.getContentPane().add(btnEditar);
+									
 	}
 	
 	public void show()
 	{
-		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.frame.addWindowListener(new WindowAdapter() 
+		this.frmAgenda.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.frmAgenda.addWindowListener(new WindowAdapter() 
 		{
 			@Override
 		    public void windowClosing(WindowEvent e) {
 		        int confirm = JOptionPane.showOptionDialog(
-		             null, "Estas seguro que quieres salir de la Agenda?", 
-		             "Confirmacion", JOptionPane.YES_NO_OPTION,
+		             null, "¿Estás seguro que quieres salir de la Agenda?", 
+		             "Confirmación", JOptionPane.YES_NO_OPTION,
 		             JOptionPane.QUESTION_MESSAGE, null, null, null);
 		        if (confirm == 0) {
 		        	Conexion.getConexion().cerrarConexion();
@@ -93,12 +167,17 @@ public class Vista
 		        }
 		    }
 		});
-		this.frame.setVisible(true);
+		this.frmAgenda.setVisible(true);
 	}
 	
 	public JButton getBtnAgregar() 
 	{
 		return btnAgregar;
+	}
+	
+	public JButton getBtnEditar() 
+	{
+		return btnEditar;
 	}
 
 	public JButton getBtnBorrar() 
@@ -111,34 +190,34 @@ public class Vista
 		return btnReporte;
 	}
 	
-	public DefaultTableModel getModelPersonas() 
+	public Contacto[] getContactos() 
 	{
-		return modelPersonas;
-	}
-	
-	public JTable getTablaPersonas()
-	{
-		return tablaPersonas;
-	}
-
-	public String[] getNombreColumnas() 
-	{
-		return nombreColumnas;
+		int cantContactos = panelContactos.getComponents().length;
+		Contacto[] contactos = new Contacto [cantContactos];
+		for (int i = 0; i < cantContactos; i++) {
+			contactos[i] = (Contacto) panelContactos.getComponents()[i];
+		}
+		return contactos;
 	}
 
 
 	public void llenarTabla(List<PersonaDTO> personasEnTabla) {
-		this.getModelPersonas().setRowCount(0); //Para vaciar la tabla
-		this.getModelPersonas().setColumnCount(0);
-		this.getModelPersonas().setColumnIdentifiers(this.getNombreColumnas());
-
+		panelContactos.removeAll();
+		
+		int ejeY = 11;
 		for (PersonaDTO p : personasEnTabla)
 		{
-			String nombre = p.getNombre();
-			String tel = p.getTelefono();
-			Object[] fila = {nombre, tel};
-			this.getModelPersonas().addRow(fila);
+			Contacto panelContacto = new Contacto(p);
+			panelContacto.setLocation(10, ejeY);
+			
+			panelContactos.add(panelContacto);
+			
+			ejeY += panelContacto.getHeight();
+			
+			panelContactos.setPreferredSize(new Dimension(panelContactos.getWidth(), ejeY));
 		}
 		
+		panelContactos.revalidate();
+		panelContactos.repaint();
 	}
 }

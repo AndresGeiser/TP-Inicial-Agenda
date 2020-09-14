@@ -125,7 +125,7 @@ public class VentanaPersona extends JFrame
 	{
 		return txtTelefono;
 	}
-
+	
 	public JTextField getTxtCorreo() 
 	{
 		return txtCorreo;
@@ -140,7 +140,7 @@ public class VentanaPersona extends JFrame
 	{
 		return cbxTipo;
 	}
-	
+
 	public JButton getBtnAgregarPersona() 
 	{
 		return btnAgregarPersona;
