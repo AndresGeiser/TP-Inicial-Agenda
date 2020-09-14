@@ -49,27 +49,33 @@ public class PersonaDTO
 		this.telefono = telefono;
 	}
 
-	public String getCorreo() {
+	public String getCorreo() 
+	{
 		return correo;
 	}
 
-	public void setCorreo(String correo) {
+	public void setCorreo(String correo) 
+	{
 		this.correo = correo;
 	}
 
-	public String getTipo_contacto() {
+	public String getTipo_contacto() 
+	{
 		return tipo_contacto;
 	}
 
-	public void setTipo_contacto(String tipo_contacto) {
+	public void setTipo_contacto(String tipo_contacto) 
+	{
 		this.tipo_contacto = tipo_contacto;
 	}
 
-	public String getFecha_cumple() {
+	public String getFecha_cumple() 
+	{
 		return fecha_cumple;
 	}
 
-	public void setFecha_cumple(String fecha_cumple) {
+	public void setFecha_cumple(String fecha_cumple) 
+	{
 		this.fecha_cumple = fecha_cumple;
 	}
 }
