@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import modelo.Agenda;
-import persistencia.PersonaDAO;
 import reportes.ReporteAgenda;
 import vista.Contacto;
 import vista.VentanaPersona;

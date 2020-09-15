@@ -6,9 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import persistencia.Conexion;
-import persistencia.PersonaDAO;
 import dto.PersonaDTO;
 
 public class PersonaDAOSQL implements PersonaDAO
