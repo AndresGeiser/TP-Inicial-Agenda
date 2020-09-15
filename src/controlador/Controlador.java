@@ -9,20 +9,30 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 import modelo.Agenda;
+import modelo.Regiones;
+import persistencia.DAOSQLFactory;
 import reportes.ReporteAgenda;
 import vista.Contacto;
 import vista.VentanaPersona;
 import vista.Vista;
+import dto.LocalidadDTO;
+import dto.PaisDTO;
 import dto.PersonaDTO;
+import dto.ProvinciaDTO;
 
 public class Controlador implements ActionListener
 {
 		private Vista vista;
 		private VentanaPersona ventanaPersona; 
 		private Agenda agenda;
+		private Regiones regiones;
 		
 		private List<PersonaDTO> personasEnLista;
 		private PersonaDTO personaSeleccionada;
+		
+		private List<PaisDTO> paises;
+		private List<ProvinciaDTO> provincias;
+		private List<LocalidadDTO> localidades;
 		
 		public Controlador(Vista vista, Agenda agenda)
 		{
@@ -35,9 +45,18 @@ public class Controlador implements ActionListener
 			this.ventanaPersona = VentanaPersona.getInstance();
 			this.ventanaPersona.getBtnActualizarPersona().addActionListener(u-> editarPersona(u));
 			this.ventanaPersona.getBtnAgregarPersona().addActionListener(p->guardarPersona(p));
+			this.ventanaPersona.getCbxPais().addActionListener(p->actualizarProvincias(p));
+			this.ventanaPersona.getCbxProvincia().addActionListener(p->actualizarLocalidades(p));
+	
+			//Carga de paises
+			this.regiones = new Regiones(new DAOSQLFactory());
+			this.paises = this.regiones.obtenerPaises();
+			this.ventanaPersona.cargarPaises(this.paises);
+			
 			this.agenda = agenda;
 		}
 		
+
 		private void ventanaAgregarPersona(ActionEvent a) {
 			ventanaPersona.mostrarVentana();
 		}
@@ -187,6 +206,22 @@ public class Controlador implements ActionListener
 			vista.llenarTabla(personasEnLista);
 		}
 		
+		private void actualizarProvincias(ActionEvent p) 
+		{
+			int i = ventanaPersona.getCbxPais().getSelectedIndex();
+			PaisDTO pais = paises.get(i);
+			provincias = regiones.obtenerProvincias(pais);
+			ventanaPersona.cargarProvincias(provincias);
+		}
+		
+		private void actualizarLocalidades(ActionEvent p) 
+		{	
+			int i = ventanaPersona.getCbxProvincia().getSelectedIndex();
+			ProvinciaDTO provincia = provincias.get(i);
+			localidades = regiones.obtenerLocalidades(provincia);
+			ventanaPersona.cargarLocalidades(localidades);
+		}
+
 		
 		@Override
 		public void actionPerformed(ActionEvent e) { }

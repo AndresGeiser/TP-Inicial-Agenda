@@ -13,7 +13,13 @@ public class DAOSQLFactory implements DAOAbstractFactory
 	 */
 	public PersonaDAO createPersonaDAO() 
 	{
-				return new PersonaDAOSQL();
+		return new PersonaDAOSQL();
+	}
+
+	
+	public RegionesDAO createRegionesDAO() {
+		
+		return new RegionesDAOSQL();
 	}
 
 }
