@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 
 import java.awt.event.WindowAdapter;
@@ -158,8 +159,8 @@ public class Vista
 			@Override
 		    public void windowClosing(WindowEvent e) {
 		        int confirm = JOptionPane.showOptionDialog(
-		             null, "¿Estás seguro que quieres salir de la Agenda?", 
-		             "Confirmación", JOptionPane.YES_NO_OPTION,
+		             null, "Estas seguro que quieres salir de la Agenda?", 
+		             "Confirmacion", JOptionPane.YES_NO_OPTION,
 		             JOptionPane.QUESTION_MESSAGE, null, null, null);
 		        if (confirm == 0) {
 		        	Conexion.getConexion().cerrarConexion();
@@ -220,4 +221,7 @@ public class Vista
 		panelContactos.revalidate();
 		panelContactos.repaint();
 	}
+
+
+	
 }

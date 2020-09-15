@@ -20,7 +20,7 @@ public class VentanaPersona extends JFrame
 	private JTextField txtCorreo;
 	private JComboBox<String> cbxTipo;
 	private JTextField txtFecha;
-	
+	private JButton btnActualizarPersona;
 	
 	public static VentanaPersona getInstance()
 	{
@@ -72,6 +72,10 @@ public class VentanaPersona extends JFrame
 		btnAgregarPersona.setBounds(208, 325, 89, 23);
 		panel.add(btnAgregarPersona);
 		
+		btnActualizarPersona = new JButton("Actualizar");
+		btnActualizarPersona.setBounds(208, 325, 89, 23);
+		panel.add(btnActualizarPersona);
+		
 		JLabel lblCorreo = new JLabel("Correo electronico");
 		lblCorreo.setBounds(10, 123, 287, 14);
 		panel.add(lblCorreo);
@@ -113,8 +117,30 @@ public class VentanaPersona extends JFrame
 	
 	public void mostrarVentana()
 	{
+		btnAgregarPersona.setVisible(true);
+		btnActualizarPersona.setVisible(false);
+		
+		//Se limpia la vista de los campos
+		txtNombre.setText("");
+		txtTelefono.setText("");
+		txtCorreo.setText("");
+		txtFecha.setText("");
 		this.setVisible(true);
 	}
+	
+	public void mostrarVentanaConDatos(String nombre, String telefono, String correo, String cumple)
+	{
+		btnAgregarPersona.setVisible(false);
+		btnActualizarPersona.setVisible(true);
+		//Aún no se toma el estado del JComboBox de tipo_contacto
+		txtNombre.setText(nombre);
+		txtTelefono.setText(telefono);
+		txtCorreo.setText(correo);
+		txtFecha.setText(cumple);
+		
+		this.setVisible(true);
+	}
+	
 	
 	public JTextField getTxtNombre() 
 	{
@@ -144,6 +170,11 @@ public class VentanaPersona extends JFrame
 	public JButton getBtnAgregarPersona() 
 	{
 		return btnAgregarPersona;
+	}
+	
+	public JButton getBtnActualizarPersona() 
+	{
+		return btnActualizarPersona;
 	}
 
 	public void cerrar()
