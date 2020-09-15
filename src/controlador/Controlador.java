@@ -106,6 +106,8 @@ public class Controlador implements ActionListener
 				agenda.editarPersona(personaSeleccionada);
 				refrescarTabla();
 				ventanaPersona.cerrar();
+				personaSeleccionada = null;
+
 			}
 		}
 		
