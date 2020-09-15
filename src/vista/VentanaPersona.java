@@ -8,18 +8,21 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JComboBox;
 import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JScrollPane;
+import java.awt.Insets;
 
 public class VentanaPersona extends JFrame 
 {
 	private static final long serialVersionUID = 1L;
+	private static VentanaPersona INSTANCE;
 	private JPanel contentPane;
 	private JTextField txtNombre;
 	private JTextField txtTelefono;
-	private JButton btnAgregarPersona;
-	private static VentanaPersona INSTANCE;
 	private JTextField txtCorreo;
 	private JComboBox<String> cbxTipo;
 	private JTextField txtFecha;
+	private JButton btnAgregarPersona;
 	private JButton btnActualizarPersona;
 	
 	public static VentanaPersona getInstance()
@@ -37,61 +40,74 @@ public class VentanaPersona extends JFrame
 	{
 		super();
 		setTitle("Agregar Contacto");
-		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 343, 419);
+		setBounds(100, 100, 350, 557);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 314, 497);
+		contentPane.add(scrollPane);
+		
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 307, 359);
-		contentPane.add(panel);
+		scrollPane.setViewportView(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNombreYApellido = new JLabel("Nombre y apellido *");
-		lblNombreYApellido.setBounds(10, 11, 287, 14);
+		lblNombreYApellido.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		lblNombreYApellido.setBounds(10, 11, 287, 30);
 		panel.add(lblNombreYApellido);
 		
 		JLabel lblTelfono = new JLabel("Telefono *");
-		lblTelfono.setBounds(10, 67, 287, 14);
+		lblTelfono.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		lblTelfono.setBounds(10, 93, 287, 30);
 		panel.add(lblTelfono);
 		
 		txtNombre = new JTextField();
-		txtNombre.setBounds(10, 36, 287, 20);
+		txtNombre.setMargin(new Insets(2, 5, 2, 5));
+		txtNombre.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		txtNombre.setBounds(10, 52, 287, 30);
 		panel.add(txtNombre);
 		txtNombre.setColumns(10);
 		
 		txtTelefono = new JTextField();
-		txtTelefono.setBounds(10, 92, 287, 20);
+		txtTelefono.setMargin(new Insets(2, 5, 2, 5));
+		txtTelefono.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		txtTelefono.setBounds(10, 134, 287, 30);
 		panel.add(txtTelefono);
 		txtTelefono.setColumns(10);
 		
 		btnAgregarPersona = new JButton("Agregar");
-		btnAgregarPersona.setBounds(208, 325, 89, 23);
+		btnAgregarPersona.setBounds(187, 454, 110, 30);
 		panel.add(btnAgregarPersona);
 		
 		btnActualizarPersona = new JButton("Actualizar");
-		btnActualizarPersona.setBounds(208, 325, 89, 23);
+		btnActualizarPersona.setBounds(187, 454, 110, 30);
 		panel.add(btnActualizarPersona);
 		
 		JLabel lblCorreo = new JLabel("Correo electronico");
-		lblCorreo.setBounds(10, 123, 287, 14);
+		lblCorreo.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		lblCorreo.setBounds(10, 175, 287, 30);
 		panel.add(lblCorreo);
 		
 		txtCorreo = new JTextField();
+		txtCorreo.setMargin(new Insets(2, 5, 2, 5));
+		txtCorreo.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		txtCorreo.setColumns(10);
-		txtCorreo.setBounds(10, 148, 287, 20);
+		txtCorreo.setBounds(10, 216, 287, 30);
 		panel.add(txtCorreo);
 		
 		JLabel lblTipo = new JLabel("Tipo de contacto");
-		lblTipo.setBounds(10, 179, 287, 14);
+		lblTipo.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		lblTipo.setBounds(10, 257, 287, 30);
 		panel.add(lblTipo);
 		
 		cbxTipo = new JComboBox<String>();
+		cbxTipo.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		cbxTipo.setName("");
-		cbxTipo.setBounds(10, 204, 149, 20);
+		cbxTipo.setBounds(10, 298, 149, 30);
 		cbxTipo.addItem("Trabajo");
 		cbxTipo.addItem("Familia");
 		cbxTipo.addItem("Amigos");
@@ -99,17 +115,20 @@ public class VentanaPersona extends JFrame
 		panel.add(cbxTipo);
 		
 		JLabel lblFecha = new JLabel("Fecha de Cumplea\u00F1os");
-		lblFecha.setBounds(10, 235, 205, 14);
+		lblFecha.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		lblFecha.setBounds(10, 339, 205, 30);
 		panel.add(lblFecha);
 		
 		JLabel lblEjFecha = new JLabel("Ej: 27/05/1998");
 		lblEjFecha.setForeground(Color.GRAY);
-		lblEjFecha.setBounds(208, 235, 89, 14);
+		lblEjFecha.setBounds(208, 347, 89, 14);
 		panel.add(lblEjFecha);
-
+		
 		txtFecha = new JTextField();
+		txtFecha.setMargin(new Insets(2, 5, 2, 5));
+		txtFecha.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		txtFecha.setColumns(10);
-		txtFecha.setBounds(10, 260, 287, 20);
+		txtFecha.setBounds(10, 380, 287, 30);
 		panel.add(txtFecha);
 		
 		this.setVisible(false);
@@ -117,6 +136,7 @@ public class VentanaPersona extends JFrame
 	
 	public void mostrarVentana()
 	{
+		setTitle("Agregar Contacto");
 		btnAgregarPersona.setVisible(true);
 		btnActualizarPersona.setVisible(false);
 		
@@ -125,14 +145,24 @@ public class VentanaPersona extends JFrame
 		txtTelefono.setText("");
 		txtCorreo.setText("");
 		txtFecha.setText("");
+		cbxTipo.setSelectedIndex(0);
 		this.setVisible(true);
 	}
 	
-	public void mostrarVentanaConDatos(String nombre, String telefono, String correo, String cumple)
+	public void mostrarVentanaConDatos(String nombre, String telefono, String correo, String tipo, String cumple)
 	{
+		setTitle("Actualizar Contacto");
 		btnAgregarPersona.setVisible(false);
 		btnActualizarPersona.setVisible(true);
-		//Aún no se toma el estado del JComboBox de tipo_contacto
+		
+		//Recorremos los items del combo para ver cual coincide con el del parametro
+		for (int i = 0; i < cbxTipo.getItemCount(); i++) {
+			if(cbxTipo.getItemAt(i).equalsIgnoreCase(tipo)) {
+				cbxTipo.setSelectedIndex(i);
+				break;
+			}
+		}
+
 		txtNombre.setText(nombre);
 		txtTelefono.setText(telefono);
 		txtCorreo.setText(correo);
@@ -179,8 +209,6 @@ public class VentanaPersona extends JFrame
 
 	public void cerrar()
 	{
-		this.txtNombre.setText(null);
-		this.txtTelefono.setText(null);
 		this.dispose();
 	}
 }

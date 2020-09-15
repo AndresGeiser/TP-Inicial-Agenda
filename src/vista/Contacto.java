@@ -21,11 +21,8 @@ public class Contacto extends JPanel {
 	private Color inicial = new Color(74, 72, 75);
 	private Color ratonEncima = new Color(81, 79, 82);
 	private Color seleccionado = new Color(130, 129,113);
-	private PersonaDTO pe;
 	
 	public Contacto(PersonaDTO p) {
-		
-		this.pe = p;
 		
 		setBorder(new MatteBorder(0, 0, 1, 0, (Color) Color.GRAY));
 		setLocation(10, 10);
@@ -123,11 +120,6 @@ public class Contacto extends JPanel {
 		
 	}
 	
-	public PersonaDTO getContacto() {
-		return this.pe;
-	}
-	
-
 	
 	public boolean estaSeleccionado() {
 		return (getBackground() == seleccionado) ?  true :  false;
