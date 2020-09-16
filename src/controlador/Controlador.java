@@ -50,8 +50,14 @@ public class Controlador implements ActionListener
 	
 			//Carga de paises
 			this.regiones = new Regiones(new DAOSQLFactory());
+			
+			/********* Comentado para hacer pruebas
+			 
 			this.paises = this.regiones.obtenerPaises();
 			this.ventanaPersona.cargarPaises(this.paises);
+			
+			*********  Fin comentado*/
+
 			
 			this.agenda = agenda;
 		}
@@ -188,8 +194,10 @@ public class Controlador implements ActionListener
 
 		
 		private void mostrarReporte(ActionEvent r) {
+			/* Aun sin implementar
 			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
 			reporte.mostrar();	
+			*/
 		}
 		
 		

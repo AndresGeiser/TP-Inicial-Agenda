@@ -1,5 +1,8 @@
 package persistencia;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -42,27 +45,15 @@ public class Conexion
 	    String select_db = "USE grupo_5";
 	    
 	    
-	    /******/
-	    
-	    Localidades loc = new Localidades();
-	    
-	    
-	    
-	    /*****/
+	    /**********************************************/
+	    crearTablasLocalizaciones(stmt); //<----- ¡Temporal!
+	    /**********************************************/
 	    
 	    //Ejecutamos las sentencias
 	    stmt.executeUpdate(db);
 	    stmt.executeUpdate(select_db);
 	    
-	    stmt.executeUpdate(loc.getTablaPais());
-	    stmt.executeUpdate(loc.getLocal());
-	    
-	    stmt.executeUpdate(loc.getTablaProvincia());
-	    stmt.executeUpdate(loc.getProvincia());
 
-
-
-	    
 	    //Establecemos conexión con la nueva base y creamos las tablas
 		this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/grupo_5?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
 
@@ -72,6 +63,43 @@ public class Conexion
 		
 	}
 	
+	private void crearTablasLocalizaciones(Statement stmt) throws SQLException
+	{
+		stmt.execute("USE grupo_5");
+		
+		String nombreFichero = "localizaciones.txt";
+        BufferedReader br = null;
+        try {
+           br = new BufferedReader(new FileReader(nombreFichero));
+           String texto = br.readLine();
+           while(texto != null)
+           {
+        	   stmt.execute(texto);
+               texto = br.readLine();
+           }
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Error: Fichero no encontrado");
+            System.out.println(e.getMessage());
+        }
+        catch(Exception e) {
+            System.out.println("Error de lectura del fichero");
+            System.out.println(e.getMessage());
+        }
+        finally {
+            try {
+                if(br != null)
+                    br.close();
+            }
+            catch (Exception e) {
+                System.out.println("Error al cerrar el fichero");
+                System.out.println(e.getMessage());
+            }
+        }
+		
+	}
+
+
 	public static Conexion getConexion()   
 	{								
 		if(instancia == null)
