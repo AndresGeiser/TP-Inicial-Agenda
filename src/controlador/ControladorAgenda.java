@@ -11,17 +11,18 @@ import javax.swing.JOptionPane;
 import modelo.Agenda;
 import modelo.Regiones;
 import persistencia.DAOSQLFactory;
+import reportes.ReporteAgenda;
 import vista.Contacto;
 import vista.VentanaPersona;
-import vista.Vista;
+import vista.VentanaAgenda;
 import dto.LocalidadDTO;
 import dto.PaisDTO;
 import dto.PersonaDTO;
 import dto.ProvinciaDTO;
 
-public class Controlador implements ActionListener
+public class ControladorAgenda implements ActionListener
 {
-		private Vista vista;
+		private VentanaAgenda vista;
 		private VentanaPersona ventanaPersona; 
 		private Agenda agenda;
 		private Regiones regiones;
@@ -33,7 +34,7 @@ public class Controlador implements ActionListener
 		private List<ProvinciaDTO> provincias;
 		private List<LocalidadDTO> localidades;
 		
-		public Controlador(Vista vista, Agenda agenda)
+		public ControladorAgenda(VentanaAgenda vista, Agenda agenda)
 		{
 			this.vista = vista;
 			this.vista.getBtnAgregar().addActionListener(a->ventanaAgregarPersona(a));
@@ -49,12 +50,6 @@ public class Controlador implements ActionListener
 	
 			//Carga de paises
 			this.regiones = new Regiones(new DAOSQLFactory());
-			
-			/********* Comentado para hacer pruebas
-			 
-			
-			*********  Fin comentado*/
-
 			this.paises = this.regiones.obtenerPaises();
 			this.ventanaPersona.cargarPaises(this.paises);
 			
@@ -190,13 +185,9 @@ public class Controlador implements ActionListener
 		}
 		
 		
-
-		
 		private void mostrarReporte(ActionEvent r) {
-			/* Aun sin implementar
 			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
 			reporte.mostrar();	
-			*/
 		}
 		
 		
@@ -221,16 +212,12 @@ public class Controlador implements ActionListener
 			ventanaPersona.cargarProvincias(provincias);
 		}
 		
-		private void actualizarLocalidades(ActionEvent p)
+		private void actualizarLocalidades(ActionEvent p) 
 		{	
 			int i = ventanaPersona.getCbxProvincia().getSelectedIndex();
-			
-			if(i != -1) { //Para que no tire error cuando se selecciona un pais  
-				
-				ProvinciaDTO provincia = provincias.get(i);
-				localidades = regiones.obtenerLocalidades(provincia);
-				ventanaPersona.cargarLocalidades(localidades);
-			}
+			ProvinciaDTO provincia = provincias.get(i);
+			localidades = regiones.obtenerLocalidades(provincia);
+			ventanaPersona.cargarLocalidades(localidades);
 		}
 
 		

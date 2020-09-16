@@ -22,7 +22,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
-public class Vista
+public class VentanaAgenda
 {
 	private JFrame frmAgenda;
 	private JPanel panelContactos;
@@ -32,7 +32,7 @@ public class Vista
 	private JButton btnReporte;
 
 
-	public Vista() 
+	public VentanaAgenda() 
 	{
 		super();
 		initialize();
@@ -70,7 +70,7 @@ public class Vista
 		btnAgregar.setFocusable(false);
 		btnAgregar.setBackground(new Color( 74, 72, 75 ));
 		btnAgregar.setBorderPainted(false);
-		btnAgregar.setIcon(new ImageIcon(Vista.class.getResource("/icons/agregar.png")));
+		btnAgregar.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/icons/agregar.png")));
 		btnAgregar.setBounds(505, 11, 70, 70);
 		btnAgregar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -87,7 +87,7 @@ public class Vista
 		
 		btnBorrar = new JButton("");
 		btnBorrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnBorrar.setIcon(new ImageIcon(Vista.class.getResource("/icons/borrar.png")));
+		btnBorrar.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/icons/borrar.png")));
 		btnBorrar.setToolTipText("Eliminar contacto");
 		btnBorrar.setFocusable(false);
 		btnBorrar.setBorderPainted(false);
@@ -107,7 +107,7 @@ public class Vista
 		frmAgenda.getContentPane().add(btnBorrar);
 		
 		btnReporte = new JButton("");
-		btnReporte.setIcon(new ImageIcon(Vista.class.getResource("/icons/reporte.png")));
+		btnReporte.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/icons/reporte.png")));
 		btnReporte.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnReporte.setToolTipText("Generar reporte");
 		btnReporte.setFocusable(false);
@@ -128,7 +128,7 @@ public class Vista
 		frmAgenda.getContentPane().add(btnReporte);
 		
 		btnEditar = new JButton("");
-		btnEditar.setIcon(new ImageIcon(Vista.class.getResource("/icons/editar.png")));
+		btnEditar.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/icons/editar.png")));
 		btnEditar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEditar.setToolTipText("Editar contacto");
 		btnEditar.setFocusable(false);
