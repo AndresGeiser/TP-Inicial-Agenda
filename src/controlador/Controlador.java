@@ -221,12 +221,16 @@ public class Controlador implements ActionListener
 			ventanaPersona.cargarProvincias(provincias);
 		}
 		
-		private void actualizarLocalidades(ActionEvent p) 
+		private void actualizarLocalidades(ActionEvent p)
 		{	
 			int i = ventanaPersona.getCbxProvincia().getSelectedIndex();
-			ProvinciaDTO provincia = provincias.get(i);
-			localidades = regiones.obtenerLocalidades(provincia);
-			ventanaPersona.cargarLocalidades(localidades);
+			
+			if(i != -1) { //Para que no tire error cuando se selecciona un pais  
+				
+				ProvinciaDTO provincia = provincias.get(i);
+				localidades = regiones.obtenerLocalidades(provincia);
+				ventanaPersona.cargarLocalidades(localidades);
+			}
 		}
 
 		
