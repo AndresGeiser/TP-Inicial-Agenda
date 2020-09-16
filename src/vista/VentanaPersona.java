@@ -20,6 +20,8 @@ import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaPersona extends JFrame 
 {
@@ -35,6 +37,10 @@ public class VentanaPersona extends JFrame
 	private JComboBox<String> cbxPais;
 	private JComboBox<String> cbxProvincia;
 	private JComboBox<String> cbxLocalidad;
+	private JTextField txtCalle;
+	private JTextField txtAltura;
+	private JTextField txtPiso;
+	private JTextField txtDto;
 	
 	private JButton btnAgregarPersona;
 	private JButton btnActualizarPersona;
@@ -56,7 +62,7 @@ public class VentanaPersona extends JFrame
 		super();
 		setTitle("Agregar Contacto");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 350, 501);
+		setBounds(100, 100, 352, 497);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -67,7 +73,7 @@ public class VentanaPersona extends JFrame
 		contentPane.add(scrollPane);
 		
 		JPanel panel = new JPanel();
-		panel.setPreferredSize(new Dimension(295, 600));
+		panel.setPreferredSize(new Dimension(295, 750));
 		scrollPane.setViewportView(panel);
 		panel.setLayout(null);
 		
@@ -84,16 +90,30 @@ public class VentanaPersona extends JFrame
 		txtNombre = new JTextField();
 		txtNombre.setMargin(new Insets(2, 5, 2, 5));
 		txtNombre.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		txtNombre.setColumns(10);
 		txtNombre.setBounds(10, 52, 275, 30);
 		panel.add(txtNombre);
-		txtNombre.setColumns(10);
 		
 		txtTelefono = new JTextField();
 		txtTelefono.setMargin(new Insets(2, 5, 2, 5));
 		txtTelefono.setFont(new Font("SansSerif", Font.PLAIN, 12));
-		txtTelefono.setBounds(10, 134, 275, 30);
-		panel.add(txtTelefono);
 		txtTelefono.setColumns(10);
+		txtTelefono.setBounds(10, 134, 275, 30);
+		txtTelefono.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent evt) {
+				 char car = evt.getKeyChar();
+				 if(!Character.isDigit(car)){
+					 evt.consume();
+					 getToolkit().beep();
+				 }
+				 if(txtTelefono.getText().length() > 11) {
+					 evt.consume();
+					 getToolkit().beep();
+				 }
+			}
+		});
+		panel.add(txtTelefono);
 		
 		JLabel lblCorreo = new JLabel("Correo electronico");
 		lblCorreo.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -172,11 +192,101 @@ public class VentanaPersona extends JFrame
 		cbxLocalidad.setBounds(100, 544, 149, 30);
 		panel.add(cbxLocalidad);
 		
-		btnAgregarPersona = new JButton("Agregar");
-		btnAgregarPersona.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		JLabel lblCalle = new JLabel("Calle:");
+		lblCalle.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCalle.setFont(new Font("SansSerif", Font.PLAIN, 13));
+		lblCalle.setBounds(10, 585, 80, 30);
+		panel.add(lblCalle);
+		
+		txtCalle = new JTextField();
+		txtCalle.setMargin(new Insets(2, 5, 2, 5));
+		txtCalle.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		txtCalle.setColumns(10);
+		txtCalle.setBounds(100, 585, 149, 30);
+		panel.add(txtCalle);
+		
+		JLabel lblAltura = new JLabel("Altura:");
+		lblAltura.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblAltura.setFont(new Font("SansSerif", Font.PLAIN, 13));
+		lblAltura.setBounds(10, 626, 80, 30);
+		panel.add(lblAltura);
+		
+		txtAltura = new JTextField();
+		txtAltura.setMargin(new Insets(2, 5, 2, 5));
+		txtAltura.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		txtAltura.setColumns(10);
+		txtAltura.setBounds(100, 626, 149, 30);
+		txtAltura.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent evt) {
+				 char car = evt.getKeyChar();
+				 if(!Character.isDigit(car)){
+					 evt.consume();
+					 getToolkit().beep();
+				 }
+				 if(txtAltura.getText().length() > 6) {
+					 evt.consume();
+					 getToolkit().beep();
+				 }
 			}
 		});
+		panel.add(txtAltura);
+		
+		JLabel lblPiso = new JLabel("Piso:");
+		lblPiso.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPiso.setFont(new Font("SansSerif", Font.PLAIN, 13));
+		lblPiso.setBounds(10, 667, 80, 30);
+		panel.add(lblPiso);
+		
+		txtPiso = new JTextField();
+		txtPiso.setMargin(new Insets(2, 5, 2, 5));
+		txtPiso.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		txtPiso.setColumns(10);
+		txtPiso.setBounds(100, 667, 149, 30);
+		txtPiso.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent evt) {
+				 char car = evt.getKeyChar();
+				 if(!Character.isDigit(car)){
+					 evt.consume();
+					 getToolkit().beep();
+				 }
+				 if(txtPiso.getText().length() > 3) {
+					 evt.consume();
+					 getToolkit().beep();
+				 }
+			}
+		});
+		panel.add(txtPiso);
+		
+		JLabel lblDto = new JLabel("Dto:");
+		lblDto.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDto.setFont(new Font("SansSerif", Font.PLAIN, 13));
+		lblDto.setBounds(10, 708, 80, 30);
+		panel.add(lblDto);
+		
+		txtDto = new JTextField();
+		txtDto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent evt) {
+				 char car = evt.getKeyChar();
+				 if(!Character.isDigit(car)){
+					 evt.consume();
+					 getToolkit().beep();
+				 }
+				 if(txtDto.getText().length() > 3) {
+					 evt.consume();
+					 getToolkit().beep();
+				 }
+			}
+		});
+		txtDto.setMargin(new Insets(2, 5, 2, 5));
+		txtDto.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		txtDto.setColumns(10);
+		txtDto.setBounds(100, 708, 149, 30);
+		panel.add(txtDto);
+		
+		btnAgregarPersona = new JButton("Agregar");
 		btnAgregarPersona.setBounds(214, 425, 110, 30);
 		contentPane.add(btnAgregarPersona);
 		
@@ -199,6 +309,7 @@ public class VentanaPersona extends JFrame
 		txtCorreo.setText("");
 		txtFecha.setText("");
 		cbxTipo.setSelectedIndex(0);
+		
 		this.setVisible(true);
 	}
 	
@@ -207,6 +318,11 @@ public class VentanaPersona extends JFrame
 		setTitle("Actualizar Contacto");
 		btnAgregarPersona.setVisible(false);
 		btnActualizarPersona.setVisible(true);
+
+		txtNombre.setText(nombre);
+		txtTelefono.setText(telefono);
+		txtCorreo.setText(correo);
+		txtFecha.setText(cumple);
 		
 		//Recorremos los items del combo para ver cual coincide con el del parametro
 		for (int i = 0; i < cbxTipo.getItemCount(); i++) {
@@ -215,11 +331,6 @@ public class VentanaPersona extends JFrame
 				break;
 			}
 		}
-
-		txtNombre.setText(nombre);
-		txtTelefono.setText(telefono);
-		txtCorreo.setText(correo);
-		txtFecha.setText(cumple);
 		
 		this.setVisible(true);
 	}
@@ -286,6 +397,27 @@ public class VentanaPersona extends JFrame
 	{
 		return cbxLocalidad;
 	}
+	
+	public JTextField getTxtCalle() 
+	{
+		return txtCalle;
+	}
+	
+	public JTextField getTxtAltura() 
+	{
+		return txtAltura;
+	}
+	
+	public JTextField getTxtPiso() 
+	{
+		return txtPiso;
+	}
+	
+	public JTextField getTxtDto() 
+	{
+		return txtDto;
+	}
+	
 
 	public JButton getBtnAgregarPersona() 
 	{
