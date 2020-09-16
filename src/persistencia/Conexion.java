@@ -44,14 +44,14 @@ public class Conexion
 	    String tablas = "CREATE TABLE IF NOT EXISTS personas(idPersona SERIAL NOT NULL AUTO_INCREMENT PRIMARY KEY,nombre varchar(225) NOT NULL,telefono varchar(225),correo varchar(225),tipo_contacto varchar(50),fecha_cumple varchar(255))";
 	    String select_db = "USE grupo_5";
 	    
+	    stmt.executeUpdate(db);
+	    stmt.executeUpdate(select_db);
 	    
 	    /**********************************************/
 	    crearTablasLocalizaciones(stmt); //<----- ¡Temporal!
 	    /**********************************************/
 	    
 	    //Ejecutamos las sentencias
-	    stmt.executeUpdate(db);
-	    stmt.executeUpdate(select_db);
 	    
 
 	    //Establecemos conexión con la nueva base y creamos las tablas
@@ -65,7 +65,6 @@ public class Conexion
 	
 	private void crearTablasLocalizaciones(Statement stmt) throws SQLException
 	{
-		stmt.execute("USE grupo_5");
 		
 		String nombreFichero = "localizaciones.txt";
         BufferedReader br = null;

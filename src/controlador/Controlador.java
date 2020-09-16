@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import modelo.Agenda;
 import modelo.Regiones;
 import persistencia.DAOSQLFactory;
-import reportes.ReporteAgenda;
 import vista.Contacto;
 import vista.VentanaPersona;
 import vista.Vista;
@@ -53,11 +52,11 @@ public class Controlador implements ActionListener
 			
 			/********* Comentado para hacer pruebas
 			 
-			this.paises = this.regiones.obtenerPaises();
-			this.ventanaPersona.cargarPaises(this.paises);
 			
 			*********  Fin comentado*/
 
+			this.paises = this.regiones.obtenerPaises();
+			this.ventanaPersona.cargarPaises(this.paises);
 			
 			this.agenda = agenda;
 		}

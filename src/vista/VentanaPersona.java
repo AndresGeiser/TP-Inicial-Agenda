@@ -231,12 +231,16 @@ public class VentanaPersona extends JFrame
 	}
 	
 	public void cargarProvincias(List<ProvinciaDTO> provincias) {
+		cbxProvincia.removeAllItems();
+		
 		for (ProvinciaDTO paisDTO : provincias) {
 			cbxProvincia.addItem(paisDTO.getNombre());
 		}
 	}
 	
 	public void cargarLocalidades(List<LocalidadDTO> localidades) {
+		cbxLocalidad.removeAllItems();
+		
 		for (LocalidadDTO localidadDTO : localidades) {
 			cbxLocalidad.addItem(localidadDTO.getNombre());
 		}
