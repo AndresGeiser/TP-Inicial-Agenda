@@ -2,6 +2,7 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import modelo.Servidor;
 import vista.VentanaConfigurar;
@@ -12,7 +13,7 @@ public class ControladorConfigurar implements ActionListener {
 	private VentanaConfigurar vtnConfigurar;
 	private Servidor servidor;
 	
-	public ControladorConfigurar(Servidor servidor, VentanaConfigurar vtnConfigurar) 
+	public ControladorConfigurar(Servidor servidor, VentanaConfigurar vtnConfigurar) throws SQLException 
 	{
 		this.vtnConfigurar = vtnConfigurar;
 		this.servidor = servidor;
@@ -20,9 +21,9 @@ public class ControladorConfigurar implements ActionListener {
 		this.vtnConfigurar.getBtnConfigurar().addActionListener(a-> configurarServidor(a));
 	}
 	
-	public void iniciar() 
+	public void iniciar()
 	{
-		boolean esPrimeraEjcucion = true; //¡¡Hay que ver la forma en como sabremos cuando se ejecuta por primera vez!!!
+		boolean esPrimeraEjcucion = true; //¡¡Hay que ver la forma en como sabremos cuando se ejecuta por primera vez!!! <-- Investigar si se puede consultar si la base ya fue creada
 		
 		if(esPrimeraEjcucion) 
 		{
@@ -30,26 +31,27 @@ public class ControladorConfigurar implements ActionListener {
 		}
 		else
 		{	
-			//Mostramos la ventana de Ingreso
-			VentanaIngreso vista = new VentanaIngreso();
-			ControladorIngreso controlador = new ControladorIngreso(servidor, vista);
-			controlador.iniciar();
+			//Abrimos la ventana de ingreso
+			mostrarVentanaDeIngreso();
 		}
 	}
 	
-	public void configurarServidor(ActionEvent p) 
+	private void configurarServidor(ActionEvent p)
 	{
-		/****
-		 * 
-		 * REALIZAR CONFIGURACION - IMPLEMENTAR
-		 * 
-		 * *****/
+		String usuario = vtnConfigurar.getTxtUsuario().getText().trim();
+		String contraseña = vtnConfigurar.getTxtContraseña().getText().trim();
 		
+		servidor.configurar(usuario, contraseña);
 		
 		//Cerramos la ventana de configuracion
 		vtnConfigurar.dispose();
 		
-		//Mostramos la ventana de Ingreso
+		//Abrimos la ventana de ingreso
+		mostrarVentanaDeIngreso();
+	}
+	
+	private void mostrarVentanaDeIngreso() 
+	{
 		VentanaIngreso vista = new VentanaIngreso();
 		ControladorIngreso controlador = new ControladorIngreso(servidor, vista);
 		controlador.iniciar();
