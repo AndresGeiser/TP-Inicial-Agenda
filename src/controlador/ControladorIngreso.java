@@ -2,6 +2,7 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import modelo.Agenda;
 import modelo.Servidor;
@@ -22,9 +23,9 @@ public class ControladorIngreso implements ActionListener {
 		this.vtnIngreso.getBtnIngresar().addActionListener(a-> validarIngreso(a));
 	}
 	
-	public void iniciar() 
+	public void iniciar() throws SQLException 
 	{
-		vtnIngreso.mostrar();
+		vtnIngreso.mostrar();	
 	}
 	
 	public void validarIngreso(ActionEvent p) 

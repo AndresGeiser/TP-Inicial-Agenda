@@ -2,6 +2,7 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import modelo.Servidor;
 import vista.VentanaConfigurar;
@@ -17,12 +18,19 @@ public class ControladorConfigurar implements ActionListener {
 		this.vtnConfigurar = vtnConfigurar;
 		this.servidor = servidor;
 		
-		this.vtnConfigurar.getBtnConfigurar().addActionListener(a-> configurarServidor(a));
+		this.vtnConfigurar.getBtnConfigurar().addActionListener(a-> {
+			try {
+				configurarServidor(a);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 	
-	public void iniciar() 
+	public void iniciar() throws SQLException 
 	{
-		boolean esPrimeraEjcucion = true; //¡¡Hay que ver la forma en como sabremos cuando se ejecuta por primera vez!!!
+		boolean esPrimeraEjcucion = true; //¡¡Hay que ver la forma en como sabremos cuando se ejecuta por primera vez!!! <-- Investigar si se puede consultar si la base ya fue creada
 		
 		if(esPrimeraEjcucion) 
 		{
@@ -31,13 +39,15 @@ public class ControladorConfigurar implements ActionListener {
 		else
 		{	
 			//Mostramos la ventana de Ingreso
+			servidor.preparar();
+
 			VentanaIngreso vista = new VentanaIngreso();
 			ControladorIngreso controlador = new ControladorIngreso(servidor, vista);
 			controlador.iniciar();
 		}
 	}
 	
-	public void configurarServidor(ActionEvent p) 
+	public void configurarServidor(ActionEvent p) throws SQLException 
 	{
 		/****
 		 * 
