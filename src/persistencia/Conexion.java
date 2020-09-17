@@ -56,7 +56,6 @@ public class Conexion
 		this.connection = DriverManager.getConnection(conect,user,pass);
 	}
 	
-	
 	public void cerrarConexion()
 	{
 		try 
