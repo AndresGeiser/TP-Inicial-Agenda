@@ -1,4 +1,4 @@
-package reportes;
+/*package reportes;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -49,3 +49,4 @@ public class ReporteAgenda
 	}
    
 }	
+*/

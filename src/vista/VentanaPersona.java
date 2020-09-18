@@ -315,6 +315,10 @@ public class VentanaPersona extends JFrame
 		txtNombre.setText("");
 		txtTelefono.setText("");
 		txtCorreo.setText("");
+		txtCalle.setText("");
+		txtAltura.setText("");
+		txtPiso.setText("");
+		txtDpto.setText("");
 		txtFecha.setText("");
 		cbxTipo.setSelectedIndex(0);
 		
