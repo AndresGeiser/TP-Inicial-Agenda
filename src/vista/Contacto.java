@@ -106,7 +106,7 @@ public class Contacto extends JPanel {
 		lblTipo.setBounds(286, 12, 150, 32);
 		add(lblTipo);
 		
-		JLabel lblDomicilio = new JLabel("Domicilio:" + p.getDomicilio().getCalle());
+		JLabel lblDomicilio = new JLabel("Domicilio: " + p.getDomicilio().getCalle() + " " + p.getDomicilio().getAltura());
 		lblDomicilio.setForeground(new Color(255, 153, 51));
 		lblDomicilio.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		lblDomicilio.setBounds(10, 92, 426, 14);
