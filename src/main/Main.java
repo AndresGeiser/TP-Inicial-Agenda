@@ -23,6 +23,5 @@ public class Main
 		//ControladorAgenda controlador = new ControladorAgenda(vista, modelo);
 		//controlador.inicializar();
 		
-		
 	}
 }

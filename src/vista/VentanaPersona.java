@@ -17,16 +17,16 @@ import javax.swing.JScrollPane;
 import java.awt.Insets;
 import java.awt.Dimension;
 import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
 import java.util.List;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JCheckBox;
 
 public class VentanaPersona extends JFrame 
 {
 	private static final long serialVersionUID = 1L;
 	private static VentanaPersona INSTANCE;
+	
 	private JPanel contentPane;
 	private JTextField txtNombre;
 	private JTextField txtTelefono;
@@ -34,13 +34,14 @@ public class VentanaPersona extends JFrame
 	private JComboBox<String> cbxTipo;
 	private JTextField txtFecha;
 	
+	private JCheckBox chckDomicilio;
 	private JComboBox<String> cbxPais;
 	private JComboBox<String> cbxProvincia;
 	private JComboBox<String> cbxLocalidad;
 	private JTextField txtCalle;
 	private JTextField txtAltura;
 	private JTextField txtPiso;
-	private JTextField txtDto;
+	private JTextField txtDpto;
 	
 	private JButton btnAgregarPersona;
 	private JButton btnActualizarPersona;
@@ -62,7 +63,7 @@ public class VentanaPersona extends JFrame
 		super();
 		setTitle("Agregar Contacto");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 352, 497);
+		setBounds(100, 100, 352, 495);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -154,11 +155,6 @@ public class VentanaPersona extends JFrame
 		txtFecha.setBounds(10, 380, 275, 30);
 		panel.add(txtFecha);
 		
-		JLabel lblDomicilio = new JLabel("Domicilio");
-		lblDomicilio.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		lblDomicilio.setBounds(10, 421, 292, 30);
-		panel.add(lblDomicilio);
-		
 		
 		JLabel lblPais = new JLabel("Pais:");
 		lblPais.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -167,6 +163,7 @@ public class VentanaPersona extends JFrame
 		panel.add(lblPais);
 		
 		cbxPais = new JComboBox<String>();
+		cbxPais.setEnabled(false);
 		cbxPais.setBounds(100, 462, 149, 30);
 		panel.add(cbxPais);
 		
@@ -178,6 +175,7 @@ public class VentanaPersona extends JFrame
 		panel.add(lblProvincia);
 		
 		cbxProvincia = new JComboBox<String>();
+		cbxProvincia.setEnabled(false);
 		cbxProvincia.setBounds(100, 503, 149, 30);
 		panel.add(cbxProvincia);
 		
@@ -189,6 +187,7 @@ public class VentanaPersona extends JFrame
 		panel.add(lblLocalidad);
 		
 		cbxLocalidad = new JComboBox<String>();
+		cbxLocalidad.setEnabled(false);
 		cbxLocalidad.setBounds(100, 544, 149, 30);
 		panel.add(cbxLocalidad);
 		
@@ -199,6 +198,7 @@ public class VentanaPersona extends JFrame
 		panel.add(lblCalle);
 		
 		txtCalle = new JTextField();
+		txtCalle.setEnabled(false);
 		txtCalle.setMargin(new Insets(2, 5, 2, 5));
 		txtCalle.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		txtCalle.setColumns(10);
@@ -212,6 +212,7 @@ public class VentanaPersona extends JFrame
 		panel.add(lblAltura);
 		
 		txtAltura = new JTextField();
+		txtAltura.setEnabled(false);
 		txtAltura.setMargin(new Insets(2, 5, 2, 5));
 		txtAltura.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		txtAltura.setColumns(10);
@@ -239,6 +240,7 @@ public class VentanaPersona extends JFrame
 		panel.add(lblPiso);
 		
 		txtPiso = new JTextField();
+		txtPiso.setEnabled(false);
 		txtPiso.setMargin(new Insets(2, 5, 2, 5));
 		txtPiso.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		txtPiso.setColumns(10);
@@ -265,8 +267,9 @@ public class VentanaPersona extends JFrame
 		lblDto.setBounds(10, 708, 80, 30);
 		panel.add(lblDto);
 		
-		txtDto = new JTextField();
-		txtDto.addKeyListener(new KeyAdapter() {
+		txtDpto = new JTextField();
+		txtDpto.setEnabled(false);
+		txtDpto.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent evt) {
 				 char car = evt.getKeyChar();
@@ -274,17 +277,22 @@ public class VentanaPersona extends JFrame
 					 evt.consume();
 					 getToolkit().beep();
 				 }
-				 if(txtDto.getText().length() > 3) {
+				 if(txtDpto.getText().length() > 3) {
 					 evt.consume();
 					 getToolkit().beep();
 				 }
 			}
 		});
-		txtDto.setMargin(new Insets(2, 5, 2, 5));
-		txtDto.setFont(new Font("SansSerif", Font.PLAIN, 12));
-		txtDto.setColumns(10);
-		txtDto.setBounds(100, 708, 149, 30);
-		panel.add(txtDto);
+		txtDpto.setMargin(new Insets(2, 5, 2, 5));
+		txtDpto.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		txtDpto.setColumns(10);
+		txtDpto.setBounds(100, 708, 149, 30);
+		panel.add(txtDpto);
+		
+		chckDomicilio = new JCheckBox("Agregar Domicilio");
+		chckDomicilio.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		chckDomicilio.setBounds(10, 417, 275, 30);
+		panel.add(chckDomicilio);
 		
 		btnAgregarPersona = new JButton("Agregar");
 		btnAgregarPersona.setBounds(214, 425, 110, 30);
@@ -357,6 +365,17 @@ public class VentanaPersona extends JFrame
 		}
 	}
 	
+	public void habilitarCamposDomicilio(boolean habilitar) 
+	{
+		cbxPais.setEnabled(habilitar);
+		cbxProvincia.setEnabled(habilitar);
+		cbxLocalidad.setEnabled(habilitar);
+		txtCalle.setEnabled(habilitar);
+		txtAltura.setEnabled(habilitar);
+		txtPiso.setEnabled(habilitar);
+		txtDpto.setEnabled(habilitar);
+	}
+	
 	
 	public JTextField getTxtNombre() 
 	{
@@ -381,6 +400,11 @@ public class VentanaPersona extends JFrame
 	public JComboBox<String> getTipo() 
 	{
 		return cbxTipo;
+	}
+	
+	public JCheckBox getChckDomicilio() 
+	{
+		return chckDomicilio;
 	}
 	
 	public JComboBox<String> getCbxPais() 
@@ -413,12 +437,11 @@ public class VentanaPersona extends JFrame
 		return txtPiso;
 	}
 	
-	public JTextField getTxtDto() 
+	public JTextField getTxtDpto() 
 	{
-		return txtDto;
+		return txtDpto;
 	}
 	
-
 	public JButton getBtnAgregarPersona() 
 	{
 		return btnAgregarPersona;

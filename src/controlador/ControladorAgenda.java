@@ -15,6 +15,7 @@ import reportes.ReporteAgenda;
 import vista.Contacto;
 import vista.VentanaPersona;
 import vista.VentanaAgenda;
+import dto.DomicilioDTO;
 import dto.LocalidadDTO;
 import dto.PaisDTO;
 import dto.PersonaDTO;
@@ -47,6 +48,7 @@ public class ControladorAgenda implements ActionListener
 			this.ventanaPersona.getBtnAgregarPersona().addActionListener(p->guardarPersona(p));
 			this.ventanaPersona.getCbxPais().addActionListener(p->actualizarProvincias(p));
 			this.ventanaPersona.getCbxProvincia().addActionListener(p->actualizarLocalidades(p));
+			this.ventanaPersona.getChckDomicilio().addActionListener(p->habilitarIngresoDomicilio(p));
 	
 			//Carga de paises
 			this.regiones = new Regiones(new DAOSQLFactory());
@@ -56,6 +58,12 @@ public class ControladorAgenda implements ActionListener
 			this.agenda = agenda;
 		}
 		
+		public void inicializar()
+		{
+			refrescarTabla();
+			vista.show();
+		}
+
 
 		private void ventanaAgregarPersona(ActionEvent a) {
 			ventanaPersona.mostrarVentana();
@@ -63,15 +71,31 @@ public class ControladorAgenda implements ActionListener
 
 		private void guardarPersona(ActionEvent p) {
 
-			if(validarDatos()) {
-				String nombre = ventanaPersona.getTxtNombre().getText();
-				String tel = ventanaPersona.getTxtTelefono().getText();
-				String correo = ventanaPersona.getTxtCorreo().getText();
+			if(validarDatos()) 
+			{
+				String nombre = ventanaPersona.getTxtNombre().getText().trim();
+				String tel = ventanaPersona.getTxtTelefono().getText().trim();
+				String correo = ventanaPersona.getTxtCorreo().getText().trim();
 				String tipo = ventanaPersona.getTipo().getSelectedItem().toString();
-				String cumple = ventanaPersona.getTxtCumple().getText();
-
+				String cumple = ventanaPersona.getTxtCumple().getText().trim();
 				
-				PersonaDTO nuevaPersona = new PersonaDTO(0, nombre, tel,correo,tipo,cumple);
+				DomicilioDTO domicilio  = new DomicilioDTO("", "", "", "", "", "", "");
+				
+				boolean agregoDomicilio = ventanaPersona.getChckDomicilio().isSelected();
+				if(agregoDomicilio) 
+				{
+					String pais = ventanaPersona.getCbxPais().getSelectedItem().toString();
+					String provincia = ventanaPersona.getCbxProvincia().getSelectedItem().toString();
+					String localidad = ventanaPersona.getCbxLocalidad().getSelectedItem().toString();
+					String calle = ventanaPersona.getTxtCalle().getText();
+					String altura = ventanaPersona.getTxtAltura().getText();
+					String piso = ventanaPersona.getTxtPiso().getText();
+					String dpto = ventanaPersona.getTxtDpto().getText();
+					
+					domicilio = new DomicilioDTO(pais, provincia, localidad, calle, altura, piso, dpto);
+				}
+				
+				PersonaDTO nuevaPersona = new PersonaDTO(0, nombre, tel, correo, tipo, cumple, domicilio);
 				agenda.agregarPersona(nuevaPersona);
 				refrescarTabla();
 				ventanaPersona.cerrar();	
@@ -109,7 +133,8 @@ public class ControladorAgenda implements ActionListener
 		
 		public void editarPersona(ActionEvent e)
 		{
-			if(validarDatos()) {
+			if(validarDatos()) 
+			{
 				String nombre = ventanaPersona.getTxtNombre().getText();
 				String tel = ventanaPersona.getTxtTelefono().getText();
 				String correo = ventanaPersona.getTxtCorreo().getText();
@@ -122,6 +147,23 @@ public class ControladorAgenda implements ActionListener
 				personaSeleccionada.setTipo_contacto(tipo);
 				personaSeleccionada.setFecha_cumple(cumple);
 				
+				boolean agregoDomicilio = ventanaPersona.getChckDomicilio().isSelected();
+				if(agregoDomicilio) 
+				{
+					String pais = ventanaPersona.getCbxPais().getSelectedItem().toString();
+					String provincia = ventanaPersona.getCbxProvincia().getSelectedItem().toString();
+					String localidad = ventanaPersona.getCbxLocalidad().getSelectedItem().toString();
+					String calle = ventanaPersona.getTxtCalle().getText();
+					String altura = ventanaPersona.getTxtAltura().getText();
+					String piso = ventanaPersona.getTxtPiso().getText();
+					String dpto = ventanaPersona.getTxtDpto().getText();
+					
+					DomicilioDTO domicilio = new DomicilioDTO(pais, provincia, localidad, calle, altura, piso, dpto);
+					
+					personaSeleccionada.setDomicilio(domicilio);
+					System.out.println("Agrego domicilio");
+				}
+				
 				agenda.editarPersona(personaSeleccionada);
 				refrescarTabla();
 				ventanaPersona.cerrar();
@@ -131,42 +173,45 @@ public class ControladorAgenda implements ActionListener
 		}
 		
 		
-		private boolean validarDatos() {
+		private boolean validarDatos() 
+		{
 			String nombre = ventanaPersona.getTxtNombre().getText().trim();
 			String tel = ventanaPersona.getTxtTelefono().getText().trim();
 			String correo = ventanaPersona.getTxtCorreo().getText().trim();
 			
+			
 			String mensajeAdvertencia = "";
 			
-			if(nombre.equals("") || tel.equals("")) {
+			if(nombre.equals("") || tel.equals("")) 
 				mensajeAdvertencia += "El nombre y telefono del contacto es requerido.\n";
-			}
 			
-			if(nombre.length() > 20){
+			if(nombre.length() > 20)
 				mensajeAdvertencia += "Nombre de contacto muy largo. (Maximo 20 caracteres)\\n";
-			}
-			else {
-				for (PersonaDTO personaDTO : personasEnLista) {
-					if(personaDTO.getNombre().equals(nombre) && personaDTO.getIdPersona() != personaSeleccionada.getIdPersona()) {
+			else 
+			{
+				for (PersonaDTO personaDTO : personasEnLista) 
+				{
+					if(personaDTO.getNombre().equals(nombre) && personaDTO.getIdPersona() != personaSeleccionada.getIdPersona()) 
+					{
 						mensajeAdvertencia += "Ya existe un contacto con el nombre: '" + nombre + "'. \n";
 						return false;
 					}
 				}
 			}
 			
-			if(!correo.equals("")) {
+			if(!correo.equals("")) 
+			{
 				String emailPattern = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@" + "[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
 				Pattern pattern = Pattern.compile(emailPattern);
 				Matcher matcher = pattern.matcher(correo);
-				if (!matcher.matches()) {
+				if (!matcher.matches()) 
 					mensajeAdvertencia += "Verifique que el correo este bien escrito.\n";
-				}
-			} 
-			
-			if(!mensajeAdvertencia.equals("")) {
-				JOptionPane.showMessageDialog(null, mensajeAdvertencia, "Aviso", JOptionPane.WARNING_MESSAGE); 
 			}
 			
+			
+			if(!mensajeAdvertencia.equals("")) 
+				JOptionPane.showMessageDialog(null, mensajeAdvertencia, "Aviso", JOptionPane.WARNING_MESSAGE); 
+	
 			return (mensajeAdvertencia.equals("")) ? true : false;
 		}
 		
@@ -175,26 +220,20 @@ public class ControladorAgenda implements ActionListener
 		{
 			Contacto[] contactos = vista.getContactos();
 			
-			for (int i = 0; i < contactos.length; i++) {
-				if(contactos[i].estaSeleccionado()) {
+			for (int i = 0; i < contactos.length; i++) 
+			{
+				if(contactos[i].estaSeleccionado()) 
 					agenda.borrarPersona(personasEnLista.get(i));
-				}
 			}
 			
 			refrescarTabla();
 		}
 		
 		
-		private void mostrarReporte(ActionEvent r) {
+		private void mostrarReporte(ActionEvent r) 
+		{
 			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
 			reporte.mostrar();	
-		}
-		
-		
-		public void inicializar()
-		{
-			refrescarTabla();
-			vista.show();
 		}
 		
 		
@@ -218,6 +257,14 @@ public class ControladorAgenda implements ActionListener
 			ProvinciaDTO provincia = provincias.get(i);
 			localidades = regiones.obtenerLocalidades(provincia);
 			ventanaPersona.cargarLocalidades(localidades);
+		}
+		
+		private void habilitarIngresoDomicilio(ActionEvent p) 
+		{
+			if(ventanaPersona.getChckDomicilio().isSelected())
+				ventanaPersona.habilitarCamposDomicilio(true);
+			else
+				ventanaPersona.habilitarCamposDomicilio(false);
 		}
 
 		

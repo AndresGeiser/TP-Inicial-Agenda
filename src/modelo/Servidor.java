@@ -11,7 +11,7 @@ import persistencia.Conexion;
 public class Servidor {
 
 	private String db = "CREATE DATABASE IF NOT EXISTS grupo_5";
-    private String tablaPersona = "CREATE TABLE IF NOT EXISTS personas(idPersona SERIAL NOT NULL AUTO_INCREMENT PRIMARY KEY,nombre varchar(225) NOT NULL,telefono varchar(225),correo varchar(225),tipo_contacto varchar(50),fecha_cumple varchar(255))";
+    private String tablaPersona = "CREATE TABLE IF NOT EXISTS personas(id SERIAL NOT NULL AUTO_INCREMENT PRIMARY KEY, nombre varchar(20) NOT NULL  UNIQUE, telefono varchar(20) NOT NULL, correo varchar(100), tipo_contacto enum('Trabajo', 'Familia', 'Universidad', 'Amigos') NOT NULL, fecha_cumple varchar(255), pais varchar(255), provincia varchar(255), localidad varchar(255), calle varchar(255), altura varchar(6), piso varchar(3), dpto varchar(3))";
     private String usarDB = "USE grupo_5";
     
     private Conexion conexion;
