@@ -256,9 +256,12 @@ public class ControladorAgenda implements ActionListener
 		private void actualizarLocalidades(ActionEvent p) 
 		{	
 			int i = ventanaPersona.getCbxProvincia().getSelectedIndex();
-			ProvinciaDTO provincia = provincias.get(i);
-			localidades = regiones.obtenerLocalidades(provincia);
-			ventanaPersona.cargarLocalidades(localidades);
+			if(i != -1) //para que no tire error de indice al seleccionar un pais
+			{
+				ProvinciaDTO provincia = provincias.get(i);
+				localidades = regiones.obtenerLocalidades(provincia);
+				ventanaPersona.cargarLocalidades(localidades);
+			}
 		}
 		
 		private void habilitarIngresoDomicilio(ActionEvent p) 
