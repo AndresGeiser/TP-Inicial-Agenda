@@ -7,8 +7,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import dto.DomicilioDTO;
 import dto.LocalidadDTO;
 import dto.PaisDTO;
+import dto.PersonaDTO;
 import dto.ProvinciaDTO;
 
 import javax.swing.JComboBox;
@@ -321,27 +323,48 @@ public class VentanaPersona extends JFrame
 		txtDpto.setText("");
 		txtFecha.setText("");
 		cbxTipo.setSelectedIndex(0);
+		chckDomicilio.setSelected(false);
+		cbxPais.setSelectedIndex(0);
+		habilitarCamposDomicilio(false);
 		
 		this.setVisible(true);
 	}
 	
-	public void mostrarVentanaConDatos(String nombre, String telefono, String correo, String tipo, String cumple)
+	public void mostrarVentanaConDatos(PersonaDTO p)
 	{
 		setTitle("Actualizar Contacto");
 		btnAgregarPersona.setVisible(false);
 		btnActualizarPersona.setVisible(true);
 
-		txtNombre.setText(nombre);
-		txtTelefono.setText(telefono);
-		txtCorreo.setText(correo);
-		txtFecha.setText(cumple);
+		txtNombre.setText(p.getNombre());
+		txtTelefono.setText(p.getTelefono());
+		txtCorreo.setText(p.getCorreo());
+		txtFecha.setText(p.getFecha_cumple());
 		
-		//Recorremos los items del combo para ver cual coincide con el del parametro
-		for (int i = 0; i < cbxTipo.getItemCount(); i++) {
-			if(cbxTipo.getItemAt(i).equalsIgnoreCase(tipo)) {
-				cbxTipo.setSelectedIndex(i);
-				break;
-			}
+		seleccionar(cbxTipo, p.getTipo_contacto());
+		
+		DomicilioDTO domicilio = p.getDomicilio();
+		if(!domicilio.getPais().equals("")) 
+		{
+			chckDomicilio.setSelected(true);
+			
+			seleccionar(cbxPais, domicilio.getPais());
+			seleccionar(cbxProvincia, domicilio.getProvincia());
+			seleccionar(cbxLocalidad, domicilio.getLocalidad());
+			txtCalle.setText(domicilio.getCalle());
+			txtAltura.setText(domicilio.getAltura());
+			txtPiso.setText(domicilio.getPiso());
+			txtDpto.setText(domicilio.getDpto());
+			
+			habilitarCamposDomicilio(true);
+		}
+		else 
+		{
+			cbxPais.setSelectedIndex(0);
+			txtCalle.setText("");
+			txtAltura.setText("");
+			txtPiso.setText("");
+			txtDpto.setText("");
 		}
 		
 		this.setVisible(true);
@@ -378,6 +401,16 @@ public class VentanaPersona extends JFrame
 		txtAltura.setEnabled(habilitar);
 		txtPiso.setEnabled(habilitar);
 		txtDpto.setEnabled(habilitar);
+	}
+	
+	private void seleccionar(JComboBox<String> combo, String cadena) 
+	{
+		for (int i = 0; i < combo.getItemCount(); i++) {
+			if(combo.getItemAt(i).equalsIgnoreCase(cadena)) {
+				combo.setSelectedIndex(i);
+				break;
+			}
+		}
 	}
 	
 	

@@ -79,7 +79,6 @@ public class ControladorAgenda implements ActionListener
 				String cumple = ventanaPersona.getTxtCumple().getText().trim();
 				
 				DomicilioDTO domicilio  = new DomicilioDTO("", "", "", "", "", "", "");
-				
 				boolean agregoDomicilio = ventanaPersona.getChckDomicilio().isSelected();
 				if(agregoDomicilio) 
 				{
@@ -114,20 +113,12 @@ public class ControladorAgenda implements ActionListener
 				}
 			}
 			
-			if(personaSeleccionada == null) {
+			if(personaSeleccionada == null) 
 				JOptionPane.showMessageDialog(null, "Seleccione el contacto que desea editar.", "Aviso", JOptionPane.WARNING_MESSAGE);
-			} else {
-				String nombre = personaSeleccionada.getNombre();
-				String telefono = personaSeleccionada.getTelefono();
-				String correo = personaSeleccionada.getCorreo();
-				String tipo = personaSeleccionada.getTipo_contacto();
-				String cumple = personaSeleccionada.getFecha_cumple();
-
-				ventanaPersona.mostrarVentanaConDatos(nombre, telefono, correo, tipo, cumple);
-			}
+			else 
+				ventanaPersona.mostrarVentanaConDatos(personaSeleccionada);
 			
 			this.refrescarTabla();
-			
 		}
 		
 		public void editarPersona(ActionEvent e)
@@ -146,6 +137,7 @@ public class ControladorAgenda implements ActionListener
 				personaSeleccionada.setTipo_contacto(tipo);
 				personaSeleccionada.setFecha_cumple(cumple);
 				
+				DomicilioDTO domicilio  = new DomicilioDTO("", "", "", "", "", "", "");
 				boolean agregoDomicilio = ventanaPersona.getChckDomicilio().isSelected();
 				if(agregoDomicilio) 
 				{
@@ -157,12 +149,11 @@ public class ControladorAgenda implements ActionListener
 					String piso = ventanaPersona.getTxtPiso().getText();
 					String dpto = ventanaPersona.getTxtDpto().getText();
 					
-					DomicilioDTO domicilio = new DomicilioDTO(pais, provincia, localidad, calle, altura, piso, dpto);
-					
-					personaSeleccionada.setDomicilio(domicilio);
-					System.out.println("Agrego domicilio");
+					domicilio = new DomicilioDTO(pais, provincia, localidad, calle, altura, piso, dpto);
 				}
 				
+				personaSeleccionada.setDomicilio(domicilio);
+
 				agenda.editarPersona(personaSeleccionada);
 				refrescarTabla();
 				ventanaPersona.cerrar();
@@ -180,19 +171,20 @@ public class ControladorAgenda implements ActionListener
 			
 			
 			String mensajeAdvertencia = "";
+			int numMensaje = 1;
 			
 			if(nombre.equals("") || tel.equals("")) 
-				mensajeAdvertencia += "El nombre y telefono del contacto es requerido.\n";
+				mensajeAdvertencia += numMensaje++ + ") El nombre y telefono del contacto es requerido.\n";
 			
 			if(nombre.length() > 20)
-				mensajeAdvertencia += "Nombre de contacto muy largo. (Maximo 20 caracteres)\\n";
+				mensajeAdvertencia += numMensaje++ + ") Nombre de contacto muy largo. (Maximo 20 caracteres)\\n";
 			else 
 			{
 				for (PersonaDTO personaDTO : personasEnLista) 
 				{
 					if(personaDTO.getNombre().equals(nombre) && personaDTO.getIdPersona() != personaSeleccionada.getIdPersona()) 
 					{
-						mensajeAdvertencia += "Ya existe un contacto con el nombre: '" + nombre + "'. \n";
+						mensajeAdvertencia += numMensaje++ + ") Ya existe un contacto con el nombre: '" + nombre + "'. \n";
 						return false;
 					}
 				}
@@ -204,7 +196,7 @@ public class ControladorAgenda implements ActionListener
 				Pattern pattern = Pattern.compile(emailPattern);
 				Matcher matcher = pattern.matcher(correo);
 				if (!matcher.matches()) 
-					mensajeAdvertencia += "Verifique que el correo este bien escrito.\n";
+					mensajeAdvertencia += numMensaje++ + ") Verifique que el correo este bien escrito.\n";
 			}
 			
 			boolean agregoDomicilio = ventanaPersona.getChckDomicilio().isSelected();
@@ -214,14 +206,12 @@ public class ControladorAgenda implements ActionListener
 				String altura = ventanaPersona.getTxtAltura().getText().trim();
 				
 				if(calle.equals("") || altura.equals("")) 
-				{
-					mensajeAdvertencia += "La calle y altura del domicilio no puede quedar en blanco.\n";	
-				}
+					mensajeAdvertencia += numMensaje++ + ") La calle y altura del domicilio no puede quedar en blanco.\n";	
 			}
 			
 			
 			if(!mensajeAdvertencia.equals("")) 
-				JOptionPane.showMessageDialog(null, "Se encontraron los siguientes errores en los campos:\n" + mensajeAdvertencia, "Aviso", JOptionPane.WARNING_MESSAGE); 
+				JOptionPane.showMessageDialog(null, "Se encontraron los siguientes errores en los campos:\n\n" + mensajeAdvertencia, "Aviso", JOptionPane.WARNING_MESSAGE); 
 	
 			return (mensajeAdvertencia.equals("")) ? true : false;
 		}
@@ -247,7 +237,6 @@ public class ControladorAgenda implements ActionListener
 		//	reporte.mostrar();	
 			
 			JOptionPane.showMessageDialog(null, "Aún no implementado", "Aviso", JOptionPane.WARNING_MESSAGE); 
-
 		}
 		
 		

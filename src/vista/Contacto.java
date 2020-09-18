@@ -34,26 +34,22 @@ public class Contacto extends JPanel {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				if(!estaSeleccionado()) {
+				if(!estaSeleccionado()) 
 					setBackground(ratonEncima);
-				}
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent arg0) {
-				if(!estaSeleccionado()) {
+				if(!estaSeleccionado()) 
 					setBackground(inicial);
-				}
 			}
 			
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(estaSeleccionado()) {
+				if(estaSeleccionado()) 
 					setBackground(ratonEncima);
-				}
-				else {
+				else 
 					setBackground(seleccionado);
-				}
 			}
 		});
 		
@@ -91,7 +87,8 @@ public class Contacto extends JPanel {
 		
 		String tipo = p.getTipo_contacto().toUpperCase();
 		JLabel lblTipo = new JLabel(tipo);
-		switch (tipo) {
+		switch (tipo) 
+		{
 			case "TRABAJO":
 				lblTipo.setIcon(new ImageIcon(Contacto.class.getResource("/icons/trabajo.png")));
 				break;
@@ -114,9 +111,11 @@ public class Contacto extends JPanel {
 		add(lblTipo);
 		
 		DomicilioDTO domicilio = p.getDomicilio();
-		String cadenaDomicilio =  domicilio.getCalle() + " " + domicilio.getAltura() + ", " + domicilio.getLocalidad() + ", " + domicilio.getProvincia() + ", " + domicilio.getPais();
-		if(cadenaDomicilio.equals(""))
+		String cadenaDomicilio =  domicilio.getCalle() + " " + domicilio.getAltura() + "  " + domicilio.getLocalidad() + "  " + domicilio.getProvincia() + "  " + domicilio.getPais();
+		if(cadenaDomicilio.trim().equals(""))
 			cadenaDomicilio = "Sin datos.";
+		else
+			cadenaDomicilio = cadenaDomicilio.replace("  ", ", ");
 		JLabel lblDomicilio = new JLabel("Domicilio: " + cadenaDomicilio);
 		lblDomicilio.setForeground(new Color(255, 153, 51));
 		lblDomicilio.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -132,7 +131,8 @@ public class Contacto extends JPanel {
 	}
 	
 	
-	public boolean estaSeleccionado() {
+	public boolean estaSeleccionado() 
+	{
 		return (getBackground() == seleccionado) ?  true :  false;
 	}
 }
