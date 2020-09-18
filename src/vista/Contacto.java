@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
+import dto.DomicilioDTO;
 import dto.PersonaDTO;
 import javax.swing.ImageIcon;
 
@@ -69,13 +70,19 @@ public class Contacto extends JPanel {
 		lblTelefono.setBounds(95, 42, 234, 20);
 		add(lblTelefono);
 		
-		JLabel lblCorreo = new JLabel("Correo: " + p.getCorreo());
+		String correo = p.getCorreo();
+		if(correo.equals(""))
+			correo = "Sin datos.";
+		JLabel lblCorreo = new JLabel("Correo: " + correo);
 		lblCorreo.setForeground(new Color(255, 153, 51));
 		lblCorreo.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		lblCorreo.setBounds(95, 72, 341, 17);
 		add(lblCorreo);
 		
-		JLabel lblCumpleanios = new JLabel("Cumpleaños: " + p.getFecha_cumple());
+		String cumple = p.getFecha_cumple();
+		if(cumple.equals(""))
+			cumple = "Sin datos.";
+		JLabel lblCumpleanios = new JLabel("Cumpleaños: " + cumple);
 		lblCumpleanios.setForeground(new Color(255, 153, 51));
 		lblCumpleanios.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		lblCumpleanios.setBounds(10, 117, 426, 14);
@@ -106,7 +113,11 @@ public class Contacto extends JPanel {
 		lblTipo.setBounds(286, 12, 150, 32);
 		add(lblTipo);
 		
-		JLabel lblDomicilio = new JLabel("Domicilio: " + p.getDomicilio().getCalle() + " " + p.getDomicilio().getAltura());
+		DomicilioDTO domicilio = p.getDomicilio();
+		String cadenaDomicilio =  domicilio.getCalle() + " " + domicilio.getAltura() + ", " + domicilio.getLocalidad() + ", " + domicilio.getProvincia() + ", " + domicilio.getPais();
+		if(cadenaDomicilio.equals(""))
+			cadenaDomicilio = "Sin datos.";
+		JLabel lblDomicilio = new JLabel("Domicilio: " + cadenaDomicilio);
 		lblDomicilio.setForeground(new Color(255, 153, 51));
 		lblDomicilio.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		lblDomicilio.setBounds(10, 92, 426, 14);

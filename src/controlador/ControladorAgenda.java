@@ -207,9 +207,21 @@ public class ControladorAgenda implements ActionListener
 					mensajeAdvertencia += "Verifique que el correo este bien escrito.\n";
 			}
 			
+			boolean agregoDomicilio = ventanaPersona.getChckDomicilio().isSelected();
+			if(agregoDomicilio) 
+			{
+				String calle = ventanaPersona.getTxtCalle().getText().trim();
+				String altura = ventanaPersona.getTxtAltura().getText().trim();
+				
+				if(calle.equals("") || altura.equals("")) 
+				{
+					mensajeAdvertencia += "La calle y altura del domicilio no puede quedar en blanco.\n";	
+				}
+			}
+			
 			
 			if(!mensajeAdvertencia.equals("")) 
-				JOptionPane.showMessageDialog(null, mensajeAdvertencia, "Aviso", JOptionPane.WARNING_MESSAGE); 
+				JOptionPane.showMessageDialog(null, "Se encontraron los siguientes errores en los campos:\n" + mensajeAdvertencia, "Aviso", JOptionPane.WARNING_MESSAGE); 
 	
 			return (mensajeAdvertencia.equals("")) ? true : false;
 		}
