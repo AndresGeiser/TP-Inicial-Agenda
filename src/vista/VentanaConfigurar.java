@@ -4,8 +4,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.SwingConstants;
+
+import persistencia.Conexion;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -18,8 +24,8 @@ public class VentanaConfigurar extends JFrame {
 	private JTextField txtContraseña;
 	private JButton btnConfigurar;
 	
-	public VentanaConfigurar() {
-		
+	public VentanaConfigurar() 
+	{
 		setBounds(100, 100, 500, 470);
 		setTitle("Mi Agenda - Configuracion");
 		
@@ -65,24 +71,43 @@ public class VentanaConfigurar extends JFrame {
 		btnConfigurar.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		btnConfigurar.setBounds(187, 370, 110, 30);
 		panel.add(btnConfigurar);
-	
 	}
 	
-	public void mostrar() {
+	public void mostrar() 
+	{
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter() 
+		{
+			@Override
+		    public void windowClosing(WindowEvent e) 
+			{
+		        int confirm = JOptionPane.showOptionDialog(
+		        	null, "Estas seguro que quieres salir?", 
+		            "Confirmacion", JOptionPane.YES_NO_OPTION,
+		            JOptionPane.QUESTION_MESSAGE, null, null, null);
+		        if (confirm == 0) 
+		        {
+		        	Conexion.getConexion().cerrarConexion();
+		        	System.exit(0);
+		        }
+		    }
+		});
 		setVisible(true);
 	}
 	
-	public JTextField getTxtUsuario() {
+	public JTextField getTxtUsuario() 
+	{
 		return txtUsuario;
 	}
 	
-	public JTextField getTxtContraseña() {
+	public JTextField getTxtContraseña() 
+	{
 		return txtContraseña;
 	}
 	
-	public JButton getBtnConfigurar() {
+	public JButton getBtnConfigurar() 
+	{
 		return btnConfigurar;
 	}
-	
 	
 }

@@ -22,40 +22,39 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
-public class VentanaAgenda
+public class VentanaAgenda extends JFrame
 {
-	private JFrame frmAgenda;
+	private static final long serialVersionUID = 1L;
+	
 	private JPanel panelContactos;
 	private JButton btnAgregar;
 	private JButton btnEditar;
 	private JButton btnBorrar;
 	private JButton btnReporte;
 
-
 	public VentanaAgenda() 
 	{
 		super();
-		initialize();
+		inicializar();
 	}
 
 
-	private void initialize() 
+	private void inicializar() 
 	{
-		frmAgenda = new JFrame();
-		frmAgenda.setTitle("Agenda");
-		frmAgenda.setResizable(false);
-		frmAgenda.getContentPane().setBackground(Color.DARK_GRAY);
-		frmAgenda.setBounds(100, 100, 605, 650);
-		frmAgenda.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmAgenda.getContentPane().setLayout(null);
-		frmAgenda.setLocationRelativeTo(null);
+		setTitle("Agenda");
+		setResizable(false);
+		getContentPane().setBackground(Color.DARK_GRAY);
+		setBounds(100, 100, 605, 650);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setLayout(null);
+		setLocationRelativeTo(null);
 		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(10, 11, 485, 590);
+		scrollPane.setBounds(10, 11, 485, 600);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
-		frmAgenda.getContentPane().add(scrollPane);
+		getContentPane().add(scrollPane);
 		
 		panelContactos = new JPanel();
 		panelContactos.setBackground(new Color( 74, 72, 75 ));
@@ -68,22 +67,22 @@ public class VentanaAgenda
 		btnAgregar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAgregar.setToolTipText("Agregar contacto");
 		btnAgregar.setFocusable(false);
-		btnAgregar.setBackground(new Color( 74, 72, 75 ));
+		btnAgregar.setBackground(new Color(74, 72, 75));
 		btnAgregar.setBorderPainted(false);
 		btnAgregar.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/icons/agregar.png")));
-		btnAgregar.setBounds(505, 11, 70, 70);
+		btnAgregar.setBounds(519, 11, 70, 70);
 		btnAgregar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				btnAgregar.setBackground(new Color(107, 105, 108));
+				btnAgregar.setBackground(new Color(82, 79, 83));
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent arg0) {
-				btnAgregar.setBackground(new Color( 74, 72, 75 ));
+				btnAgregar.setBackground(new Color(74, 72, 75));
 			}
 		});
-		frmAgenda.getContentPane().add(btnAgregar);
+		getContentPane().add(btnAgregar);
 		
 		btnBorrar = new JButton("");
 		btnBorrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -91,20 +90,20 @@ public class VentanaAgenda
 		btnBorrar.setToolTipText("Eliminar contacto");
 		btnBorrar.setFocusable(false);
 		btnBorrar.setBorderPainted(false);
-		btnBorrar.setBackground(new Color( 223, 84, 84 ));
-		btnBorrar.setBounds(505, 450, 70, 70);
+		btnBorrar.setBackground(new Color(223, 84, 84));
+		btnBorrar.setBounds(519, 460, 70, 70);
 		btnBorrar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				btnBorrar.setBackground(new Color(236, 130, 130));
+				btnBorrar.setBackground(new Color(227, 101, 101));
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent arg0) {
-				btnBorrar.setBackground(new Color( 223, 84, 84 ));
+				btnBorrar.setBackground(new Color(223, 84, 84));
 			}
 		});
-		frmAgenda.getContentPane().add(btnBorrar);
+		getContentPane().add(btnBorrar);
 		
 		btnReporte = new JButton("");
 		btnReporte.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/icons/reporte.png")));
@@ -113,11 +112,11 @@ public class VentanaAgenda
 		btnReporte.setFocusable(false);
 		btnReporte.setBorderPainted(false);
 		btnReporte.setBackground(new Color(255, 153, 51));
-		btnReporte.setBounds(505, 531, 70, 70);
+		btnReporte.setBounds(519, 541, 70, 70);
 		btnReporte.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				btnReporte.setBackground(new Color(252, 183, 113));
+				btnReporte.setBackground(new Color(251, 163, 76));
 			}
 			
 			@Override
@@ -125,7 +124,7 @@ public class VentanaAgenda
 				btnReporte.setBackground(new Color(255, 153, 51));
 			}
 		});
-		frmAgenda.getContentPane().add(btnReporte);
+		getContentPane().add(btnReporte);
 		
 		btnEditar = new JButton("");
 		btnEditar.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/icons/editar.png")));
@@ -134,40 +133,42 @@ public class VentanaAgenda
 		btnEditar.setFocusable(false);
 		btnEditar.setBorderPainted(false);
 		btnEditar.setBackground(new Color(74, 72, 75));
-		btnEditar.setBounds(505, 92, 70, 70);
+		btnEditar.setBounds(519, 92, 70, 70);
 		btnEditar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				btnEditar.setBackground(new Color(107, 105, 108));
+				btnEditar.setBackground(new Color(82, 79, 83));
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent arg0) {
-				btnEditar.setBackground(new Color( 74, 72, 75 ));
+				btnEditar.setBackground(new Color(74, 72, 75));
 			}
 		});
-		frmAgenda.getContentPane().add(btnEditar);
+		getContentPane().add(btnEditar);
 									
 	}
 	
-	public void show()
+	public void mostrar()
 	{
-		this.frmAgenda.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.frmAgenda.addWindowListener(new WindowAdapter() 
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter() 
 		{
 			@Override
-		    public void windowClosing(WindowEvent e) {
+		    public void windowClosing(WindowEvent e) 
+			{
 		        int confirm = JOptionPane.showOptionDialog(
-		             null, "Estas seguro que quieres salir de la Agenda?", 
-		             "Confirmacion", JOptionPane.YES_NO_OPTION,
-		             JOptionPane.QUESTION_MESSAGE, null, null, null);
-		        if (confirm == 0) {
+		            null, "Estas seguro que quieres salir de la Agenda?", 
+		            "Confirmacion", JOptionPane.YES_NO_OPTION,
+		            JOptionPane.QUESTION_MESSAGE, null, null, null);
+		        if (confirm == 0) 
+		        {
 		        	Conexion.getConexion().cerrarConexion();
-		           System.exit(0);
+		        	System.exit(0);
 		        }
 		    }
 		});
-		this.frmAgenda.setVisible(true);
+		setVisible(true);
 	}
 	
 	public JButton getBtnAgregar() 
@@ -201,7 +202,7 @@ public class VentanaAgenda
 	}
 
 
-	public void llenarTabla(List<PersonaDTO> personasEnTabla) {
+	public void llenarLista(List<PersonaDTO> personasEnTabla) {
 		panelContactos.removeAll();
 		
 		int ejeY = 11;

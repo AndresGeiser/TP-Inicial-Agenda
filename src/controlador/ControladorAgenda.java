@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import modelo.Agenda;
@@ -14,6 +15,7 @@ import persistencia.DAOSQLFactory;
 import vista.Contacto;
 import vista.VentanaPersona;
 import vista.VentanaAgenda;
+import vista.VentanaDetalles;
 import dto.DomicilioDTO;
 import dto.LocalidadDTO;
 import dto.PaisDTO;
@@ -22,8 +24,9 @@ import dto.ProvinciaDTO;
 
 public class ControladorAgenda implements ActionListener
 {
-		private VentanaAgenda vista;
-		private VentanaPersona ventanaPersona; 
+		private VentanaAgenda ventanaAgenda;
+		private VentanaPersona ventanaPersona;
+		private VentanaDetalles ventanaDetalles;
 		private Agenda agenda;
 		private Regiones regiones;
 		
@@ -36,18 +39,20 @@ public class ControladorAgenda implements ActionListener
 		
 		public ControladorAgenda(VentanaAgenda vista, Agenda agenda)
 		{
-			this.vista = vista;
-			this.vista.getBtnAgregar().addActionListener(a->ventanaAgregarPersona(a));
-			this.vista.getBtnBorrar().addActionListener(s->borrarPersona(s));
-			this.vista.getBtnReporte().addActionListener(r->mostrarReporte(r));
-			this.vista.getBtnEditar().addActionListener(t->ventanaEditarPersona(t));
+			this.ventanaAgenda = vista;
+			this.ventanaAgenda.getBtnAgregar().addActionListener(a->ventanaAgregarPersona(a));
+			this.ventanaAgenda.getBtnBorrar().addActionListener(s->borrarPersona(s));
+			this.ventanaAgenda.getBtnReporte().addActionListener(r->mostrarReporte(r));
+			this.ventanaAgenda.getBtnEditar().addActionListener(t->ventanaEditarPersona(t));
 						
 			this.ventanaPersona = VentanaPersona.getInstance();
 			this.ventanaPersona.getBtnActualizarPersona().addActionListener(u-> editarPersona(u));
 			this.ventanaPersona.getBtnAgregarPersona().addActionListener(p->guardarPersona(p));
 			this.ventanaPersona.getCbxPais().addActionListener(p->actualizarProvincias(p));
 			this.ventanaPersona.getCbxProvincia().addActionListener(p->actualizarLocalidades(p));
-			this.ventanaPersona.getChckDomicilio().addActionListener(p->habilitarIngresoDomicilio(p));
+			this.ventanaPersona.getChckDomicilio().addActionListener(p->habilitarIngresoDeDomicilio(p));
+			
+			this.ventanaDetalles = VentanaDetalles.getInstance(ventanaAgenda, true);
 	
 			//Carga de paises
 			this.regiones = new Regiones(new DAOSQLFactory());
@@ -60,7 +65,7 @@ public class ControladorAgenda implements ActionListener
 		public void inicializar()
 		{
 			refrescarTabla();
-			vista.show();
+			ventanaAgenda.mostrar();
 		}
 
 
@@ -104,7 +109,7 @@ public class ControladorAgenda implements ActionListener
 		//Muestra la pantalla de edición de contacto y fija el contacto a editar
 		public void ventanaEditarPersona(ActionEvent s)
 		{
-			Contacto[] contactos = vista.getContactos();
+			Contacto[] contactos = ventanaAgenda.getContactos();
 			
 			for (int i = 0; i < contactos.length; i++) {
 				if(contactos[i].estaSeleccionado()) {
@@ -219,7 +224,7 @@ public class ControladorAgenda implements ActionListener
 
 		public void borrarPersona(ActionEvent s)
 		{
-			Contacto[] contactos = vista.getContactos();
+			Contacto[] contactos = ventanaAgenda.getContactos();
 			
 			for (int i = 0; i < contactos.length; i++) 
 			{
@@ -233,8 +238,8 @@ public class ControladorAgenda implements ActionListener
 		
 		private void mostrarReporte(ActionEvent r) 
 		{
-		//	ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
-		//	reporte.mostrar();	
+//			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
+//			reporte.mostrar();	
 			
 			JOptionPane.showMessageDialog(null, "Aún no implementado", "Aviso", JOptionPane.WARNING_MESSAGE); 
 		}
@@ -243,9 +248,30 @@ public class ControladorAgenda implements ActionListener
 		private void refrescarTabla()
 		{
 			personasEnLista = agenda.obtenerPersonas();
-			vista.llenarTabla(personasEnLista);
+			ventanaAgenda.llenarLista(personasEnLista);
+			
+			for (Contacto contacto : ventanaAgenda.getContactos()) 
+			{
+				contacto.getBtnVerMas().addActionListener(t->mostrarDetalles(t));
+			}
 		}
 		
+		private void mostrarDetalles(ActionEvent b) 
+		{
+			for (int i = 0; i < ventanaAgenda.getContactos().length; i++) 
+			{
+				Contacto contacto = ventanaAgenda.getContactos()[i];
+				JButton boton = contacto.getBtnVerMas();
+				
+				if(boton == b.getSource()) 
+				{
+					ventanaDetalles.cargar(personasEnLista.get(i));
+					ventanaDetalles.mostrar();
+					break;
+				}
+			}
+		}
+
 		private void actualizarProvincias(ActionEvent p) 
 		{
 			int i = ventanaPersona.getCbxPais().getSelectedIndex();
@@ -265,7 +291,7 @@ public class ControladorAgenda implements ActionListener
 			}
 		}
 		
-		private void habilitarIngresoDomicilio(ActionEvent p) 
+		private void habilitarIngresoDeDomicilio(ActionEvent p) 
 		{
 			if(ventanaPersona.getChckDomicilio().isSelected())
 				ventanaPersona.habilitarCamposDomicilio(true);
