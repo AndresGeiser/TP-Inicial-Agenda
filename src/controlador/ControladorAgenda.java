@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import modelo.Agenda;
 import modelo.Regiones;
 import persistencia.DAOSQLFactory;
+import reportes.ReporteAgenda;
 import vista.Contacto;
 import vista.VentanaPersona;
 import vista.VentanaAgenda;
@@ -64,24 +65,50 @@ public class ControladorAgenda implements ActionListener
 		
 		public void inicializar()
 		{
-			refrescarTabla();
+			refrescarLista();
 			ventanaAgenda.mostrar();
 		}
 
 
-		private void ventanaAgregarPersona(ActionEvent a) {
+		/*
+		 * Muestra la ventana para agregar un nuevo contacto
+		 */
+		private void ventanaAgregarPersona(ActionEvent a) 
+		{
 			ventanaPersona.mostrarVentana();
 		}
 
+		/*
+		 * Muestra la ventana para editar un contacto
+		 */
+		public void ventanaEditarPersona(ActionEvent s)
+		{
+			Contacto[] contactos = ventanaAgenda.getContactos();
+			
+			for (int i = 0; i < contactos.length; i++) {
+				if(contactos[i].estaSeleccionado()) {
+					personaSeleccionada = personasEnLista.get(i);
+					break;
+				}
+			}
+			
+			if(personaSeleccionada == null) 
+				JOptionPane.showMessageDialog(null, "Seleccione el contacto que desea editar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+			else 
+				ventanaPersona.mostrarVentanaConDatos(personaSeleccionada);
+			
+			this.refrescarLista();
+		}
+		
 		private void guardarPersona(ActionEvent p) {
 
 			if(validarDatos()) 
 			{
-				String nombre = ventanaPersona.getTxtNombre().getText().trim();
-				String tel = ventanaPersona.getTxtTelefono().getText().trim();
-				String correo = ventanaPersona.getTxtCorreo().getText().trim();
+				String nombre = ventanaPersona.getTxtNombre().getText();
+				String tel = ventanaPersona.getTxtTelefono().getText();
+				String correo = ventanaPersona.getTxtCorreo().getText();
 				String tipo = ventanaPersona.getTipo().getSelectedItem().toString();
-				String cumple = ventanaPersona.getTxtCumple().getText().trim();
+				String cumple = ventanaPersona.getTxtCumple().getText();
 				
 				DomicilioDTO domicilio  = new DomicilioDTO("", "", "", "", "", "", "");
 				boolean agregoDomicilio = ventanaPersona.getChckDomicilio().isSelected();
@@ -100,30 +127,10 @@ public class ControladorAgenda implements ActionListener
 				
 				PersonaDTO nuevaPersona = new PersonaDTO(0, nombre, tel, correo, tipo, cumple, domicilio);
 				agenda.agregarPersona(nuevaPersona);
-				refrescarTabla();
+				refrescarLista();
 				ventanaPersona.cerrar();	
 			}
 			
-		}
-
-		//Muestra la pantalla de edición de contacto y fija el contacto a editar
-		public void ventanaEditarPersona(ActionEvent s)
-		{
-			Contacto[] contactos = ventanaAgenda.getContactos();
-			
-			for (int i = 0; i < contactos.length; i++) {
-				if(contactos[i].estaSeleccionado()) {
-					personaSeleccionada = personasEnLista.get(i);
-					break;
-				}
-			}
-			
-			if(personaSeleccionada == null) 
-				JOptionPane.showMessageDialog(null, "Seleccione el contacto que desea editar.", "Aviso", JOptionPane.WARNING_MESSAGE);
-			else 
-				ventanaPersona.mostrarVentanaConDatos(personaSeleccionada);
-			
-			this.refrescarTabla();
 		}
 		
 		public void editarPersona(ActionEvent e)
@@ -160,11 +167,31 @@ public class ControladorAgenda implements ActionListener
 				personaSeleccionada.setDomicilio(domicilio);
 
 				agenda.editarPersona(personaSeleccionada);
-				refrescarTabla();
+				refrescarLista();
 				ventanaPersona.cerrar();
 				personaSeleccionada = null;
 
 			}
+		}
+
+		public void borrarPersona(ActionEvent s)
+		{
+			Contacto[] contactos = ventanaAgenda.getContactos();
+			
+			for (int i = 0; i < contactos.length; i++) 
+			{
+				if(contactos[i].estaSeleccionado()) 
+					agenda.borrarPersona(personasEnLista.get(i));
+			}
+			
+			refrescarLista();
+		}
+		
+		
+		private void mostrarReporte(ActionEvent r) 
+		{
+			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
+			reporte.mostrar();	
 		}
 		
 		
@@ -221,41 +248,20 @@ public class ControladorAgenda implements ActionListener
 			return (mensajeAdvertencia.equals("")) ? true : false;
 		}
 		
-
-		public void borrarPersona(ActionEvent s)
-		{
-			Contacto[] contactos = ventanaAgenda.getContactos();
-			
-			for (int i = 0; i < contactos.length; i++) 
-			{
-				if(contactos[i].estaSeleccionado()) 
-					agenda.borrarPersona(personasEnLista.get(i));
-			}
-			
-			refrescarTabla();
-		}
 		
-		
-		private void mostrarReporte(ActionEvent r) 
-		{
-			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
-			reporte.mostrar();	
-			
-//			JOptionPane.showMessageDialog(null, "Aún no implementado", "Aviso", JOptionPane.WARNING_MESSAGE); 
-		}
-		
-		
-		private void refrescarTabla()
+		private void refrescarLista()
 		{
 			personasEnLista = agenda.obtenerPersonas();
 			ventanaAgenda.llenarLista(personasEnLista);
 			
-			for (Contacto contacto : ventanaAgenda.getContactos()) 
-			{
+			//Agregamos la funcion para ver los detalles del contacto a cada boton
+			for (Contacto contacto : ventanaAgenda.getContactos())
 				contacto.getBtnVerMas().addActionListener(t->mostrarDetalles(t));
-			}
 		}
 		
+		/*
+		 * Muestra la ventana de detalles del contacto
+		 */
 		private void mostrarDetalles(ActionEvent b) 
 		{
 			for (int i = 0; i < ventanaAgenda.getContactos().length; i++) 

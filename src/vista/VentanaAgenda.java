@@ -49,7 +49,6 @@ public class VentanaAgenda extends JFrame
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
 		
-		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setBounds(10, 11, 485, 600);
@@ -58,10 +57,9 @@ public class VentanaAgenda extends JFrame
 		
 		panelContactos = new JPanel();
 		panelContactos.setBackground(new Color( 74, 72, 75 ));
-		scrollPane.setViewportView(panelContactos);
 		panelContactos.setPreferredSize(new Dimension(0, 0));
 		panelContactos.setLayout(null);
-		
+		scrollPane.setViewportView(panelContactos);
 		
 		btnAgregar = new JButton("");
 		btnAgregar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
