@@ -238,10 +238,10 @@ public class ControladorAgenda implements ActionListener
 		
 		private void mostrarReporte(ActionEvent r) 
 		{
-//			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
-//			reporte.mostrar();	
+			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
+			reporte.mostrar();	
 			
-			JOptionPane.showMessageDialog(null, "Aún no implementado", "Aviso", JOptionPane.WARNING_MESSAGE); 
+//			JOptionPane.showMessageDialog(null, "Aún no implementado", "Aviso", JOptionPane.WARNING_MESSAGE); 
 		}
 		
 		
