@@ -4,6 +4,8 @@
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="455"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="531"/>
 	<property name="net.sf.jasperreports.chart.pie.ignore.duplicated.key" value="true"/>
+	<parameter name="Fecha" class="java.lang.String"/>
+	<parameter name="NumPersonas" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -47,7 +49,7 @@
 						<font size="12" isBold="true"/>
 						<paragraph leftIndent="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{domicilio}.getLocalidad().equals("") ? "Sin Registros" : $F{domicilio}.getLocalidad()]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{domicilio}.getLocalidad()]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -78,14 +80,10 @@
 				</textElement>
 				<text><![CDATA[Reporte de mi agenda]]></text>
 			</staticText>
-			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="460" y="0" width="100" height="30" uuid="93da1a5f-c671-4c2f-ab26-4ae1b140919d"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			<textField>
+				<reportElement x="420" y="0" width="140" height="40" uuid="dd6c46d5-c891-43a3-b0bc-da0ee1952719"/>
+				<textFieldExpression><![CDATA["Reporte generado: " + $P{Fecha}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="369" y="0" width="91" height="31" uuid="b3180557-55bf-40b0-886d-4c002b27d011"/>
-				<text><![CDATA[Reporte generado: ]]></text>
-			</staticText>
 		</band>
 	</title>
 	<pageHeader>
@@ -252,15 +250,15 @@
 			<textField evaluationTime="Report">
 				<reportElement x="470" y="0" width="90" height="30" uuid="290523b1-1ffc-4c96-b888-2c917d3fc330"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[" " +  $V{PAGE_NUMBER} ]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" " +  $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="200" splitType="Stretch">
+		<band height="270" splitType="Stretch">
 			<pieChart>
 				<chart>
-					<reportElement x="0" y="0" width="560" height="200" uuid="0050af94-b3f8-4950-b0b8-f61e3a2a3409"/>
+					<reportElement x="0" y="70" width="560" height="200" uuid="b109bb37-f4f4-43a9-8ac5-573f37cfa4b3"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -268,7 +266,7 @@
 				<pieDataset>
 					<keyExpression><![CDATA[$V{Domicilio.Localidad}]]></keyExpression>
 					<valueExpression><![CDATA[$V{Group1_COUNT}]]></valueExpression>
-					<labelExpression><![CDATA[$V{Group1_COUNT} + ""]]></labelExpression>
+					<labelExpression><![CDATA[(($V{Group1_COUNT} * 100) / $P{NumPersonas}) + "% (" + $V{Group1_COUNT} +")" ]]></labelExpression>
 					<sectionHyperlink>
 						<hyperlinkWhenExpression><![CDATA[$V{TotalFilas}]]></hyperlinkWhenExpression>
 					</sectionHyperlink>
@@ -278,6 +276,13 @@
 					<itemLabel/>
 				</piePlot>
 			</pieChart>
+			<textField>
+				<reportElement x="0" y="20" width="420" height="41" uuid="7a9bfaa2-c932-4ef4-a555-15f8e216da6e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total de contactos: " + $V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

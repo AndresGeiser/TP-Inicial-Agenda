@@ -31,6 +31,7 @@ public class ReporteAgenda
     	//Hardcodeado
 		Map<String, Object> parametersMap = new HashMap<String, Object>();
 		parametersMap.put("Fecha", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+		parametersMap.put("NumPersonas", personas.size()); //Se usara en el reporte para sacar el porcentaje de los grupos
 		
     	try	
     	{
