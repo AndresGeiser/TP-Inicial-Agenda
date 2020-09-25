@@ -13,10 +13,10 @@ import dto.PersonaDTO;
 public class PersonaDAOSQL implements PersonaDAO
 {
 	
-	private static final String insert = "INSERT INTO personas(id, nombre, telefono, correo, tipo_contacto, fecha_cumple, pais, provincia, localidad, calle, altura, piso, dpto) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String insert = "INSERT INTO personas(id, nombre, telefono, correo, tipo_contacto, fecha_cumple, pais, provincia, localidad, calle, altura, tipo_domicilio, piso, dpto) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM personas WHERE id = ?";
 	private static final String readall = "SELECT * FROM personas";
-	private static final String update = "UPDATE personas SET nombre= ?, telefono=?, correo=?, tipo_contacto=?, fecha_cumple=?, pais=?, provincia=?, localidad=?, calle=?, altura=?, piso=?, dpto=? WHERE id = ?";
+	private static final String update = "UPDATE personas SET nombre= ?, telefono=?, correo=?, tipo_contacto=?, fecha_cumple=?, pais=?, provincia=?, localidad=?, calle=?, altura=?, tipo_domicilio=?, piso=?, dpto=? WHERE id = ?";
 		
 	public boolean insert(PersonaDTO persona)
 	{
@@ -26,6 +26,7 @@ public class PersonaDAOSQL implements PersonaDAO
 		try
 		{
 			statement = conexion.prepareStatement(insert);
+			
 			statement.setInt(1, persona.getIdPersona());
 			statement.setString(2, persona.getNombre());
 			statement.setString(3, persona.getTelefono());
@@ -34,13 +35,15 @@ public class PersonaDAOSQL implements PersonaDAO
 			statement.setString(6, persona.getFecha_cumple());
 			
 			DomicilioDTO domicilio = persona.getDomicilio();
+			System.out.println(domicilio.getTipo());
 			statement.setString(7, domicilio.getPais());
 			statement.setString(8, domicilio.getProvincia());
 			statement.setString(9, domicilio.getLocalidad());
 			statement.setString(10, domicilio.getCalle());
 			statement.setString(11, domicilio.getAltura());
-			statement.setString(12, domicilio.getPiso());
-			statement.setString(13, domicilio.getDpto());
+			statement.setString(12, domicilio.getTipo());
+			statement.setString(13, domicilio.getPiso());
+			statement.setString(14, domicilio.getDpto());
 
 			if(statement.executeUpdate() > 0)
 			{
@@ -104,10 +107,11 @@ public class PersonaDAOSQL implements PersonaDAO
 			statement.setString(8, domicilio.getLocalidad());
 			statement.setString(9, domicilio.getCalle());
 			statement.setString(10, domicilio.getAltura());
-			statement.setString(11, domicilio.getPiso());
-			statement.setString(12, domicilio.getDpto());
+			statement.setString(11, domicilio.getTipo());
+			statement.setString(12, domicilio.getPiso());
+			statement.setString(13, domicilio.getDpto());
 			
-			statement.setInt(13, persona.getIdPersona());
+			statement.setInt(14, persona.getIdPersona());
 
 			if(statement.executeUpdate() > 0)
 			{
@@ -164,10 +168,11 @@ public class PersonaDAOSQL implements PersonaDAO
 		String localidad = resultSet.getString("localidad");
 		String calle = resultSet.getString("calle");
 		String altura = resultSet.getString("altura");
+		String tipoDomicilio = resultSet.getString("tipo_domicilio");
 		String piso = resultSet.getString("piso");
 		String dpto = resultSet.getString("dpto");
 		
-		DomicilioDTO domicilio = new DomicilioDTO(pais, provincia, localidad, calle, altura, piso, dpto);
+		DomicilioDTO domicilio = new DomicilioDTO(pais, provincia, localidad, calle, altura, tipoDomicilio, piso, dpto);
 		
 		return new PersonaDTO(id, nombre, tel, correo, tipo, cumple, domicilio);
 	}

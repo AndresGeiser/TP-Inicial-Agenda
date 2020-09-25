@@ -32,6 +32,8 @@ public class VentanaPersona extends JFrame
 	private static final long serialVersionUID = 1L;
 	private static VentanaPersona INSTANCE;
 	
+	private JScrollPane scrollPane;
+	
 	private JTextField txtNombre;
 	private JTextField txtTelefono;
 	private JTextField txtCorreo;
@@ -68,7 +70,7 @@ public class VentanaPersona extends JFrame
 		setBounds(100, 100, 400, 500);
 		getContentPane().setLayout(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 364, 400);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		getContentPane().add(scrollPane);
@@ -364,8 +366,10 @@ public class VentanaPersona extends JFrame
 	public void mostrarVentana()
 	{
 		setTitle("Agregar Contacto");
+		scrollPane.getVerticalScrollBar().setValue(0);
 		btnAgregarPersona.setVisible(true);
 		btnActualizarPersona.setVisible(false);
+		
 		
 		//Reseteo de los campos a su estado inicial
 		txtNombre.setText("");
@@ -388,6 +392,7 @@ public class VentanaPersona extends JFrame
 	public void mostrarVentanaConDatos(PersonaDTO p)
 	{
 		setTitle("Actualizar Contacto");
+		scrollPane.getVerticalScrollBar().setValue(0);
 		btnAgregarPersona.setVisible(false);
 		btnActualizarPersona.setVisible(true);
 
@@ -408,6 +413,7 @@ public class VentanaPersona extends JFrame
 			seleccionar(cbxLocalidad, domicilio.getLocalidad());
 			txtCalle.setText(domicilio.getCalle());
 			txtAltura.setText(domicilio.getAltura());
+			seleccionar(cbxTipoDomicilio, domicilio.getTipo());
 			txtPiso.setText(domicilio.getPiso());
 			txtDpto.setText(domicilio.getDpto());
 			
@@ -420,6 +426,7 @@ public class VentanaPersona extends JFrame
 			cbxPais.setSelectedIndex(0);
 			txtCalle.setText("");
 			txtAltura.setText("");
+			cbxTipoDomicilio.setSelectedIndex(0);
 			txtPiso.setText("");
 			txtDpto.setText("");
 			

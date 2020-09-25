@@ -110,20 +110,26 @@ public class ControladorAgenda implements ActionListener
 				String tipo = ventanaPersona.getTipo().getSelectedItem().toString();
 				String cumple = ventanaPersona.getTxtCumple().getText();
 				
-				DomicilioDTO domicilio  = new DomicilioDTO("", "", "", "", "", "", "");
+				String pais, provincia, localidad, calle, altura, tipoDomicilio, piso, dpto;
+				pais = provincia = localidad = calle = altura = tipoDomicilio = piso = dpto = "";
+				
 				boolean agregoDomicilio = ventanaPersona.getChckDomicilio().isSelected();
 				if(agregoDomicilio) 
 				{
-					String pais = ventanaPersona.getCbxPais().getSelectedItem().toString();
-					String provincia = ventanaPersona.getCbxProvincia().getSelectedItem().toString();
-					String localidad = ventanaPersona.getCbxLocalidad().getSelectedItem().toString();
-					String calle = ventanaPersona.getTxtCalle().getText();
-					String altura = ventanaPersona.getTxtAltura().getText();
-					String piso = ventanaPersona.getTxtPiso().getText();
-					String dpto = ventanaPersona.getTxtDpto().getText();
-					
-					domicilio = new DomicilioDTO(pais, provincia, localidad, calle, altura, piso, dpto);
-				}
+					pais = ventanaPersona.getCbxPais().getSelectedItem().toString();
+					provincia = ventanaPersona.getCbxProvincia().getSelectedItem().toString();
+					localidad = ventanaPersona.getCbxLocalidad().getSelectedItem().toString();
+					calle = ventanaPersona.getTxtCalle().getText();
+					altura = ventanaPersona.getTxtAltura().getText();
+					tipoDomicilio = ventanaPersona.getCbxTipoDomicilio().getSelectedItem().toString();
+					piso = ventanaPersona.getTxtPiso().getText();
+					dpto = ventanaPersona.getTxtDpto().getText();
+				} 
+				
+				System.out.println(pais);
+				System.out.println(tipoDomicilio);
+				
+				DomicilioDTO domicilio  = new DomicilioDTO(pais, provincia, localidad, calle, altura, tipoDomicilio, piso, dpto);
 				
 				PersonaDTO nuevaPersona = new PersonaDTO(0, nombre, tel, correo, tipo, cumple, domicilio);
 				agenda.agregarPersona(nuevaPersona);
@@ -149,20 +155,22 @@ public class ControladorAgenda implements ActionListener
 				personaSeleccionada.setTipo_contacto(tipo);
 				personaSeleccionada.setFecha_cumple(cumple);
 				
-				DomicilioDTO domicilio  = new DomicilioDTO("", "", "", "", "", "", "");
+				String pais, provincia, localidad, calle, altura, tipoDomicilio, piso, dpto;
+				pais = provincia = localidad = calle = altura = tipoDomicilio = piso = dpto = "";
 				boolean agregoDomicilio = ventanaPersona.getChckDomicilio().isSelected();
 				if(agregoDomicilio) 
 				{
-					String pais = ventanaPersona.getCbxPais().getSelectedItem().toString();
-					String provincia = ventanaPersona.getCbxProvincia().getSelectedItem().toString();
-					String localidad = ventanaPersona.getCbxLocalidad().getSelectedItem().toString();
-					String calle = ventanaPersona.getTxtCalle().getText();
-					String altura = ventanaPersona.getTxtAltura().getText();
-					String piso = ventanaPersona.getTxtPiso().getText();
-					String dpto = ventanaPersona.getTxtDpto().getText();
-					
-					domicilio = new DomicilioDTO(pais, provincia, localidad, calle, altura, piso, dpto);
+					pais = ventanaPersona.getCbxPais().getSelectedItem().toString();
+					provincia = ventanaPersona.getCbxProvincia().getSelectedItem().toString();
+					localidad = ventanaPersona.getCbxLocalidad().getSelectedItem().toString();
+					calle = ventanaPersona.getTxtCalle().getText();
+					altura = ventanaPersona.getTxtAltura().getText();
+					tipoDomicilio = ventanaPersona.getCbxTipoDomicilio().getSelectedItem().toString();
+					piso = ventanaPersona.getTxtPiso().getText();
+					dpto = ventanaPersona.getTxtDpto().getText();
 				}
+				
+				DomicilioDTO domicilio  = new DomicilioDTO(pais, provincia, localidad, calle, altura, tipoDomicilio, piso, dpto);
 				
 				personaSeleccionada.setDomicilio(domicilio);
 
@@ -170,7 +178,6 @@ public class ControladorAgenda implements ActionListener
 				refrescarLista();
 				ventanaPersona.cerrar();
 				personaSeleccionada = null;
-
 			}
 		}
 
