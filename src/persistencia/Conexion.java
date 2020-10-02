@@ -20,8 +20,15 @@ public class Conexion
 			//Class.forName("com.mysql.jdbc.Driver"); // quitar si no es necesario
 			
 			//Establecemos conexión con la base por defecto de MySQL y creamos la base a utilizar
-			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
+			//this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
 
+			
+			//Levantamos la configuración y nos conectamos con los datos
+			DBConfiguracion config = new DBConfiguracion();
+			
+			this.connection = DriverManager.getConnection(config.getUrl(), config.getUser(),config.getPassword());
+
+			
 			this.connection.setAutoCommit(false);
 			log.info("Conexion exitosa");
 		}
