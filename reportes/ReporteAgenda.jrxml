@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteAgenda" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="25edd741-3275-4f02-aef2-fd3a3d52ca6e">
+<!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteAgenda" pageWidth="660" pageHeight="842" columnWidth="620" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="25edd741-3275-4f02-aef2-fd3a3d52ca6e">
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="455"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="531"/>
 	<property name="net.sf.jasperreports.chart.pie.ignore.duplicated.key" value="true"/>
@@ -42,7 +42,7 @@
 		<groupHeader>
 			<band height="40">
 				<textField>
-					<reportElement mode="Opaque" x="0" y="10" width="560" height="30" backcolor="#FF9933" uuid="e8bbb2dc-6980-494d-9529-ced98df115b5">
+					<reportElement mode="Opaque" x="0" y="10" width="640" height="30" backcolor="#FF9933" uuid="e8bbb2dc-6980-494d-9529-ced98df115b5">
 						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
@@ -56,9 +56,11 @@
 		<groupFooter>
 			<band height="20">
 				<frame>
-					<reportElement mode="Opaque" x="0" y="0" width="560" height="20" backcolor="#F5D3AB" uuid="d22344ea-eca8-4909-af2a-c89d7b8f3716"/>
+					<reportElement mode="Opaque" x="0" y="0" width="640" height="20" backcolor="#F5D3AB" uuid="d22344ea-eca8-4909-af2a-c89d7b8f3716"/>
 					<textField>
-						<reportElement x="490" y="0" width="70" height="20" uuid="0f19d639-2de4-4838-94a0-85635d86031f"/>
+						<reportElement x="560" y="0" width="70" height="20" uuid="0f19d639-2de4-4838-94a0-85635d86031f">
+							<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						</reportElement>
 						<textElement verticalAlignment="Middle">
 							<font isBold="true"/>
 						</textElement>
@@ -81,7 +83,7 @@
 				<text><![CDATA[Reporte de mi agenda]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="420" y="0" width="140" height="40" uuid="dd6c46d5-c891-43a3-b0bc-da0ee1952719"/>
+				<reportElement x="501" y="0" width="140" height="40" uuid="dd6c46d5-c891-43a3-b0bc-da0ee1952719"/>
 				<textFieldExpression><![CDATA["Reporte generado: " + $P{Fecha}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -89,7 +91,7 @@
 	<pageHeader>
 		<band height="30" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="560" height="30" uuid="38bf6d64-c6b2-4448-93ea-e70e8f27ae26">
+				<reportElement x="0" y="0" width="640" height="30" uuid="38bf6d64-c6b2-4448-93ea-e70e8f27ae26">
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -103,7 +105,7 @@
 	<columnHeader>
 		<band height="31" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="560" height="31" backcolor="#E6E3E3" uuid="a483471a-06cd-4886-9eae-9b143c76e340"/>
+				<reportElement mode="Opaque" x="0" y="0" width="640" height="31" backcolor="#E6E3E3" uuid="a483471a-06cd-4886-9eae-9b143c76e340"/>
 				<staticText>
 					<reportElement x="0" y="0" width="80" height="31" uuid="fc3a813f-d2ec-4aee-8f34-72ef96e610a6">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -175,13 +177,23 @@
 					</textElement>
 					<text><![CDATA[Pais]]></text>
 				</staticText>
+				<staticText>
+					<reportElement x="560" y="0" width="79" height="31" uuid="fe4a7163-93f8-4fa4-936f-46c77df4fa85">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tipo]]></text>
+				</staticText>
 			</frame>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="30" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="560" height="30" backcolor="#FCE8D2" uuid="c57dd395-9f15-4d5b-8b3b-6cc0fea159f5">
+				<reportElement mode="Opaque" x="0" y="0" width="640" height="30" backcolor="#FCE8D2" uuid="c57dd395-9f15-4d5b-8b3b-6cc0fea159f5">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
@@ -237,6 +249,14 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{domicilio}.getPais()]]></textFieldExpression>
 				</textField>
+				<textField>
+					<reportElement x="560" y="1" width="80" height="30" uuid="2370f741-e914-48bc-93ed-471ad2477698">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="17a1eea3-b8bb-4284-9cce-6001cbe2d36e"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{domicilio}.getTipo()]]></textFieldExpression>
+				</textField>
 			</frame>
 		</band>
 	</detail>
@@ -258,15 +278,16 @@
 		<band height="270" splitType="Stretch">
 			<pieChart>
 				<chart>
-					<reportElement x="0" y="70" width="560" height="200" uuid="b109bb37-f4f4-43a9-8ac5-573f37cfa4b3"/>
+					<reportElement x="40" y="69" width="560" height="200" uuid="b109bb37-f4f4-43a9-8ac5-573f37cfa4b3"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
 				<pieDataset>
+					<dataset resetType="Report"/>
 					<keyExpression><![CDATA[$V{Domicilio.Localidad}]]></keyExpression>
 					<valueExpression><![CDATA[$V{Group1_COUNT}]]></valueExpression>
-					<labelExpression><![CDATA[(($V{Group1_COUNT} * 100) / $P{NumPersonas}) + "% (" + $V{Group1_COUNT} +")" ]]></labelExpression>
+					<labelExpression><![CDATA[(($V{Group1_COUNT} * 100) / $P{NumPersonas}) + "% (" + $V{Group1_COUNT} +")"]]></labelExpression>
 					<sectionHyperlink>
 						<hyperlinkWhenExpression><![CDATA[$V{TotalFilas}]]></hyperlinkWhenExpression>
 					</sectionHyperlink>
