@@ -2,6 +2,7 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -60,15 +61,12 @@ public class ControladorAgenda implements ActionListener
 			this.ventanaPersona.getCbxPais().addActionListener(a -> actualizarProvincias(a));
 			this.ventanaPersona.getCbxProvincia().addActionListener(a -> actualizarLocalidades(a));
 			this.ventanaPersona.getChckDomicilio().addActionListener(a -> habilitarIngresoDeDomicilio(a));
-			this.ventanaPersona.getBtnAgregarTipo().addActionListener(a -> ventanaTipoContacto(a));
-			this.ventanaPersona.getBtnEditarTipo().addActionListener(a -> ventanaTipoContacto(a));
-			this.ventanaPersona.getBtnBorrarTipo().addActionListener(a -> ventanaTipoContacto(a));
+			this.ventanaPersona.getBtnConfigurarTipo().addActionListener(a -> ventanaTipoContacto(a));
 			
 			this.ventanaTipoContacto = VentanaTipoContacto.getInstance(ventanaPersona, true);
 			this.ventanaTipoContacto.getBtnAgregar().addActionListener(a -> agregarNuevoTipo(a));
 			this.ventanaTipoContacto.getBtnEditar().addActionListener(a -> editarTipo(a));
 			this.ventanaTipoContacto.getBtnBorrar().addActionListener(a -> borrarTipo(a));
-			this.ventanaTipoContacto.getBtnCancelar().addActionListener(a -> ventanaTipoContacto(a));
 			
 			this.ventanaDetalles = VentanaDetalles.getInstance(ventanaAgenda, true);
 	
@@ -83,6 +81,8 @@ public class ControladorAgenda implements ActionListener
 		{
 			this.ventanaPersona.cargarPaises(paises);
 			this.ventanaPersona.cargarTiposDeContacto(tipos);
+			
+			this.ventanaTipoContacto.cargarTipos(tipos);
 			
 			refrescarLista();
 			ventanaAgenda.mostrar();
@@ -370,19 +370,7 @@ public class ControladorAgenda implements ActionListener
 		 */
 		private void ventanaTipoContacto(ActionEvent p) 
 		{
-			JButton btnAgregar = ventanaPersona.getBtnAgregarTipo();
-			JButton btnEditar = ventanaPersona.getBtnEditarTipo();
-			JButton btnBorrar = ventanaPersona.getBtnBorrarTipo();
-			JButton btnCancelar = ventanaTipoContacto.getBtnCancelar();
-			
-			if (p.getSource() == btnAgregar)
-				ventanaTipoContacto.mostrarAgregar();
-			else if (p.getSource() == btnEditar)
-				ventanaTipoContacto.mostrarEditar(tipos);
-			else if (p.getSource() == btnBorrar)
-				ventanaTipoContacto.mostrarBorrar(tipos);
-			else if (p.getSource() == btnCancelar)
-				ventanaTipoContacto.cerrar();
+			ventanaTipoContacto.mostrar();
 		}
 	
 		
@@ -406,9 +394,8 @@ public class ControladorAgenda implements ActionListener
 				else 
 				{
 					agenda.agregarTipoDeContacto(new TipoDTO(0, nombre));
-					ventanaTipoContacto.cerrar();
-					tipos = agenda.obtenerTiposDeContacto();
-					ventanaPersona.cargarTiposDeContacto(tipos);
+					refrescarTiposDeContacto();
+					ventanaTipoContacto.limpiarCampos();
 					JOptionPane.showMessageDialog(null, "Nuevo tipo de contacto guardado.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
 				}
 			}
@@ -445,9 +432,9 @@ public class ControladorAgenda implements ActionListener
 					{
 						tipo.setNombre(nombreNuevo);
 						agenda.editarTipoDeContacto(tipo);
-						ventanaTipoContacto.cerrar();
-						tipos = agenda.obtenerTiposDeContacto();
-						ventanaPersona.cargarTiposDeContacto(tipos);
+						
+						refrescarTiposDeContacto();
+						ventanaTipoContacto.limpiarCampos();
 						refrescarLista();
 						JOptionPane.showMessageDialog(null, "Tipo de contacto actualizado.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
 					}
@@ -459,33 +446,33 @@ public class ControladorAgenda implements ActionListener
 		
 		public void borrarTipo(ActionEvent p) 
 		{
-			JCheckBox[] chksTipos = ventanaTipoContacto.getChksPanelBorrar();
+			List<JCheckBox> chksTipos = ventanaTipoContacto.getChksPanelBorrar();
+			List<Integer> indicesSelec = new ArrayList<Integer>();
 			
-			//Recorremos para verificar si selecciono algun tipo 
-			boolean selecciono = false;
-			for (int i = 0; i < chksTipos.length; i++) 
-				if (chksTipos[i].isSelected()) 
-					selecciono = true;
+			//Recorremos para obtener los indices de los seleccionados
+			for (int i = 0; i < chksTipos.size(); i++) 
+			{
+				if (chksTipos.get(i).isSelected()) 
+				{
+					indicesSelec.add(i);
+					agenda.borrarTipoDeContacto(tipos.get(i));
+				}
+			}
 			
-			if (selecciono) 
+			if (indicesSelec.size() > 0) //Verificamos si selecciono alguno 
 			{
 				int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan algunos de los tipos seleccionados seran afectados.\n¿Esta seguro de eliminarlos?", "Confirmacion para eliminar", JOptionPane.YES_NO_OPTION);
 				
 				if (respuesta == 0) 
 				{
-					//Recorremos y eliminamos los tipos seleccionados
-					for (int i = 0; i < chksTipos.length; i++) 
+					//Recorremos y eliminamos los tipos que corresponden a los indices seleccionados
+					for (Integer indice : indicesSelec) 
 					{
-						if (chksTipos[i].isSelected()) 
-						{
-							TipoDTO tipo = tipos.get(i);
-							agenda.borrarTipoDeContacto(tipo);
-						}
+						if(chksTipos.get(indice).isSelected())
+							agenda.borrarTipoDeContacto(tipos.get(indice));
 					}
 					
-					ventanaTipoContacto.cerrar();
-					tipos = agenda.obtenerTiposDeContacto();
-					ventanaPersona.cargarTiposDeContacto(tipos);
+					refrescarTiposDeContacto();
 					refrescarLista();
 					JOptionPane.showMessageDialog(null, "Tipos de contacto eliminados correctamente.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
 				}
@@ -493,6 +480,14 @@ public class ControladorAgenda implements ActionListener
 			else
 				JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguno.", "Aviso", JOptionPane.WARNING_MESSAGE);
 			
+		}
+		
+		private void refrescarTiposDeContacto() 
+		{
+			tipos = agenda.obtenerTiposDeContacto();
+			ventanaPersona.cargarTiposDeContacto(tipos);
+			ventanaTipoContacto.cargarTipos(tipos);
+			ventanaTipoContacto.limpiarCampos();	
 		}
 		
 		@Override

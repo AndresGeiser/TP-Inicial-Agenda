@@ -52,9 +52,7 @@ public class VentanaPersona extends JFrame
 	private JTextField txtPiso;
 	private JTextField txtDpto;
 	
-	private JButton btnAgregarTipo;
-	private JButton btnEditarTipo;
-	private JButton btnBorrarTipo;
+	private JButton btnConfigurarTipo;
 	private JButton btnAgregarPersona;
 	private JButton btnActualizarPersona;
 	
@@ -73,6 +71,7 @@ public class VentanaPersona extends JFrame
 		setTitle("Agregar Contacto");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 400, 500);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		
 		scrollPane = new JScrollPane();
@@ -150,29 +149,13 @@ public class VentanaPersona extends JFrame
 		cbxTipo.addItem("Universidad");
 		panel.add(cbxTipo);
 		
-		btnAgregarTipo = new JButton("");
-		btnAgregarTipo.setIcon(new ImageIcon(VentanaPersona.class.getResource("/icons/agregarTipo.png")));
-		btnAgregarTipo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnAgregarTipo.setFont(new Font("SansSerif", Font.PLAIN, 10));
-		btnAgregarTipo.setToolTipText("Agregar nuevo tipo de contacto");
-		btnAgregarTipo.setBounds(129, 257, 30, 30);
-		panel.add(btnAgregarTipo);
-		
-		btnEditarTipo = new JButton("");
-		btnEditarTipo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnEditarTipo.setIcon(new ImageIcon(VentanaPersona.class.getResource("/icons/editarTipo.png")));
-		btnEditarTipo.setToolTipText("Editar tipo de contacto");
-		btnEditarTipo.setFont(new Font("SansSerif", Font.PLAIN, 10));
-		btnEditarTipo.setBounds(169, 257, 30, 30);
-		panel.add(btnEditarTipo);
-		
-		btnBorrarTipo = new JButton("");
-		btnBorrarTipo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnBorrarTipo.setIcon(new ImageIcon(VentanaPersona.class.getResource("/icons/borrarTipo.png")));
-		btnBorrarTipo.setToolTipText("Eliminar tipo de contacto");
-		btnBorrarTipo.setFont(new Font("SansSerif", Font.PLAIN, 10));
-		btnBorrarTipo.setBounds(209, 257, 30, 30);
-		panel.add(btnBorrarTipo);
+		btnConfigurarTipo = new JButton("");
+		btnConfigurarTipo.setIcon(new ImageIcon(VentanaPersona.class.getResource("/icons/configurarTipos.png")));
+		btnConfigurarTipo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnConfigurarTipo.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		btnConfigurarTipo.setToolTipText("Agregar nuevo tipo de contacto");
+		btnConfigurarTipo.setBounds(129, 257, 30, 30);
+		panel.add(btnConfigurarTipo);
 		
 		JLabel lblFecha = new JLabel("Fecha de Cumplea\u00F1os");
 		lblFecha.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -601,19 +584,9 @@ public class VentanaPersona extends JFrame
 		return txtDpto;
 	}
 	
-	public JButton getBtnAgregarTipo() 
+	public JButton getBtnConfigurarTipo() 
 	{
-		return btnAgregarTipo;
-	}
-	
-	public JButton getBtnEditarTipo() 
-	{
-		return btnEditarTipo;
-	}
-	
-	public JButton getBtnBorrarTipo() 
-	{
-		return btnBorrarTipo;
+		return btnConfigurarTipo;
 	}
 	
 	public JButton getBtnAgregarPersona() 
