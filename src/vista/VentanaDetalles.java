@@ -13,6 +13,8 @@ import javax.swing.SwingConstants;
 
 import dto.DomicilioDTO;
 import dto.PersonaDTO;
+import dto.TipoDTO;
+
 import java.awt.Toolkit;
 
 public class VentanaDetalles extends JDialog 
@@ -120,7 +122,13 @@ public class VentanaDetalles extends JDialog
 		this.setTitle("Detalles de: '" + persona.getNombre() + "'");
 		
 		lblNombre.setText(persona.getNombre());
-		lblTipo.setText("Tipo: " + persona.getTipo_contacto());
+		
+		TipoDTO tipo = persona.getTipo_contacto();
+		if(tipo == null)
+			lblTipo.setText("Tipo: Sin informacion.");
+		else
+			lblTipo.setText("Tipo: " + persona.getTipo_contacto().getNombre());
+			
 		lblTelefono.setText("Telefono: " + persona.getTelefono());
 		
 		String correo = persona.getCorreo();
@@ -161,10 +169,5 @@ public class VentanaDetalles extends JDialog
 		this.setVisible(true);
 	}
 	
-
-	public void cerrar()
-	{
-		this.dispose();
-	}
 }
 

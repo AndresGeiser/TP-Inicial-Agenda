@@ -11,6 +11,7 @@ import dto.LocalidadDTO;
 import dto.PaisDTO;
 import dto.PersonaDTO;
 import dto.ProvinciaDTO;
+import dto.TipoDTO;
 
 import javax.swing.JComboBox;
 import java.awt.Font;
@@ -26,6 +27,7 @@ import javax.swing.JCheckBox;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 
 public class VentanaPersona extends JFrame 
 {
@@ -50,6 +52,9 @@ public class VentanaPersona extends JFrame
 	private JTextField txtPiso;
 	private JTextField txtDpto;
 	
+	private JButton btnAgregarTipo;
+	private JButton btnEditarTipo;
+	private JButton btnBorrarTipo;
 	private JButton btnAgregarPersona;
 	private JButton btnActualizarPersona;
 	
@@ -80,10 +85,10 @@ public class VentanaPersona extends JFrame
 		scrollPane.setViewportView(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNombreYApellido = new JLabel("Nombre y apellido *");
-		lblNombreYApellido.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		lblNombreYApellido.setBounds(10, 11, 325, 30);
-		panel.add(lblNombreYApellido);
+		JLabel lblNombreDeContacto = new JLabel("Nombre de contacto *");
+		lblNombreDeContacto.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		lblNombreDeContacto.setBounds(10, 11, 325, 30);
+		panel.add(lblNombreDeContacto);
 		
 		JLabel lblTelfono = new JLabel("Telefono *");
 		lblTelfono.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -132,7 +137,7 @@ public class VentanaPersona extends JFrame
 		
 		JLabel lblTipo = new JLabel("Tipo de contacto");
 		lblTipo.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		lblTipo.setBounds(10, 257, 325, 30);
+		lblTipo.setBounds(10, 257, 121, 30);
 		panel.add(lblTipo);
 		
 		cbxTipo = new JComboBox<String>();
@@ -144,6 +149,30 @@ public class VentanaPersona extends JFrame
 		cbxTipo.addItem("Amigos");
 		cbxTipo.addItem("Universidad");
 		panel.add(cbxTipo);
+		
+		btnAgregarTipo = new JButton("");
+		btnAgregarTipo.setIcon(new ImageIcon(VentanaPersona.class.getResource("/icons/agregarTipo.png")));
+		btnAgregarTipo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnAgregarTipo.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		btnAgregarTipo.setToolTipText("Agregar nuevo tipo de contacto");
+		btnAgregarTipo.setBounds(129, 257, 30, 30);
+		panel.add(btnAgregarTipo);
+		
+		btnEditarTipo = new JButton("");
+		btnEditarTipo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnEditarTipo.setIcon(new ImageIcon(VentanaPersona.class.getResource("/icons/editarTipo.png")));
+		btnEditarTipo.setToolTipText("Editar tipo de contacto");
+		btnEditarTipo.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		btnEditarTipo.setBounds(169, 257, 30, 30);
+		panel.add(btnEditarTipo);
+		
+		btnBorrarTipo = new JButton("");
+		btnBorrarTipo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnBorrarTipo.setIcon(new ImageIcon(VentanaPersona.class.getResource("/icons/borrarTipo.png")));
+		btnBorrarTipo.setToolTipText("Eliminar tipo de contacto");
+		btnBorrarTipo.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		btnBorrarTipo.setBounds(209, 257, 30, 30);
+		panel.add(btnBorrarTipo);
 		
 		JLabel lblFecha = new JLabel("Fecha de Cumplea\u00F1os");
 		lblFecha.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -319,7 +348,6 @@ public class VentanaPersona extends JFrame
 		txtDpto.setBounds(100, 746, 94, 30);
 		panel.add(txtDpto);
 		
-		
 		btnAgregarPersona = new JButton("Agregar");
 		btnAgregarPersona.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAgregarPersona.setBorder(null);
@@ -401,7 +429,11 @@ public class VentanaPersona extends JFrame
 		txtCorreo.setText(p.getCorreo());
 		txtFecha.setText(p.getFecha_cumple());
 		
-		seleccionar(cbxTipo, p.getTipo_contacto());
+		TipoDTO tipo = p.getTipo_contacto();
+		if(tipo != null)
+			seleccionar(cbxTipo, p.getTipo_contacto().getNombre());
+		else
+			cbxTipo.setSelectedIndex(0);
 		
 		DomicilioDTO domicilio = p.getDomicilio();
 		if(!domicilio.getPais().equals("")) 
@@ -446,7 +478,6 @@ public class VentanaPersona extends JFrame
 	public void cargarProvincias(List<ProvinciaDTO> provincias) 
 	{
 		cbxProvincia.removeAllItems();
-		
 		for (ProvinciaDTO paisDTO : provincias) 
 			cbxProvincia.addItem(paisDTO.getNombre());
 	}
@@ -454,9 +485,16 @@ public class VentanaPersona extends JFrame
 	public void cargarLocalidades(List<LocalidadDTO> localidades) 
 	{
 		cbxLocalidad.removeAllItems();
-		
 		for (LocalidadDTO localidadDTO : localidades)
 			cbxLocalidad.addItem(localidadDTO.getNombre());
+	}
+	
+	public void cargarTiposDeContacto(List<TipoDTO> tipos) 
+	{
+		cbxTipo.removeAllItems();
+		cbxTipo.addItem(null);
+		for (TipoDTO tipo : tipos)
+			cbxTipo.addItem(tipo.getNombre());
 	}
 	
 	
@@ -481,9 +519,10 @@ public class VentanaPersona extends JFrame
 	 */
 	private void seleccionar(JComboBox<String> combo, String cadena) 
 	{
-		for (int i = 0; i < combo.getItemCount(); i++) 
+		for (int i = 1; i < combo.getItemCount(); i++) 
 		{
-			if(combo.getItemAt(i).equalsIgnoreCase(cadena)) 
+			System.out.println(i);
+			if(combo.getItemAt(i).equalsIgnoreCase(cadena))
 			{
 				combo.setSelectedIndex(i);
 				break;
@@ -560,6 +599,21 @@ public class VentanaPersona extends JFrame
 	public JTextField getTxtDpto() 
 	{
 		return txtDpto;
+	}
+	
+	public JButton getBtnAgregarTipo() 
+	{
+		return btnAgregarTipo;
+	}
+	
+	public JButton getBtnEditarTipo() 
+	{
+		return btnEditarTipo;
+	}
+	
+	public JButton getBtnBorrarTipo() 
+	{
+		return btnBorrarTipo;
 	}
 	
 	public JButton getBtnAgregarPersona() 

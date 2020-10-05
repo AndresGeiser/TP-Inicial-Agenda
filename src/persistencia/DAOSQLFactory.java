@@ -22,4 +22,10 @@ public class DAOSQLFactory implements DAOAbstractFactory
 		return new RegionesDAOSQL();
 	}
 
+
+	public TipoDAO createTipoDAO() 
+	{
+		return new TipoDAOSQL();
+	}
+
 }

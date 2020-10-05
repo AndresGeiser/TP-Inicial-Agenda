@@ -7,17 +7,17 @@ public class PersonaDTO
 	private String nombre;
 	private String telefono;
 	private String correo;
-	private String tipo_contacto;
 	private String fecha_cumple;
+	private TipoDTO tipo;
 	private DomicilioDTO domicilio; 
 	
-	public PersonaDTO(int id, String nombre, String telefono, String correo, String tipo_contacto, String fecha_cumple, DomicilioDTO domicilio)
+	public PersonaDTO(int id, String nombre, String telefono, String correo, TipoDTO tipo, String fecha_cumple, DomicilioDTO domicilio)
 	{
 		this.id = id;
 		this.nombre = nombre;
 		this.telefono = telefono;
 		this.correo = correo;
-		this.tipo_contacto = tipo_contacto;
+		this.tipo = tipo;
 		this.fecha_cumple = fecha_cumple;
 		this.domicilio = domicilio;
 	}
@@ -62,14 +62,14 @@ public class PersonaDTO
 		this.correo = correo;
 	}
 
-	public String getTipo_contacto() 
+	public TipoDTO getTipo_contacto() 
 	{
-		return tipo_contacto;
+		return tipo;
 	}
 
-	public void setTipo_contacto(String tipo_contacto) 
+	public void setTipo_contacto(TipoDTO tipo) 
 	{
-		this.tipo_contacto = tipo_contacto;
+		this.tipo = tipo;
 	}
 
 	public String getFecha_cumple() 

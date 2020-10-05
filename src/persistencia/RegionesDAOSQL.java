@@ -12,9 +12,9 @@ import dto.ProvinciaDTO;
 
 public class RegionesDAOSQL implements RegionesDAO {
 	
-	private static final String selectPaises = "SELECT * FROM pais";
-	private static final String selectProvincias = "SELECT * FROM provincia WHERE idPais = ?";
-	private static final String selectLocalidades = "SELECT * FROM localidad WHERE idProvincia = ?";
+	private static final String selectPaises = "SELECT * FROM paises";
+	private static final String selectProvincias = "SELECT * FROM provincias WHERE idPais = ?";
+	private static final String selectLocalidades = "SELECT * FROM localidades WHERE idProvincia = ?";
 
 	public List<PaisDTO> getPaises() 
 	{

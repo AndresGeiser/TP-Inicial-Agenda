@@ -4,6 +4,8 @@ package persistencia;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
+
 import org.apache.log4j.Logger;
 
 
@@ -19,8 +21,13 @@ public class Conexion
 		{
 			//Class.forName("com.mysql.jdbc.Driver"); // quitar si no es necesario
 			
+	        Properties props =  new Properties();
+	        props.put("user", "root");
+	        props.put("password", "");
+	        props.put("allowMultiQueries", "true");
+			
 			//Establecemos conexión con la base por defecto de MySQL y creamos la base a utilizar
-			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
+			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", props);
 
 			this.connection.setAutoCommit(false);
 			log.info("Conexion exitosa");

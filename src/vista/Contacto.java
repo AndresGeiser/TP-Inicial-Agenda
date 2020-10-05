@@ -12,6 +12,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
 import dto.PersonaDTO;
+import dto.TipoDTO;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -87,31 +89,34 @@ public class Contacto extends JPanel
 			add(lblCorreo);
 		}
 		
-		String tipo = p.getTipo_contacto().toUpperCase();
-		JLabel lblTipo = new JLabel(tipo);
-		switch (tipo) 
+		TipoDTO tipo = p.getTipo_contacto();
+		if(tipo != null) 
 		{
-			case "TRABAJO":
-				lblTipo.setIcon(new ImageIcon(Contacto.class.getResource("/icons/trabajo.png")));
-				break;
-			case "UNIVERSIDAD":
-				lblTipo.setIcon(new ImageIcon(Contacto.class.getResource("/icons/universidad.png")));
-				break;
-			case "AMIGOS":
-				lblTipo.setIcon(new ImageIcon(Contacto.class.getResource("/icons/amigos.png")));
-				break;
-			case "FAMILIA":
-				lblTipo.setIcon(new ImageIcon(Contacto.class.getResource("/icons/familia.png")));
-				break;
-			default:
-				break;
+			String tipoNombre = tipo.getNombre().toUpperCase();
+			JLabel lblTipo = new JLabel(tipoNombre);
+			switch (tipoNombre) 
+			{
+				case "TRABAJO":
+					lblTipo.setIcon(new ImageIcon(Contacto.class.getResource("/icons/trabajo.png")));
+					break;
+				case "UNIVERSIDAD":
+					lblTipo.setIcon(new ImageIcon(Contacto.class.getResource("/icons/universidad.png")));
+					break;
+				case "AMIGOS":
+					lblTipo.setIcon(new ImageIcon(Contacto.class.getResource("/icons/amigos.png")));
+					break;
+				case "FAMILIA":
+					lblTipo.setIcon(new ImageIcon(Contacto.class.getResource("/icons/familia.png")));
+					break;
+				default:
+					break;
+			}
+			lblTipo.setHorizontalAlignment(SwingConstants.RIGHT);
+			lblTipo.setForeground(Color.ORANGE);
+			lblTipo.setFont(new Font("SansSerif", Font.BOLD, 14));
+			lblTipo.setBounds(286, 12, 150, 32);
+			add(lblTipo);
 		}
-		lblTipo.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTipo.setForeground(Color.ORANGE);
-		lblTipo.setFont(new Font("SansSerif", Font.BOLD, 14));
-		lblTipo.setBounds(286, 12, 150, 32);
-		add(lblTipo);
-		
 		btnVerMas = new JButton("+");
 		btnVerMas.addMouseListener(new MouseAdapter() {
 			@Override
