@@ -498,7 +498,7 @@ public class VentanaPersona extends JFrame
 	}
 	
 	
-	/*
+	/**
 	 * Activa o desactiva los campos del domicilio  
 	 */
 	public void habilitarCamposDomicilio(boolean habilitar) 
@@ -514,7 +514,7 @@ public class VentanaPersona extends JFrame
 	}
 	
 	
-	/*
+	/**
 	 * Selecciona el item del combo que coincida con el string 
 	 */
 	private void seleccionar(JComboBox<String> combo, String cadena) 

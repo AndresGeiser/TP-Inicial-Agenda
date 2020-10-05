@@ -50,7 +50,7 @@ public class ControladorAgenda implements ActionListener
 		{
 			this.ventanaAgenda = vista;
 			this.ventanaAgenda.getBtnAgregar().addActionListener(a -> ventanaAgregarPersona(a));
-			this.ventanaAgenda.getBtnBorrar().addActionListener(a -> borrarPersonas(a));
+			this.ventanaAgenda.getBtnBorrar().addActionListener(a -> borrarContactos(a));
 			this.ventanaAgenda.getBtnReporte().addActionListener(a -> mostrarReporte(a));
 			this.ventanaAgenda.getBtnEditar().addActionListener(a -> ventanaEditarPersona(a));
 						
@@ -96,61 +96,10 @@ public class ControladorAgenda implements ActionListener
 		{
 			ventanaPersona.mostrarVentana();
 		}
-
-		/**
-		 * Muestra la ventana para editar un contacto
-		 */
-		public void ventanaEditarPersona(ActionEvent s)
-		{
-			Contacto[] contactos = ventanaAgenda.getContactos();
-			
-			for (int i = 0; i < contactos.length; i++) {
-				if(contactos[i].estaSeleccionado()) {
-					personaSeleccionada = personasEnLista.get(i);
-					break;
-				}
-			}
-			
-			if(personaSeleccionada == null) 
-				JOptionPane.showMessageDialog(null, "Seleccione el contacto que desea editar.", "Aviso", JOptionPane.WARNING_MESSAGE);
-			else 
-				ventanaPersona.mostrarVentanaConDatos(personaSeleccionada);
-			
-			this.refrescarLista();
-		}
 		
-		/**
-		 * Muestra la ventana con un reporte generado
-		 */
-		private void mostrarReporte(ActionEvent r) 
+		private void agregarPersona(ActionEvent p) 
 		{
-			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
-			reporte.mostrar();
-		}
-		
-		/**
-		 * Muestra la ventana de detalles del contacto
-		 */
-		private void mostrarDetalles(ActionEvent b) 
-		{
-			for (int i = 0; i < ventanaAgenda.getContactos().length; i++) 
-			{
-				Contacto contacto = ventanaAgenda.getContactos()[i];
-				JButton boton = contacto.getBtnVerMas();
-				
-				if(boton == b.getSource()) 
-				{
-					ventanaDetalles.cargar(personasEnLista.get(i));
-					ventanaDetalles.mostrar();
-					break;
-				}
-			}
-		}
-		
-
-		private void agregarPersona(ActionEvent p) {
-
-			if(validarDatos()) 
+			if (validarDatos()) 
 			{
 				String nombre = ventanaPersona.getTxtNombre().getText();
 				String tel = ventanaPersona.getTxtTelefono().getText();
@@ -164,7 +113,7 @@ public class ControladorAgenda implements ActionListener
 				pais = provincia = localidad = calle = altura = tipoDomicilio = piso = dpto = "";
 				
 				boolean agregoDomicilio = ventanaPersona.getChckDomicilio().isSelected();
-				if(agregoDomicilio) 
+				if (agregoDomicilio) 
 				{
 					pais = ventanaPersona.getCbxPais().getSelectedItem().toString();
 					provincia = ventanaPersona.getCbxProvincia().getSelectedItem().toString();
@@ -185,10 +134,32 @@ public class ControladorAgenda implements ActionListener
 				ventanaPersona.cerrar();	
 			}
 		}
+
+		/**
+		 * Muestra la ventana para editar un contacto
+		 */
+		public void ventanaEditarPersona(ActionEvent s)
+		{
+			Contacto[] contactos = ventanaAgenda.getContactos();
+			
+			for (int i = 0; i < contactos.length; i++) {
+				if (contactos[i].estaSeleccionado()) {
+					personaSeleccionada = personasEnLista.get(i);
+					break;
+				}
+			}
+			
+			if (personaSeleccionada == null) 
+				JOptionPane.showMessageDialog(null, "Seleccione el contacto que desea editar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+			else 
+				ventanaPersona.mostrarVentanaConDatos(personaSeleccionada);
+			
+			this.refrescarLista();
+		}
 		
 		public void editarPersona(ActionEvent e)
 		{
-			if(validarDatos()) 
+			if (validarDatos()) 
 			{
 				String nombre = ventanaPersona.getTxtNombre().getText();
 				String tel = ventanaPersona.getTxtTelefono().getText();
@@ -207,7 +178,7 @@ public class ControladorAgenda implements ActionListener
 				String pais, provincia, localidad, calle, altura, tipoDomicilio, piso, dpto;
 				pais = provincia = localidad = calle = altura = tipoDomicilio = piso = dpto = "";
 				boolean agregoDomicilio = ventanaPersona.getChckDomicilio().isSelected();
-				if(agregoDomicilio) 
+				if (agregoDomicilio) 
 				{
 					pais = ventanaPersona.getCbxPais().getSelectedItem().toString();
 					provincia = ventanaPersona.getCbxProvincia().getSelectedItem().toString();
@@ -229,41 +200,75 @@ public class ControladorAgenda implements ActionListener
 				personaSeleccionada = null;
 			}
 		}
-
-		public void borrarPersonas(ActionEvent s)
+		
+		/**
+		 * Muestra la ventana con un reporte generado
+		 */
+		private void mostrarReporte(ActionEvent r) 
 		{
-			Contacto[] contactos = ventanaAgenda.getContactos();
-			
-			for (int i = 0; i < contactos.length; i++) 
-			{
-				if(contactos[i].estaSeleccionado()) 
-					agenda.borrarPersona(personasEnLista.get(i));
-			}
-			
-			refrescarLista();
+			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
+			reporte.mostrar();
 		}
 		
-		
-		private boolean validarDatos() 
+
+		/**
+		 * Borra los contactos seleccionados
+		 */
+		public void borrarContactos(ActionEvent s)
 		{
+			Contacto[] contactos = ventanaAgenda.getContactos();
+		
+			boolean selecciono = false;
+			for (int i = 0; i < contactos.length; i++)
+			{
+				if (contactos[i].estaSeleccionado()) 
+				{
+					selecciono = true;
+					break;
+				}
+			}
+			
+			if (selecciono) 
+			{
+				int respuesta = JOptionPane.showConfirmDialog(null, "¿Estas seguro de eliminar los contactos seleccionados?", "Confirmacion para eliminar", JOptionPane.YES_NO_OPTION);
+				
+				if (respuesta == 0) 
+				{
+					for (int i = 0; i < contactos.length; i++) 
+						if (contactos[i].estaSeleccionado()) 
+							agenda.borrarPersona(personasEnLista.get(i));
+					
+					refrescarLista();
+				}
+			}
+			else
+				JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun contacto para eliminar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+				
+		}
+		
+		/**
+		 * Retorna true si los campos de la ventana de agregar o editar un contacto estan correctos o false en caso contrario
+		 */
+		private boolean validarDatos() 
+		{	
+			String mensajeAdvertencia = "";
+			int numMensaje = 1;
+			
 			String nombre = ventanaPersona.getTxtNombre().getText().trim();
 			String tel = ventanaPersona.getTxtTelefono().getText().trim();
 			String correo = ventanaPersona.getTxtCorreo().getText().trim();
 			
-			
-			String mensajeAdvertencia = "";
-			int numMensaje = 1;
-			
-			if(nombre.equals("") || tel.equals("")) 
+			//Validacion nombre
+			if (nombre.equals("") || tel.equals("")) 
 				mensajeAdvertencia += numMensaje++ + ") El nombre y telefono del contacto es requerido.\n";
 			
-			if(nombre.length() > 20)
+			if (nombre.length() > 20)
 				mensajeAdvertencia += numMensaje++ + ") Nombre de contacto muy largo. (Maximo 20 caracteres)\\n";
 			else 
 			{
 				for (PersonaDTO personaDTO : personasEnLista) 
 				{
-					if(personaDTO.getNombre().equals(nombre) && personaDTO.getIdPersona() != personaSeleccionada.getIdPersona()) 
+					if (personaDTO.getNombre().equals(nombre) && personaDTO.getIdPersona() != personaSeleccionada.getIdPersona()) 
 					{
 						mensajeAdvertencia += numMensaje++ + ") Ya existe un contacto con el nombre: '" + nombre + "'. \n";
 						return false;
@@ -271,7 +276,8 @@ public class ControladorAgenda implements ActionListener
 				}
 			}
 			
-			if(!correo.equals("")) 
+			//Validacion correo
+			if (!correo.equals("")) 
 			{
 				String emailPattern = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@" + "[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
 				Pattern pattern = Pattern.compile(emailPattern);
@@ -280,34 +286,38 @@ public class ControladorAgenda implements ActionListener
 					mensajeAdvertencia += numMensaje++ + ") Verifique que el correo este bien escrito.\n";
 			}
 			
+			//Validacion Domicilio
 			boolean agregoDomicilio = ventanaPersona.getChckDomicilio().isSelected();
-			if(agregoDomicilio) 
+			if (agregoDomicilio) 
 			{
 				String calle = ventanaPersona.getTxtCalle().getText().trim();
 				String altura = ventanaPersona.getTxtAltura().getText().trim();
 				
-				if(calle.equals("") || altura.equals("")) 
+				if (calle.equals("") || altura.equals("")) 
 					mensajeAdvertencia += numMensaje++ + ") La calle y altura del domicilio no puede quedar en blanco.\n";	
 			}
 			
 			
-			if(!mensajeAdvertencia.equals("")) 
+			if (!mensajeAdvertencia.equals("")) 
 				JOptionPane.showMessageDialog(null, "Se encontraron los siguientes errores en los campos:\n\n" + mensajeAdvertencia, "Aviso", JOptionPane.WARNING_MESSAGE); 
 	
 			return (mensajeAdvertencia.equals("")) ? true : false;
 		}
 		
-		
+		/**
+		 * Actualiza la lista de contactos de la agenda
+		 */
 		private void refrescarLista()
 		{
 			personasEnLista = agenda.obtenerPersonas();
-			ventanaAgenda.llenarLista(personasEnLista);
+			ventanaAgenda.cargarContactos(personasEnLista);
 			
 			//Agregamos la funcion para ver los detalles del contacto a cada boton
 			for (Contacto contacto : ventanaAgenda.getContactos())
 				contacto.getBtnVerMas().addActionListener(t->mostrarDetalles(t));
 		}
 
+		
 		private void actualizarProvincias(ActionEvent p) 
 		{
 			int i = ventanaPersona.getCbxPais().getSelectedIndex();
@@ -316,10 +326,11 @@ public class ControladorAgenda implements ActionListener
 			ventanaPersona.cargarProvincias(provincias);
 		}
 		
+		
 		private void actualizarLocalidades(ActionEvent p) 
 		{	
 			int i = ventanaPersona.getCbxProvincia().getSelectedIndex();
-			if(i != -1) //para que no tire error de indice al seleccionar un pais
+			if (i != -1) //para que no tire error de indice al seleccionar un pais
 			{
 				ProvinciaDTO provincia = provincias.get(i);
 				localidades = regiones.obtenerLocalidades(provincia);
@@ -329,13 +340,34 @@ public class ControladorAgenda implements ActionListener
 		
 		private void habilitarIngresoDeDomicilio(ActionEvent p) 
 		{
-			if(ventanaPersona.getChckDomicilio().isSelected())
+			if (ventanaPersona.getChckDomicilio().isSelected())
 				ventanaPersona.habilitarCamposDomicilio(true);
 			else
 				ventanaPersona.habilitarCamposDomicilio(false);
 		}
-
 		
+		/**
+		 * Muestra la ventana de detalles de un contacto
+		 */
+		private void mostrarDetalles(ActionEvent b) 
+		{
+			for (int i = 0; i < ventanaAgenda.getContactos().length; i++) 
+			{
+				Contacto contacto = ventanaAgenda.getContactos()[i];
+				JButton boton = contacto.getBtnVerMas();
+				
+				if (boton == b.getSource()) 
+				{
+					ventanaDetalles.cargar(personasEnLista.get(i));
+					ventanaDetalles.mostrar();
+					break;
+				}
+			}
+		}
+
+		/**
+		 * Muestra y cierra la ventana de agregar, editar o borrar un tipo de contacto.
+		 */
 		private void ventanaTipoContacto(ActionEvent p) 
 		{
 			JButton btnAgregar = ventanaPersona.getBtnAgregarTipo();
@@ -343,13 +375,13 @@ public class ControladorAgenda implements ActionListener
 			JButton btnBorrar = ventanaPersona.getBtnBorrarTipo();
 			JButton btnCancelar = ventanaTipoContacto.getBtnCancelar();
 			
-			if(p.getSource() == btnAgregar)
+			if (p.getSource() == btnAgregar)
 				ventanaTipoContacto.mostrarAgregar();
-			else if(p.getSource() == btnEditar)
+			else if (p.getSource() == btnEditar)
 				ventanaTipoContacto.mostrarEditar(tipos);
-			else if(p.getSource() == btnBorrar)
+			else if (p.getSource() == btnBorrar)
 				ventanaTipoContacto.mostrarBorrar(tipos);
-			else if(p.getSource() == btnCancelar)
+			else if (p.getSource() == btnCancelar)
 				ventanaTipoContacto.cerrar();
 		}
 	
@@ -358,17 +390,18 @@ public class ControladorAgenda implements ActionListener
 		{
 			String nombre = ventanaTipoContacto.getTxtNombreAgregar().getText().trim();
 			
-			if(!nombre.equals("")) 
+			if (!nombre.equals("")) 
 			{
 				nombre = nombre.substring(0, 1).toUpperCase() + nombre.substring(1); //Convertimos la primera letra en mayuscula
 				
 				boolean existe = false;
-				for (TipoDTO tipo : tipos) {
-					if(tipo.getNombre().equals(nombre))
+				for (TipoDTO tipo : tipos) 
+				{
+					if (tipo.getNombre().equals(nombre))
 						existe = true;
 				}
 				
-				if(existe)
+				if (existe)
 					JOptionPane.showMessageDialog(null, "Ya existe un tipo de contacto con el nombre '" + nombre + "'", "Aviso", JOptionPane.WARNING_MESSAGE); 
 				else 
 				{
@@ -389,17 +422,17 @@ public class ControladorAgenda implements ActionListener
 			int seleccionado = ventanaTipoContacto.getCbxTiposEditar().getSelectedIndex();
 			String nombreNuevo = ventanaTipoContacto.getTxtNombreEditar().getText().trim();
 			
-			if(!nombreNuevo.equals("")) 
+			if (!nombreNuevo.equals("")) 
 			{
 				nombreNuevo = nombreNuevo.substring(0, 1).toUpperCase() + nombreNuevo.substring(1); //Convertimos la primera letra en mayuscula
 				
 				boolean existe = false;
 				for (TipoDTO tipo : tipos) {
-					if(tipo.getNombre().equals(nombreNuevo))
+					if (tipo.getNombre().equals(nombreNuevo))
 						existe = true;
 				}
 				
-				if(existe)
+				if (existe)
 					JOptionPane.showMessageDialog(null, "Ya existe un tipo de contacto con el nombre '" + nombreNuevo + "'", "Aviso", JOptionPane.WARNING_MESSAGE); 
 				else 
 				{
@@ -408,7 +441,7 @@ public class ControladorAgenda implements ActionListener
 					
 					int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan el tipo '" + nombreViejo + "' seran afectados.\n¿Estas seguro de cambiar el tipo '" + nombreViejo + "' por '" + nombreNuevo + "' ?", "Confirmacion para editar", JOptionPane.YES_NO_OPTION);
 					
-					if(respuesta == 0) 
+					if (respuesta == 0) 
 					{
 						tipo.setNombre(nombreNuevo);
 						agenda.editarTipoDeContacto(tipo);
@@ -436,10 +469,9 @@ public class ControladorAgenda implements ActionListener
 			
 			if (selecciono) 
 			{
-				
 				int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan algunos de los tipos seleccionados seran afectados.\n¿Esta seguro de eliminarlos?", "Confirmacion para eliminar", JOptionPane.YES_NO_OPTION);
 				
-				if(respuesta == 0) 
+				if (respuesta == 0) 
 				{
 					//Recorremos y eliminamos los tipos seleccionados
 					for (int i = 0; i < chksTipos.length; i++) 
@@ -457,7 +489,6 @@ public class ControladorAgenda implements ActionListener
 					refrescarLista();
 					JOptionPane.showMessageDialog(null, "Tipos de contacto eliminados correctamente.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
 				}
-				
 			}
 			else
 				JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguno.", "Aviso", JOptionPane.WARNING_MESSAGE);

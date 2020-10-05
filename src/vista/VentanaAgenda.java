@@ -38,7 +38,6 @@ public class VentanaAgenda extends JFrame
 		inicializar();
 	}
 
-
 	private void inicializar() 
 	{
 		setTitle("Agenda");
@@ -200,8 +199,10 @@ public class VentanaAgenda extends JFrame
 	}
 
 
-	public void llenarLista(List<PersonaDTO> personasEnTabla) {
+	public void cargarContactos(List<PersonaDTO> personasEnTabla) 
+	{
 		panelContactos.removeAll();
+		panelContactos.setPreferredSize(new Dimension(0, 0));
 		
 		int ejeY = 11;
 		for (PersonaDTO p : personasEnTabla)
@@ -219,7 +220,6 @@ public class VentanaAgenda extends JFrame
 		panelContactos.revalidate();
 		panelContactos.repaint();
 	}
-
-
+	
 	
 }

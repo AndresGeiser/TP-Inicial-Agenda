@@ -11,8 +11,7 @@ import dto.TipoDTO;
 
 public class TipoDAOSQL implements TipoDAO 
 {
-
-	private static final String insert = "INSERT INTO tipos(id, nombre) VALUES(?, ?)";
+	private static final String insert = "INSERT INTO tipos (id, nombre) VALUES (?, ?)";
 	private static final String delete = "DELETE FROM tipos WHERE id = ?";
 	private static final String readall = "SELECT * FROM tipos";
 	private static final String update = "UPDATE tipos SET nombre = ? WHERE id = ?";
@@ -103,7 +102,7 @@ public class TipoDAOSQL implements TipoDAO
 	public List<TipoDTO> readAll() 
 	{
 		PreparedStatement statement;
-		ResultSet resultSet; //Guarda el resultado de la query
+		ResultSet resultSet;
 		ArrayList<TipoDTO> tipos = new ArrayList<TipoDTO>();
 		Conexion conexion = Conexion.getConexion();
 		try 
@@ -125,7 +124,7 @@ public class TipoDAOSQL implements TipoDAO
 	private TipoDTO getTipoDTO(ResultSet resultSet) throws SQLException
 	{
 		int id = resultSet.getInt("id");
-		String nombre = resultSet.getString("Nombre");
+		String nombre = resultSet.getString("nombre");
 		
 		return new TipoDTO(id, nombre);
 	}

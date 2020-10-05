@@ -17,16 +17,16 @@ import javax.swing.SwingConstants;
 
 import persistencia.Conexion;
 
-public class VentanaIngreso extends JFrame {
-	
+public class VentanaIngreso extends JFrame 
+{
 	private static final long serialVersionUID = 1L;
 	
 	private JTextField txtUsuario;
 	private JTextField txtContraseña;
 	private JButton btnIngresar;
 	
-	public VentanaIngreso() {
-		
+	public VentanaIngreso() 
+	{	
 		setBounds(100, 100, 400, 400);
 		setTitle("Mi Agenda - Ingreso");
 		
