@@ -2,16 +2,16 @@ package dto;
 
 public class DomicilioDTO 
 {
-	private String pais;
-	private String provincia;
-	private String localidad;
+	private PaisDTO pais;
+	private ProvinciaDTO provincia;
+	private LocalidadDTO localidad;
 	private String calle;
 	private String altura;
 	private String tipo;
 	private String piso;
 	private String dpto;
 	
-	public DomicilioDTO(String pais, String provincia, String localidad, String calle, String altura, String tipo, String piso, String dpto)
+	public DomicilioDTO(PaisDTO pais, ProvinciaDTO provincia, LocalidadDTO localidad, String calle, String altura, String tipo, String piso, String dpto)
 	{
 		this.pais = pais;
 		this.provincia = provincia;
@@ -24,32 +24,32 @@ public class DomicilioDTO
 	}
 	
 
-	public String getPais() 
+	public PaisDTO getPais() 
 	{
 		return pais;
 	}
 	
-	public void setPais(String pais) 
+	public void setPais(PaisDTO pais) 
 	{
 		this.pais = pais;
 	}
 	
-	public String getProvincia() 
+	public ProvinciaDTO getProvincia() 
 	{
 		return provincia;
 	}
 	
-	public void setProvincia(String provincia) 
+	public void setProvincia(ProvinciaDTO provincia) 
 	{
 		this.provincia = provincia;
 	}
 	
-	public String getLocalidad() 
+	public LocalidadDTO getLocalidad() 
 	{
 		return localidad;
 	}
 	
-	public void setLocalidad(String localidad) 
+	public void setLocalidad(LocalidadDTO localidad) 
 	{
 		this.localidad = localidad;
 	}

@@ -36,9 +36,9 @@ public class ControladorIngreso implements ActionListener {
 			vtnIngreso.dispose(); 
 			
 			//Mostramos la ventana de la agenda
-			VentanaAgenda vista = new VentanaAgenda();
+			VentanaAgenda vista = VentanaAgenda.getInstance();
 			Agenda modelo = new Agenda(new DAOSQLFactory());
-			ControladorAgenda controlador = new ControladorAgenda(vista, modelo);
+			ControladorAgenda controlador = ControladorAgenda.getInstance(vista, modelo);
 			controlador.inicializar();
 		}
 		

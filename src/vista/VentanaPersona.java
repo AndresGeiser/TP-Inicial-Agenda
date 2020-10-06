@@ -52,6 +52,7 @@ public class VentanaPersona extends JFrame
 	private JTextField txtPiso;
 	private JTextField txtDpto;
 	
+	private JButton btnConfigurarUbicaciones;
 	private JButton btnConfigurarTipo;
 	private JButton btnAgregarPersona;
 	private JButton btnActualizarPersona;
@@ -153,7 +154,7 @@ public class VentanaPersona extends JFrame
 		btnConfigurarTipo.setIcon(new ImageIcon(VentanaPersona.class.getResource("/icons/configurarTipos.png")));
 		btnConfigurarTipo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnConfigurarTipo.setFont(new Font("SansSerif", Font.PLAIN, 10));
-		btnConfigurarTipo.setToolTipText("Agregar nuevo tipo de contacto");
+		btnConfigurarTipo.setToolTipText("Configurar tipos de contacto");
 		btnConfigurarTipo.setBounds(129, 257, 30, 30);
 		panel.add(btnConfigurarTipo);
 		
@@ -171,7 +172,7 @@ public class VentanaPersona extends JFrame
 		
 		chckDomicilio = new JCheckBox("Agregar Domicilio");
 		chckDomicilio.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		chckDomicilio.setBounds(10, 417, 325, 30);
+		chckDomicilio.setBounds(10, 417, 137, 30);
 		panel.add(chckDomicilio);
 		
 		JLabel lblPais = new JLabel("Pais:");
@@ -331,6 +332,13 @@ public class VentanaPersona extends JFrame
 		txtDpto.setBounds(100, 746, 94, 30);
 		panel.add(txtDpto);
 		
+		btnConfigurarUbicaciones = new JButton("");
+		btnConfigurarUbicaciones.setIcon(new ImageIcon(VentanaPersona.class.getResource("/icons/configurarTipos.png")));
+		btnConfigurarUbicaciones.setToolTipText("Configurar ubicaciones");
+		btnConfigurarUbicaciones.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		btnConfigurarUbicaciones.setBounds(153, 417, 30, 30);
+		panel.add(btnConfigurarUbicaciones);
+		
 		btnAgregarPersona = new JButton("Agregar");
 		btnAgregarPersona.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAgregarPersona.setBorder(null);
@@ -419,13 +427,13 @@ public class VentanaPersona extends JFrame
 			cbxTipo.setSelectedIndex(0);
 		
 		DomicilioDTO domicilio = p.getDomicilio();
-		if(!domicilio.getPais().equals("")) 
+		if(domicilio.getPais() != null) 
 		{
 			chckDomicilio.setSelected(true);
 			
-			seleccionar(cbxPais, domicilio.getPais());
-			seleccionar(cbxProvincia, domicilio.getProvincia());
-			seleccionar(cbxLocalidad, domicilio.getLocalidad());
+			seleccionar(cbxPais, domicilio.getPais().getNombre());
+			seleccionar(cbxProvincia, domicilio.getProvincia().getNombre());
+			seleccionar(cbxLocalidad, domicilio.getLocalidad().getNombre());
 			txtCalle.setText(domicilio.getCalle());
 			txtAltura.setText(domicilio.getAltura());
 			seleccionar(cbxTipoDomicilio, domicilio.getTipo());
@@ -454,6 +462,7 @@ public class VentanaPersona extends JFrame
 	
 	public void cargarPaises(List<PaisDTO> paises) 
 	{
+		cbxPais.removeAllItems();
 		for (PaisDTO paisDTO : paises) 
 			cbxPais.addItem(paisDTO.getNombre());
 	}
@@ -470,6 +479,16 @@ public class VentanaPersona extends JFrame
 		cbxLocalidad.removeAllItems();
 		for (LocalidadDTO localidadDTO : localidades)
 			cbxLocalidad.addItem(localidadDTO.getNombre());
+	}
+	
+	public void limpiarProvincias() 
+	{
+		cbxProvincia.removeAllItems();
+	}
+	
+	public void limpiarLocalidades() 
+	{
+		cbxLocalidad.removeAllItems();
 	}
 	
 	public void cargarTiposDeContacto(List<TipoDTO> tipos) 
@@ -514,90 +533,41 @@ public class VentanaPersona extends JFrame
 	}
 	
 	
-	public JTextField getTxtNombre() 
-	{
-		return txtNombre;
-	}
+	public JTextField getTxtNombre() { return txtNombre; }
 
-	public JTextField getTxtTelefono() 
-	{
-		return txtTelefono;
-	}
+	public JTextField getTxtTelefono() { return txtTelefono; }
 	
-	public JTextField getTxtCorreo() 
-	{
-		return txtCorreo;
-	}
+	public JTextField getTxtCorreo() { return txtCorreo; }
 	
-	public JTextField getTxtCumple() 
-	{
-		return txtFecha;
-	}
+	public JTextField getTxtCumple() { return txtFecha; }
 	
-	public JComboBox<String> getTipo() 
-	{
-		return cbxTipo;
-	}
+	public JComboBox<String> getTipo() { return cbxTipo; }
 	
-	public JCheckBox getChckDomicilio() 
-	{
-		return chckDomicilio;
-	}
+	public JCheckBox getChckDomicilio() { return chckDomicilio;}
 	
-	public JComboBox<String> getCbxPais() 
-	{
-		return cbxPais;
-	}
+	public JComboBox<String> getCbxPais() { return cbxPais; }
 	
-	public JComboBox<String> getCbxProvincia() 
-	{
-		return cbxProvincia;
-	}
+	public JComboBox<String> getCbxProvincia() { return cbxProvincia; }
 	
-	public JComboBox<String> getCbxLocalidad() 
-	{
-		return cbxLocalidad;
-	}
+	public JComboBox<String> getCbxLocalidad() { return cbxLocalidad; }
 	
-	public JTextField getTxtCalle() 
-	{
-		return txtCalle;
-	}
+	public JTextField getTxtCalle() { return txtCalle; }
 	
-	public JTextField getTxtAltura() 
-	{
-		return txtAltura;
-	}
+	public JTextField getTxtAltura() { return txtAltura; }
 	
-	public JComboBox<String> getCbxTipoDomicilio() 
-	{
-		return cbxTipoDomicilio;
-	}
+	public JComboBox<String> getCbxTipoDomicilio() { return cbxTipoDomicilio; }
 	
-	public JTextField getTxtPiso() 
-	{
-		return txtPiso;
-	}
+	public JTextField getTxtPiso() { return txtPiso; }
 	
-	public JTextField getTxtDpto() 
-	{
-		return txtDpto;
-	}
+	public JTextField getTxtDpto() { return txtDpto; }
 	
-	public JButton getBtnConfigurarTipo() 
-	{
-		return btnConfigurarTipo;
-	}
+	public JButton getBtnConfigurarUbicaciones() { return btnConfigurarUbicaciones; }
 	
-	public JButton getBtnAgregarPersona() 
-	{
-		return btnAgregarPersona;
-	}
+	public JButton getBtnConfigurarTipo() { return btnConfigurarTipo; }
 	
-	public JButton getBtnActualizarPersona() 
-	{
-		return btnActualizarPersona;
-	}
+	public JButton getBtnAgregarPersona() { return btnAgregarPersona; }
+	
+	public JButton getBtnActualizarPersona() { return btnActualizarPersona; }
 
 	public void cerrar()
 	{

@@ -10,7 +10,7 @@ public class ProvinciaDTO {
 	{
 		this.id = id;
 		this.nombre = nombre;
-		this.idPais = id;
+		this.idPais = idPais;
 	}
 	
 	public int getId() 

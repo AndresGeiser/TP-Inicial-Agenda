@@ -3,6 +3,7 @@ package vista;
 import dto.PersonaDTO;
 import persistencia.Conexion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -25,14 +26,25 @@ import java.awt.event.MouseEvent;
 public class VentanaAgenda extends JFrame
 {
 	private static final long serialVersionUID = 1L;
+	private static VentanaAgenda INSTANCE;
 	
 	private JPanel panelContactos;
+	private List<Contacto> contactos;
 	private JButton btnAgregar;
 	private JButton btnEditar;
 	private JButton btnBorrar;
 	private JButton btnReporte;
 
-	public VentanaAgenda() 
+	
+	public static VentanaAgenda getInstance()
+	{
+		if(INSTANCE == null)
+			INSTANCE = new VentanaAgenda(); 	
+		
+		return INSTANCE;
+	}
+	
+	private VentanaAgenda() 
 	{
 		super();
 		inicializar();
@@ -144,6 +156,7 @@ public class VentanaAgenda extends JFrame
 		});
 		getContentPane().add(btnEditar);
 									
+		contactos = new ArrayList<Contacto>();
 	}
 	
 	public void mostrar()
@@ -167,40 +180,11 @@ public class VentanaAgenda extends JFrame
 		});
 		setVisible(true);
 	}
-	
-	public JButton getBtnAgregar() 
-	{
-		return btnAgregar;
-	}
-	
-	public JButton getBtnEditar() 
-	{
-		return btnEditar;
-	}
-
-	public JButton getBtnBorrar() 
-	{
-		return btnBorrar;
-	}
-	
-	public JButton getBtnReporte() 
-	{
-		return btnReporte;
-	}
-	
-	public Contacto[] getContactos() 
-	{
-		int cantContactos = panelContactos.getComponents().length;
-		Contacto[] contactos = new Contacto [cantContactos];
-		for (int i = 0; i < cantContactos; i++) {
-			contactos[i] = (Contacto) panelContactos.getComponents()[i];
-		}
-		return contactos;
-	}
 
 
 	public void cargarContactos(List<PersonaDTO> personasEnTabla) 
 	{
+		contactos.clear();
 		panelContactos.removeAll();
 		panelContactos.setPreferredSize(new Dimension(0, 0));
 		
@@ -210,6 +194,7 @@ public class VentanaAgenda extends JFrame
 			Contacto panelContacto = new Contacto(p);
 			panelContacto.setLocation(10, ejeY);
 			
+			contactos.add(panelContacto);
 			panelContactos.add(panelContacto);
 			
 			ejeY += panelContacto.getHeight();
@@ -221,5 +206,14 @@ public class VentanaAgenda extends JFrame
 		panelContactos.repaint();
 	}
 	
+	public List<Contacto> getContactos() { return contactos; }
+	
+	public JButton getBtnAgregar() { return btnAgregar; }
+	
+	public JButton getBtnEditar() { return btnEditar; }
+
+	public JButton getBtnBorrar() { return btnBorrar; }
+	
+	public JButton getBtnReporte() { return btnReporte; }
 	
 }

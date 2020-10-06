@@ -16,16 +16,24 @@ public class DAOSQLFactory implements DAOAbstractFactory
 		return new PersonaDAOSQL();
 	}
 
-	
-	public RegionesDAO createRegionesDAO() {
-		
-		return new RegionesDAOSQL();
-	}
-
-
 	public TipoDAO createTipoDAO() 
 	{
 		return new TipoDAOSQL();
+	}
+	
+	public PaisDAO createPaisDAO() 
+	{
+		return new PaisDAOSQL();
+	}
+	
+	public ProvinciaDAO createProvinciaDAO() 
+	{
+		return new ProvinciaDAOSQL();
+	}
+	
+	public LocalidadDAO createLocalidadDAO() 
+	{
+		return new LocalidadDAOSQL();
 	}
 
 }

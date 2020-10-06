@@ -4,7 +4,11 @@ public interface DAOAbstractFactory
 {
 	public PersonaDAO createPersonaDAO();
 	
-	public RegionesDAO createRegionesDAO();
-
 	public TipoDAO createTipoDAO();
+	
+	public PaisDAO createPaisDAO();
+	
+	public ProvinciaDAO createProvinciaDAO();
+	
+	public LocalidadDAO createLocalidadDAO();
 }

@@ -1,9 +1,78 @@
-CREATE TABLE IF NOT EXISTS paises (id int AUTO_INCREMENT NOT NULL,nombre varchar(100) NOT NULL,CONSTRAINT pk_paises PRIMARY KEY (id));
-CREATE TABLE IF NOT EXISTS provincias (id int AUTO_INCREMENT NOT NULL,idPais int NOT NULL,nombre varchar(100) NOT NULL,CONSTRAINT pk_provincias PRIMARY KEY (id),CONSTRAINT fk_provincias_paises FOREIGN KEY (idPais) REFERENCES paises(id));
-CREATE TABLE IF NOT EXISTS localidades (id int AUTO_INCREMENT NOT NULL,idProvincia int NOT NULL,nombre varchar(100) NOT NULL,CONSTRAINT pk_localidades PRIMARY KEY (id),CONSTRAINT fk_localidades_provincias FOREIGN KEY (idProvincia) REFERENCES provincias(id));
+/*************************/
+/* Creacion de tablas	 */
+/*************************/
+CREATE TABLE IF NOT EXISTS paises (
+	id int AUTO_INCREMENT NOT NULL,
+	nombre varchar(100) NOT NULL,
+	CONSTRAINT pk_paises PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS provincias (
+	id int AUTO_INCREMENT NOT NULL,
+	idPais int NOT NULL,
+	nombre varchar(100) NOT NULL,
+	CONSTRAINT pk_provincias PRIMARY KEY (id),
+	CONSTRAINT fk_provincias_paises FOREIGN KEY (idPais) REFERENCES paises(id)
+);
+
+CREATE TABLE IF NOT EXISTS localidades (
+	id int AUTO_INCREMENT NOT NULL,
+	idProvincia int NOT NULL,
+	nombre varchar(100) NOT NULL,
+	CONSTRAINT pk_localidades PRIMARY KEY (id),
+	CONSTRAINT fk_localidades_provincias FOREIGN KEY (idProvincia) REFERENCES provincias(id)
+);
+
+CREATE TABLE IF NOT EXISTS tipos (
+	id int AUTO_INCREMENT NOT NULL, 
+	nombre varchar(100) NOT NULL, 
+	CONSTRAINT pk_tipos PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS contactos (
+	id int NOT NULL AUTO_INCREMENT,
+	nombre varchar(20) NOT NULL  UNIQUE,
+	telefono varchar(20) NOT NULL,
+	correo varchar(100),
+	idTipo int,
+	fecha_cumple varchar(255),
+	idPais int,
+	idProvincia int,
+	idLocalidad int,
+	calle varchar(255),
+	altura varchar(6),
+	tipo_domicilio enum('', 'Casa', 'Edificio'),
+	piso varchar(3),
+	dpto varchar(3),
+	CONSTRAINT pk_personas PRIMARY KEY (id),
+	CONSTRAINT fk_personas_tipos FOREIGN KEY (idTipo) REFERENCES tipos(id),
+	CONSTRAINT fk_personas_paises FOREIGN KEY (idPais) REFERENCES paises(id),
+	CONSTRAINT fk_personas_provincias FOREIGN KEY (idProvincia) REFERENCES provincias(id),
+	CONSTRAINT fk_personas_localidades FOREIGN KEY (idLocalidad) REFERENCES localidades(id)
+);
+
+
+/******************************/
+/* Insert de tipo de contacto */
+/******************************/
+INSERT IGNORE into tipos (id, nombre) VALUES (1, 'Trabajo');
+INSERT IGNORE into tipos (id, nombre) VALUES (2, 'Universidad');
+INSERT IGNORE into tipos (id, nombre) VALUES (3, 'Familia');
+INSERT IGNORE into tipos (id, nombre) VALUES (4, 'Amigos');
+
+
+
+/******************************/
+/* 	Insert paises	*/
+/******************************/
 INSERT IGNORE into paises (id, nombre) VALUES (1, 'Argentina');
 INSERT IGNORE into paises (id, nombre) VALUES (2, 'Uruguay');
 INSERT IGNORE into paises (id, nombre) VALUES (3, 'Chile');
+
+
+/******************************/
+/* 	Insert provincias	*/
+/******************************/
 INSERT IGNORE into provincias (id, idPais, nombre) VALUES (1, 1, 'Buenos Aires');
 INSERT IGNORE into provincias (id, idPais, nombre) VALUES (2, 1, 'Catamarca');
 INSERT IGNORE into provincias (id, idPais, nombre) VALUES (3, 1, 'Chaco');
@@ -21,6 +90,10 @@ INSERT IGNORE into provincias (id, idPais, nombre) VALUES (14, 3, 'Antofagasta')
 INSERT IGNORE into provincias (id, idPais, nombre) VALUES (15, 3, 'Araucania');
 INSERT IGNORE into provincias (id, idPais, nombre) VALUES (16, 3, 'Libertador General Bernardo OHiggins');
 INSERT IGNORE into provincias (id, idPais, nombre) VALUES (17, 3, 'Region Metropolitana');
+
+/******************************/
+/* 	Insert localidades	*/
+/******************************/
 INSERT IGNORE into localidades (id, idProvincia, nombre) VALUES (1, 1, 'Malvinas Argentinas');
 INSERT IGNORE into localidades (id, idProvincia, nombre) VALUES (2, 1, 'San Miguel');
 INSERT IGNORE into localidades (id, idProvincia, nombre) VALUES (3, 1, 'Jose C. Paz');

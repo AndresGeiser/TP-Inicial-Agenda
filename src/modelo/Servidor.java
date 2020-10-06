@@ -34,7 +34,6 @@ public class Servidor
 		{
 			crearDB();
 			crearTablas();
-			crearTablasUbicaciones();
 			
 			conexion.getSQLConexion().commit();
 		} 
@@ -58,7 +57,7 @@ public class Servidor
 	private void crearTablas() throws SQLException 
 	{
 		String contenido = "";
-		String nombreFichero = "contactos.sql";
+		String nombreFichero = "agenda.sql";
         BufferedReader br = null;
      
         try {
@@ -92,52 +91,6 @@ public class Servidor
         }
         
         stmt.executeUpdate(contenido);
-        
-	}
-	
-	
-	//Crea la tabla de paises, provincias y localidades desde un archivo de texto
-	private void crearTablasUbicaciones() throws SQLException 
-	{
-		String nombreFichero = "localizaciones.sql";
-        BufferedReader br = null;
-     
-        try 
-        {
-        	Statement stmt = conexion.getSQLConexion().createStatement();
-        	br = new BufferedReader(new FileReader(nombreFichero));
-        	String texto = br.readLine();
-        	while(texto != null)
-        	{
-        		stmt.executeUpdate(texto);
-        		texto = br.readLine();
-	  		}
-   
-        	conexion.notificar("Tablas 'pais', 'provincia' y 'localidad' creadas exitosamente");
-        }
-        catch (FileNotFoundException e) 
-        {
-        	System.out.println("Error: Fichero no encontrado");
-            System.out.println(e.getMessage());
-        }
-
-        catch(Exception e) 
-        {
-            System.out.println("Error de lectura del fichero");
-            System.out.println(e.getMessage());
-        }
-        finally 
-        {
-            try {
-                if(br != null)
-                    br.close();
-            }
-            catch (Exception e) {
-                System.out.println("Error al cerrar el fichero");
-                System.out.println(e.getMessage());
-            }
-        }
-		
 	}
 	
 }

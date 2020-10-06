@@ -142,7 +142,7 @@ public class VentanaDetalles extends JDialog
 		lblCumpleanios.setText("Cumpleaños: " + cumpleanios);
 
 		DomicilioDTO domicilio = persona.getDomicilio();
-		if(domicilio.getPais().equals("")) 
+		if(domicilio.getPais() == null) 
 		{
 			lblDomicilio.setText("Domicilio: Sin informacion.");
 			lblDomicilio_2.setText("");
@@ -150,7 +150,7 @@ public class VentanaDetalles extends JDialog
 		else 
 		{
 			lblDomicilio.setText("Domicilio: "  + domicilio.getCalle() + " " + domicilio.getAltura() + ",");
-			lblDomicilio_2.setText(domicilio.getLocalidad() + ", " + domicilio.getProvincia() + ", " + domicilio.getPais());
+			lblDomicilio_2.setText(domicilio.getLocalidad().getNombre() + ", " + domicilio.getProvincia().getNombre() + ", " + domicilio.getPais().getNombre());
 		}
 		
 		String piso = domicilio.getPiso();
