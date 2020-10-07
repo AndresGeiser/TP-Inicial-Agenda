@@ -45,7 +45,11 @@ public class PersonaDAOSQL implements PersonaDAO
 			else 
 				statement.setInt(5, persona.getTipo_contacto().getId());
 			
-			statement.setString(6, persona.getFecha_cumple());
+			
+			if(persona.getFecha_cumple() == null)
+				statement.setNull(6, Types.INTEGER);
+			else
+				statement.setString(6, persona.getFecha_cumple());
 			
 			DomicilioDTO domicilio = persona.getDomicilio();
 			
@@ -122,11 +126,16 @@ public class PersonaDAOSQL implements PersonaDAO
 			statement.setString(1, persona.getNombre());
 			statement.setString(2, persona.getTelefono());
 			statement.setString(3, persona.getCorreo());
+			
 			if(persona.getTipo_contacto() == null) 
 				statement.setNull(4, Types.INTEGER);
 			else 
 				statement.setInt(4, persona.getTipo_contacto().getId());
-			statement.setString(5, persona.getFecha_cumple());
+
+			if(persona.getFecha_cumple() == null)
+				statement.setNull(5, Types.INTEGER);
+			else
+				statement.setString(5, persona.getFecha_cumple());
 			
 			DomicilioDTO domicilio = persona.getDomicilio();
 			

@@ -20,6 +20,8 @@ import java.awt.Insets;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.SwingConstants;
+
+import java.util.Date;
 import java.util.List;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -27,7 +29,11 @@ import javax.swing.JCheckBox;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import javax.swing.ImageIcon;
+import com.toedter.calendar.JDateChooser;
 
 public class VentanaPersona extends JFrame 
 {
@@ -40,7 +46,6 @@ public class VentanaPersona extends JFrame
 	private JTextField txtTelefono;
 	private JTextField txtCorreo;
 	private JComboBox<String> cbxTipo;
-	private JTextField txtFecha;
 	
 	private JCheckBox chckDomicilio;
 	private JComboBox<String> cbxPais;
@@ -56,7 +61,7 @@ public class VentanaPersona extends JFrame
 	private JButton btnConfigurarTipo;
 	private JButton btnAgregarPersona;
 	private JButton btnActualizarPersona;
-	
+	private JDateChooser jdcFechaCumpleanios;
 	
 	public static VentanaPersona getInstance()
 	{
@@ -71,7 +76,7 @@ public class VentanaPersona extends JFrame
 		setResizable(false);
 		setTitle("Agregar Contacto");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 400, 500);
+		setBounds(100, 100, 400, 494);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		
@@ -158,13 +163,6 @@ public class VentanaPersona extends JFrame
 		lblFecha.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		lblFecha.setBounds(10, 339, 325, 30);
 		panel.add(lblFecha);
-		
-		txtFecha = new JTextField();
-		txtFecha.setMargin(new Insets(2, 5, 2, 5));
-		txtFecha.setFont(new Font("SansSerif", Font.PLAIN, 12));
-		txtFecha.setColumns(10);
-		txtFecha.setBounds(10, 380, 325, 30);
-		panel.add(txtFecha);
 		
 		chckDomicilio = new JCheckBox("Agregar Domicilio");
 		chckDomicilio.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -335,6 +333,10 @@ public class VentanaPersona extends JFrame
 		btnConfigurarUbicaciones.setBounds(153, 417, 30, 30);
 		panel.add(btnConfigurarUbicaciones);
 		
+		jdcFechaCumpleanios = new JDateChooser();
+		jdcFechaCumpleanios.setBounds(10, 380, 137, 30);
+		panel.add(jdcFechaCumpleanios);
+		
 		btnAgregarPersona = new JButton("Agregar");
 		btnAgregarPersona.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAgregarPersona.setBorder(null);
@@ -393,7 +395,7 @@ public class VentanaPersona extends JFrame
 		txtAltura.setText("");
 		txtPiso.setText("");
 		txtDpto.setText("");
-		txtFecha.setText("");
+		jdcFechaCumpleanios.setDate(null);
 		cbxTipo.setSelectedIndex(0);
 		chckDomicilio.setSelected(false);
 		cbxPais.setSelectedIndex(0);
@@ -413,7 +415,20 @@ public class VentanaPersona extends JFrame
 		txtNombre.setText(p.getNombre());
 		txtTelefono.setText(p.getTelefono());
 		txtCorreo.setText(p.getCorreo());
-		txtFecha.setText(p.getFecha_cumple());
+
+		String cumpleanios = p.getFecha_cumple();
+		if(cumpleanios != null) 
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				Date fechaCumple = sdf.parse(cumpleanios);
+				jdcFechaCumpleanios.setDate(fechaCumple);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		else 
+			jdcFechaCumpleanios.setDate(null);
 		
 		TipoDTO tipo = p.getTipo_contacto();
 		if(tipo != null)
@@ -533,7 +548,7 @@ public class VentanaPersona extends JFrame
 	
 	public JTextField getTxtCorreo() { return txtCorreo; }
 	
-	public JTextField getTxtCumple() { return txtFecha; }
+	public JDateChooser getJdtFechaCumpleanios() { return jdcFechaCumpleanios; }
 	
 	public JComboBox<String> getTipo() { return cbxTipo; }
 	

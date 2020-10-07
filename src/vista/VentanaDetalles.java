@@ -16,6 +16,9 @@ import dto.PersonaDTO;
 import dto.TipoDTO;
 
 import java.awt.Toolkit;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class VentanaDetalles extends JDialog 
 {
@@ -125,7 +128,7 @@ public class VentanaDetalles extends JDialog
 		
 		TipoDTO tipo = persona.getTipo_contacto();
 		if(tipo == null)
-			lblTipo.setText("Tipo: Sin informacion.");
+			lblTipo.setText("Tipo: -");
 		else
 			lblTipo.setText("Tipo: " + persona.getTipo_contacto().getNombre());
 			
@@ -133,18 +136,30 @@ public class VentanaDetalles extends JDialog
 		
 		String correo = persona.getCorreo();
 		if(correo.equals(""))
-			correo = "Sin informacion.";
+			correo = "-";
 		lblCorreo.setText("Correo: " + correo);
 		
 		String cumpleanios = persona.getFecha_cumple();
-		if(cumpleanios.equals(""))
-			cumpleanios = "Sin informacion.";
+		if(cumpleanios != null) 
+		{
+			SimpleDateFormat formatMysql = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat miFormat = new SimpleDateFormat("dd/MM/yyyy");
+			Date date;
+			try {
+				date = formatMysql.parse(cumpleanios);
+				cumpleanios = miFormat.format(date.getTime());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		else
+			cumpleanios = "-";
 		lblCumpleanios.setText("Cumpleaños: " + cumpleanios);
 
 		DomicilioDTO domicilio = persona.getDomicilio();
 		if(domicilio.getPais() == null) 
 		{
-			lblDomicilio.setText("Domicilio: Sin informacion.");
+			lblDomicilio.setText("Domicilio: -");
 			lblDomicilio_2.setText("");
 		}
 		else 
@@ -155,12 +170,12 @@ public class VentanaDetalles extends JDialog
 		
 		String piso = domicilio.getPiso();
 		if(piso.equals(""))
-			piso = "Sin informacion.";
+			piso = "-";
 		lblPiso.setText("Piso: " + piso);
 		
 		String dpto = domicilio.getDpto();
 		if(dpto.equals(""))
-			dpto = "Sin informacion.";
+			dpto = "-";
 		lblDpto.setText("Dpto: " + dpto);
 	}
 	

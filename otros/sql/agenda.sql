@@ -25,17 +25,17 @@ CREATE TABLE IF NOT EXISTS localidades (
 
 CREATE TABLE IF NOT EXISTS tipos (
 	id int AUTO_INCREMENT NOT NULL, 
-	nombre varchar(100) NOT NULL, 
+	nombre varchar(15) NOT NULL, 
 	CONSTRAINT pk_tipos PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS contactos (
 	id int NOT NULL AUTO_INCREMENT,
 	nombre varchar(20) NOT NULL  UNIQUE,
-	telefono varchar(20) NOT NULL,
+	telefono varchar(15) NOT NULL,
 	correo varchar(100),
 	idTipo int,
-	fecha_cumple varchar(255),
+	fecha_cumple date,
 	idPais int,
 	idProvincia int,
 	idLocalidad int,

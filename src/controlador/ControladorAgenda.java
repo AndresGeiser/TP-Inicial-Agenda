@@ -2,7 +2,9 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,6 +12,7 @@ import java.util.regex.Pattern;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import modelo.Agenda;
 import reportes.ReporteAgenda;
@@ -116,11 +119,13 @@ public class ControladorAgenda implements ActionListener
 			String nombre = ventanaPersona.getTxtNombre().getText();
 			String tel = ventanaPersona.getTxtTelefono().getText();
 			String correo = ventanaPersona.getTxtCorreo().getText();
-			String cumple = ventanaPersona.getTxtCumple().getText();
+			
+			String cumple = null;
+			if(ventanaPersona.getJdtFechaCumpleanios().getDate() != null) 
+				cumple = new SimpleDateFormat("yyyy-MM-dd").format(ventanaPersona.getJdtFechaCumpleanios().getDate().getTime());
 			
 			int indexTipo = ventanaPersona.getTipo().getSelectedIndex();
 			TipoDTO tipo = (indexTipo == -1) ? null : tipos.get(indexTipo - 1);
-			
 			
 			PaisDTO pais = null; ProvinciaDTO provincia = null; LocalidadDTO localidad = null;
 			String calle, altura, tipoDomicilio, piso, dpto;
@@ -185,7 +190,10 @@ public class ControladorAgenda implements ActionListener
 			String nombre = ventanaPersona.getTxtNombre().getText();
 			String tel = ventanaPersona.getTxtTelefono().getText();
 			String correo = ventanaPersona.getTxtCorreo().getText();
-			String cumple = ventanaPersona.getTxtCumple().getText();
+			
+			String cumple = null;
+			if(ventanaPersona.getJdtFechaCumpleanios().getDate() != null) 
+				cumple = new SimpleDateFormat("yyyy-MM-dd").format(ventanaPersona.getJdtFechaCumpleanios().getDate().getTime());
 			
 			int indexTipo = ventanaPersona.getTipo().getSelectedIndex();
 			TipoDTO tipo = (indexTipo == -1) ? null : tipos.get(indexTipo - 1);
@@ -295,7 +303,7 @@ public class ControladorAgenda implements ActionListener
 		String tel = ventanaPersona.getTxtTelefono().getText().trim();
 		if(tel.equals("")) 
 			mensajeAdvertencia += numMensaje++ + ") El número de telefono del contacto es requerido.\n";
-		if (tel.length() > 15 || tel.length() > 7)
+		if (tel.length() > 15 || tel.length() < 7)
 			mensajeAdvertencia += numMensaje++ + ") El número invalido. (Minimo 7 numeros y maximo 15)\n";
 		
 		//Validacion correo
@@ -308,6 +316,16 @@ public class ControladorAgenda implements ActionListener
 			if (!matcher.matches()) 
 				mensajeAdvertencia += numMensaje++ + ") Verifique que el correo este bien escrito.\n";
 		}
+		
+		//Validacion fecha
+		String textoFecha = ((JTextField) ventanaPersona.getJdtFechaCumpleanios().getDateEditor().getUiComponent()).getText().trim();
+		if(!textoFecha.isEmpty()) 
+		{
+			Date fecha = ventanaPersona.getJdtFechaCumpleanios().getDate();
+			if(fecha == null) 
+				mensajeAdvertencia += numMensaje++ + ") La fecha de cumpleaños es invalida.\n";
+		}
+		
 		
 		//Validacion Domicilio
 		boolean agregoDomicilio = ventanaPersona.getChckDomicilio().isSelected();
