@@ -2,7 +2,9 @@ package modelo;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.sql.Statement;
 import persistencia.Conexion;
@@ -57,11 +59,14 @@ public class Servidor
 	private void crearTablas() throws SQLException 
 	{
 		String contenido = "";
-		String nombreFichero = "agenda.sql";
+		String rutaArchivo = "archivos/agenda.sql";
         BufferedReader br = null;
-     
         try {
-        	br = new BufferedReader(new FileReader(nombreFichero));
+        	ClassLoader cl = getClass().getClassLoader();
+        	InputStream is = cl.getResourceAsStream(rutaArchivo);
+        	InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
+        	
+        	br = new BufferedReader(isr);
         	String linea = br.readLine();
         	while(linea != null)
         	{

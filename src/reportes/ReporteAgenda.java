@@ -1,6 +1,6 @@
 package reportes;
 
-import java.io.File;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,15 +12,12 @@ import org.apache.log4j.Logger;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import dto.PersonaDTO;
 
 public class ReporteAgenda
 {
-	private JasperReport reporte;
 	private JasperViewer reporteViewer;
 	private JasperPrint	reporteLleno;
 	private Logger log = Logger.getLogger(ReporteAgenda.class);
@@ -35,8 +32,10 @@ public class ReporteAgenda
 		
     	try	
     	{
-			this.reporte = (JasperReport) JRLoader.loadObjectFromFile( "reportes"+ File.separator + "ReporteAgenda.jasper" );
-			this.reporteLleno = JasperFillManager.fillReport(this.reporte, parametersMap, new JRBeanCollectionDataSource(personas));
+    		String rutaArchivo = "archivos/ReporteAgenda.jasper";
+    		ClassLoader cl = getClass().getClassLoader();
+        	InputStream is = cl.getResourceAsStream(rutaArchivo);
+			this.reporteLleno = JasperFillManager.fillReport(is, parametersMap, new JRBeanCollectionDataSource(personas));
     		log.info("Se cargo correctamente el reporte");
 		}
 		catch( JRException ex ) 
