@@ -14,5 +14,4 @@ public class Main
 		ControladorConfigurar controlador = new ControladorConfigurar(modelo, vista);
 		controlador.iniciar();
 	}
-	
 }

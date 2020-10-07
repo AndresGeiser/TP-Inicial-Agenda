@@ -91,15 +91,11 @@ public class VentanaIngreso extends JFrame
 		setVisible(true);
 	}
 	
-	public JTextField getTxtUsuario() {
-		return txtUsuario;
-	}
+	public JTextField getTxtUsuario() { return txtUsuario; }
 	
-	public JTextField getTxtContraseña() {
-		return txtContraseña;
-	}
+	public JTextField getTxtContraseña() { return txtContraseña; }
 	
-	public JButton getBtnIngresar() {
-		return btnIngresar;
-	}
+	public JButton getBtnIngresar() { return btnIngresar; }
+	
+	
 }

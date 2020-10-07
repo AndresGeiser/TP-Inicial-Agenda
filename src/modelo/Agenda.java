@@ -33,6 +33,7 @@ public class Agenda
 		localidad = metodo_persistencia.createLocalidadDAO();
 	}
 	
+	
 	/************************/
 	/* 	ABM Persona 		*/
 	/************************/
@@ -56,6 +57,7 @@ public class Agenda
 	{
 		return persona.readAll();		
 	}
+	
 	
 	
 	/************************/
@@ -104,6 +106,7 @@ public class Agenda
 	}
 	
 	
+	
 	/************************/
 	/* 		ABM Pais 	*/
 	/************************/
@@ -142,6 +145,14 @@ public class Agenda
 			}
 		}
 		
+		//Borramos las localidades de las provincias del pais a eliminar y sus provincias
+		List<ProvinciaDTO> provincias = this.provincia.selectProvinciasFrom(pais_a_borrar);
+		for (ProvinciaDTO provincia : provincias) 
+		{
+			this.localidad.deleteLocalidadesOf(provincia);
+			this.provincia.delete(provincia);
+		}
+		
 		//Eliminamos el pais 
 		this.pais.delete(pais_a_borrar);
 	}
@@ -150,6 +161,7 @@ public class Agenda
 	{
 		return pais.readAll();
 	}
+	
 	
 	
 	/************************/
@@ -190,6 +202,11 @@ public class Agenda
 			}
 		}
 		
+		//Borramos las localidades de la provincia a borrar
+		List<LocalidadDTO> localidades = this.localidad.selectLocalidadesFrom(provincia_a_borrar);
+		for (LocalidadDTO localidad : localidades) 
+			this.localidad.delete(localidad);
+		
 		//Eliminamos la provincia 
 		this.provincia.delete(provincia_a_borrar);
 	}
@@ -198,6 +215,7 @@ public class Agenda
 	{
 		return provincia.selectProvinciasFrom(pais);
 	}
+	
 	
 	
 	/************************/

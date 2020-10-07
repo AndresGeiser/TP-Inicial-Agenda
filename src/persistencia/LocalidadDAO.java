@@ -14,4 +14,6 @@ public interface LocalidadDAO
 	public boolean update(LocalidadDTO provincia_a_actualizar);
 	
 	public List<LocalidadDTO> selectLocalidadesFrom(ProvinciaDTO provincia);
+
+	public boolean deleteLocalidadesOf(ProvinciaDTO provincia);
 }

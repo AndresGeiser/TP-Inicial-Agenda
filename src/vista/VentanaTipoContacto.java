@@ -223,40 +223,19 @@ public class VentanaTipoContacto extends JDialog
 		txtNombreEditar.setText("");
 	}
 	
-	public JTextField getTxtNombreAgregar() 
-	{
-		return txtNombreAgregar;
-	}
+	public JTextField getTxtNombreAgregar() { return txtNombreAgregar; }
 	
-	public JTextField getTxtNombreEditar() 
-	{
-		return txtNombreEditar;
-	}
+	public JTextField getTxtNombreEditar() { return txtNombreEditar; }
 	
-	public JComboBox<String> getCbxTiposEditar() 
-	{
-		return cbxTiposEditar;
-	}
+	public JComboBox<String> getCbxTiposEditar() { return cbxTiposEditar; }
 	
-	public List<JCheckBox> getChksPanelBorrar()
-	{
-		return chksBorrar;
-	}
+	public List<JCheckBox> getChksPanelBorrar() { return chksBorrar; }
 	
-	public JButton getBtnAgregar() 
-	{
-		return btnAgregar;
-	}
+	public JButton getBtnAgregar() { return btnAgregar; }
 	
-	public JButton getBtnEditar() 
-	{
-		return btnEditar;
-	}
+	public JButton getBtnEditar() { return btnEditar; }
 	
-	public JButton getBtnBorrar() 
-	{
-		return btnBorrar;
-	}
+	public JButton getBtnBorrar() { return btnBorrar; }
  	
 	public void cerrar() 
 	{

@@ -134,7 +134,7 @@ public class ControladorUbicaciones implements ActionListener
 				PaisDTO pais = paises.get(seleccionado);
 				String nombreViejo = pais.getNombre();
 				
-				int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan este pais asignado seran afectados.\n¿Estas seguro de cambiar el tipo '" + nombreViejo + "' por '" + nombreNuevo + "' ?", "Confirmacion para editar", JOptionPane.YES_NO_OPTION);
+				int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan este pais asignado a su domicilio seran afectados.\n¿Estas seguro de cambiar el tipo '" + nombreViejo + "' por '" + nombreNuevo + "' ?", "Confirmacion para editar", JOptionPane.YES_NO_OPTION);
 				
 				if (respuesta == 0) 
 				{
@@ -161,8 +161,11 @@ public class ControladorUbicaciones implements ActionListener
 		
 		if (indicesSelec.size() > 0) //Verificamos si selecciono alguno 
 		{
-			int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan algunos de los paises seleccionados seran afectados.\n¿Esta seguro de eliminarlos?", "Confirmacion para eliminar", JOptionPane.YES_NO_OPTION);
-			
+			int respuesta = JOptionPane.showConfirmDialog(null, "Al confirmar esta accion tambien se eliminaran:\n"
+															+ "1) Las provincias y localidades correspondientes a los paises seleccionados.\n"
+															+ "2) La informacion del domicilio de los contactos que tengan asignado alguno de los paises."
+															, "Confirmacion para eliminar", JOptionPane.YES_NO_OPTION);
+
 			if (respuesta == 0) 
 			{
 				//Recorremos y eliminamos los tipos que corresponden a los indices seleccionados
@@ -237,7 +240,7 @@ public class ControladorUbicaciones implements ActionListener
 				ProvinciaDTO provincia = provincias.get(seleccionado);
 				String nombreViejo = provincia.getNombre();
 				
-				int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan esta provincia asignada seran afectados.\n¿Estas seguro de cambiar el nombre de '" + nombreViejo + "' a '" + nombreNuevo + "' ?", "Confirmacion para editar", JOptionPane.YES_NO_OPTION);
+				int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan esta provincia asignada a su domicilio seran afectados.\n¿Estas seguro de cambiar el nombre de '" + nombreViejo + "' a '" + nombreNuevo + "' ?", "Confirmacion para editar", JOptionPane.YES_NO_OPTION);
 				
 				if (respuesta == 0) 
 				{
@@ -270,7 +273,10 @@ public class ControladorUbicaciones implements ActionListener
 		
 		if (indicesSelec.size() > 0) //Verificamos si selecciono alguno 
 		{
-			int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan algunos de las provincias seleccionadas seran afectados.\n¿Esta seguro de eliminarlas?", "Confirmacion para eliminar", JOptionPane.YES_NO_OPTION);
+			int respuesta = JOptionPane.showConfirmDialog(null, "Al confirmar esta accion tambien se eliminaran:\n"
+															+ "1) Las localidades correspondientes a las provincias seleccionadas.\n"
+															+ "2) La informacion del domicilio de los contactos que tengan asignado alguno de las pprovincias."
+															, "Confirmacion para eliminar", JOptionPane.YES_NO_OPTION);
 			
 			if (respuesta == 0) 
 			{
@@ -351,7 +357,7 @@ public class ControladorUbicaciones implements ActionListener
 				LocalidadDTO localidad = localidades.get(seleccionado);
 				String nombreViejo = localidad.getNombre();
 				
-				int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan esta localidad asignada seran afectados.\n¿Estas seguro de cambiar el nombre de '" + nombreViejo + "' a '" + nombreNuevo + "' ?", "Confirmacion para editar", JOptionPane.YES_NO_OPTION);
+				int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan esta localidad asignada a su domicilio seran afectados.\n¿Estas seguro de cambiar el nombre de '" + nombreViejo + "' a '" + nombreNuevo + "' ?", "Confirmacion para editar", JOptionPane.YES_NO_OPTION);
 				
 				if (respuesta == 0) 
 				{
@@ -384,7 +390,10 @@ public class ControladorUbicaciones implements ActionListener
 		
 		if (indicesSelec.size() > 0) //Verificamos si selecciono alguno 
 		{
-			int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan algunas de las localidades seleccionadas seran afectados.\n¿Esta seguro de eliminarlas?", "Confirmacion para eliminar", JOptionPane.YES_NO_OPTION);
+			int respuesta = JOptionPane.showConfirmDialog(null, "Al confirmar esta accion tambien se eliminaran:\n"
+															+ "1) Las localidades correspondientes a las provincias seleccionadas.\n"
+															+ "2) La informacion del domicilio de los contactos que tengan asignado alguno de las localidades."
+															, "Confirmacion para eliminar", JOptionPane.YES_NO_OPTION);
 			
 			if (respuesta == 0) 
 			{
