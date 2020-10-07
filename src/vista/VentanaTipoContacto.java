@@ -63,6 +63,7 @@ public class VentanaTipoContacto extends JDialog
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
 		JPanel contPanels = new JPanel();

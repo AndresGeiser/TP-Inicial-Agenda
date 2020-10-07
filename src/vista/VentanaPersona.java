@@ -389,7 +389,6 @@ public class VentanaPersona extends JFrame
 		btnAgregarPersona.setVisible(true);
 		btnActualizarPersona.setVisible(false);
 		
-		
 		//Reseteo de los campos a su estado inicial
 		txtNombre.setText("");
 		txtTelefono.setText("");

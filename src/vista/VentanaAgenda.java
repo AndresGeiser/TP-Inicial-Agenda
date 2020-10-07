@@ -11,16 +11,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.ImageIcon;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.BoxLayout;
+import javax.swing.border.MatteBorder;
 
 
 public class VentanaAgenda extends JFrame
@@ -53,33 +57,33 @@ public class VentanaAgenda extends JFrame
 	private void inicializar() 
 	{
 		setTitle("Agenda");
-		setResizable(false);
 		getContentPane().setBackground(Color.DARK_GRAY);
 		setBounds(100, 100, 605, 650);
+		setMinimumSize(new Dimension(0, 350));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setLayout(null);
+		getContentPane().setLayout(new BorderLayout(0, 0));
 		setLocationRelativeTo(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(10, 11, 485, 600);
-		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
-		getContentPane().add(scrollPane);
+		JPanel panelDerecho = new JPanel();
+		panelDerecho.setBorder(new MatteBorder(5, 0, 5, 0, (Color) new Color(64, 64, 64)));
+		panelDerecho.setBackground(Color.DARK_GRAY);
+		panelDerecho.setLayout(new BorderLayout(0, 0));
+		getContentPane().add(panelDerecho, BorderLayout.EAST);
 		
-		panelContactos = new JPanel();
-		panelContactos.setBackground(new Color( 74, 72, 75 ));
-		panelContactos.setPreferredSize(new Dimension(0, 0));
-		panelContactos.setLayout(null);
-		scrollPane.setViewportView(panelContactos);
+		JPanel panelDerechoSuperior = new JPanel();
+		panelDerechoSuperior.setBackground(Color.DARK_GRAY);
+		panelDerechoSuperior.setPreferredSize(new Dimension(80, 140));
+		panelDerechoSuperior.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panelDerecho.add(panelDerechoSuperior, BorderLayout.NORTH);
 		
 		btnAgregar = new JButton("");
+		btnAgregar.setPreferredSize(new Dimension(60, 60));
 		btnAgregar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAgregar.setToolTipText("Agregar contacto");
 		btnAgregar.setFocusable(false);
 		btnAgregar.setBackground(new Color(74, 72, 75));
 		btnAgregar.setBorderPainted(false);
 		btnAgregar.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/icons/agregar.png")));
-		btnAgregar.setBounds(519, 11, 70, 70);
 		btnAgregar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
@@ -91,58 +95,16 @@ public class VentanaAgenda extends JFrame
 				btnAgregar.setBackground(new Color(74, 72, 75));
 			}
 		});
-		getContentPane().add(btnAgregar);
-		
-		btnBorrar = new JButton("");
-		btnBorrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnBorrar.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/icons/borrar.png")));
-		btnBorrar.setToolTipText("Eliminar contacto");
-		btnBorrar.setFocusable(false);
-		btnBorrar.setBorderPainted(false);
-		btnBorrar.setBackground(new Color(223, 84, 84));
-		btnBorrar.setBounds(519, 460, 70, 70);
-		btnBorrar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				btnBorrar.setBackground(new Color(227, 101, 101));
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				btnBorrar.setBackground(new Color(223, 84, 84));
-			}
-		});
-		getContentPane().add(btnBorrar);
-		
-		btnReporte = new JButton("");
-		btnReporte.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/icons/reporte.png")));
-		btnReporte.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnReporte.setToolTipText("Generar reporte");
-		btnReporte.setFocusable(false);
-		btnReporte.setBorderPainted(false);
-		btnReporte.setBackground(new Color(255, 153, 51));
-		btnReporte.setBounds(519, 541, 70, 70);
-		btnReporte.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				btnReporte.setBackground(new Color(251, 163, 76));
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				btnReporte.setBackground(new Color(255, 153, 51));
-			}
-		});
-		getContentPane().add(btnReporte);
+		panelDerechoSuperior.add(btnAgregar);
 		
 		btnEditar = new JButton("");
+		btnEditar.setPreferredSize(new Dimension(60, 60));
 		btnEditar.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/icons/editar.png")));
 		btnEditar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEditar.setToolTipText("Editar contacto");
 		btnEditar.setFocusable(false);
 		btnEditar.setBorderPainted(false);
 		btnEditar.setBackground(new Color(74, 72, 75));
-		btnEditar.setBounds(519, 92, 70, 70);
 		btnEditar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
@@ -154,7 +116,68 @@ public class VentanaAgenda extends JFrame
 				btnEditar.setBackground(new Color(74, 72, 75));
 			}
 		});
-		getContentPane().add(btnEditar);
+		panelDerechoSuperior.add(btnEditar);
+		
+		
+		JPanel panelDerechoInferior = new JPanel();
+		panelDerechoInferior.setBackground(Color.DARK_GRAY);
+		panelDerechoInferior.setPreferredSize(new Dimension(80, 140));
+		panelDerechoInferior.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panelDerecho.add(panelDerechoInferior, BorderLayout.SOUTH);
+		
+		btnBorrar = new JButton("");
+		btnBorrar.setPreferredSize(new Dimension(60, 60));
+		btnBorrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnBorrar.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/icons/borrar.png")));
+		btnBorrar.setToolTipText("Eliminar contacto");
+		btnBorrar.setFocusable(false);
+		btnBorrar.setBorderPainted(false);
+		btnBorrar.setBackground(new Color(223, 84, 84));
+		btnBorrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				btnBorrar.setBackground(new Color(227, 101, 101));
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				btnBorrar.setBackground(new Color(223, 84, 84));
+			}
+		});
+		panelDerechoInferior.add(btnBorrar);
+		
+		btnReporte = new JButton("");
+		btnReporte.setPreferredSize(new Dimension(60, 60));
+		btnReporte.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/icons/reporte.png")));
+		btnReporte.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnReporte.setToolTipText("Generar reporte");
+		btnReporte.setFocusable(false);
+		btnReporte.setBorderPainted(false);
+		btnReporte.setBackground(new Color(255, 153, 51));
+		btnReporte.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				btnReporte.setBackground(new Color(251, 163, 76));
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				btnReporte.setBackground(new Color(255, 153, 51));
+			}
+		});
+		panelDerechoInferior.add(btnReporte);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBorder(null);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(15);
+		getContentPane().add(scrollPane, BorderLayout.CENTER);
+		
+		panelContactos = new JPanel();
+		panelContactos.setBorder(new MatteBorder(10, 20, 10, 15, (Color) new Color(64, 64, 64)));
+		panelContactos.setBackground(new Color( 74, 72, 75 ));
+		panelContactos.setPreferredSize(new Dimension(0, 0));
+		scrollPane.setViewportView(panelContactos);
+		panelContactos.setLayout(new BoxLayout(panelContactos, BoxLayout.Y_AXIS));
 									
 		contactos = new ArrayList<Contacto>();
 	}
@@ -186,22 +209,19 @@ public class VentanaAgenda extends JFrame
 	{
 		contactos.clear();
 		panelContactos.removeAll();
-		panelContactos.setPreferredSize(new Dimension(0, 0));
 		
-		int ejeY = 11;
+		int altoTotal = 0;
 		for (PersonaDTO p : personasEnTabla)
 		{
 			Contacto panelContacto = new Contacto(p);
-			panelContacto.setLocation(10, ejeY);
 			
 			contactos.add(panelContacto);
 			panelContactos.add(panelContacto);
 			
-			ejeY += panelContacto.getHeight();
+			altoTotal += panelContacto.getPreferredSize().getHeight();
 			
-			panelContactos.setPreferredSize(new Dimension(panelContactos.getWidth(), ejeY));
+			panelContactos.setPreferredSize(new Dimension(0, altoTotal));
 		}
-		
 		panelContactos.revalidate();
 		panelContactos.repaint();
 	}

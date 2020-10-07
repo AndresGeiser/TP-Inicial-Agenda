@@ -2,6 +2,7 @@ package vista;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,6 +17,8 @@ import dto.TipoDTO;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
 public class Contacto extends JPanel 
 {
@@ -31,10 +34,12 @@ public class Contacto extends JPanel
 	{	
 		setBorder(new MatteBorder(0, 0, 1, 0, (Color) Color.GRAY));
 		setLocation(10, 10);
-		setSize(446, 104);
+		setPreferredSize(new Dimension(446, 104));
+		setMaximumSize(new Dimension(Integer.MAX_VALUE, 104));
+		setPreferredSize(new Dimension(446, 104));
 		setBackground(inicial);
-		setLayout(null);
 		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		setLayout(new BorderLayout(0, 0));
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent arg0) 
@@ -60,33 +65,47 @@ public class Contacto extends JPanel
 			}
 		});
 		
+		JPanel panelIzquierdo = new JPanel();
+		panelIzquierdo.setPreferredSize(new Dimension(200, 10));
+		panelIzquierdo.setBackground(null);
+		panelIzquierdo.setLayout(null);
+		add(panelIzquierdo, BorderLayout.EAST);
+		
+		JPanel panelCentro = new JPanel();
+		panelCentro.setBackground(null);
+		panelCentro.setLayout(new GridLayout(3, 0, 4, 0));
+		add(panelCentro, BorderLayout.CENTER);
+		
 		JLabel lblNombre = new JLabel(p.getNombre());
+		lblNombre.setBorder(new MatteBorder(0, 10, 0, 0, (Color) null));
 		lblNombre.setIconTextGap(8);
 		lblNombre.setIcon(new ImageIcon(Contacto.class.getResource("/icons/contactox16.png")));
 		lblNombre.setForeground(new Color(255, 153, 51));
 		lblNombre.setFont(new Font("SansSerif", Font.BOLD, 17));
 		lblNombre.setBounds(10, 12, 181, 20);
-		add(lblNombre);
+		panelCentro.add(lblNombre);
 		
 		JLabel lblTelefono = new JLabel(p.getTelefono());
+		lblTelefono.setBorder(new MatteBorder(0, 10, 0, 0, (Color) null));
 		lblTelefono.setIconTextGap(8);
 		lblTelefono.setIcon(new ImageIcon(Contacto.class.getResource("/icons/telefono.png")));
 		lblTelefono.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTelefono.setForeground(new Color(255, 153, 51));
 		lblTelefono.setFont(new Font("SansSerif", Font.BOLD, 15));
 		lblTelefono.setBounds(10, 43, 234, 20);
-		add(lblTelefono);
+		panelCentro.add(lblTelefono);
 		
 		String correo = p.getCorreo();
 		if(!correo.equals("")) 
 		{
 			JLabel lblCorreo = new JLabel(correo);
+			lblCorreo.setBorder(new MatteBorder(0, 10, 0, 0, (Color) null));
 			lblCorreo.setIconTextGap(8);
 			lblCorreo.setIcon(new ImageIcon(Contacto.class.getResource("/icons/correo.png")));
 			lblCorreo.setForeground(new Color(255, 153, 51));
 			lblCorreo.setFont(new Font("SansSerif", Font.PLAIN, 15));
 			lblCorreo.setBounds(10, 74, 336, 17);
-			add(lblCorreo);
+			panelCentro.add(lblCorreo);
 		}
 		
 		TipoDTO tipo = p.getTipo_contacto();
@@ -114,9 +133,10 @@ public class Contacto extends JPanel
 			lblTipo.setHorizontalAlignment(SwingConstants.RIGHT);
 			lblTipo.setForeground(Color.ORANGE);
 			lblTipo.setFont(new Font("SansSerif", Font.BOLD, 14));
-			lblTipo.setBounds(286, 12, 150, 32);
-			add(lblTipo);
+			lblTipo.setBounds(40, 11, 150, 32);
+			panelIzquierdo.add(lblTipo);
 		}
+		
 		btnVerMas = new JButton("+");
 		btnVerMas.addMouseListener(new MouseAdapter() {
 			@Override
@@ -133,8 +153,8 @@ public class Contacto extends JPanel
 		btnVerMas.setForeground(new Color(74, 75, 71));
 		btnVerMas.setBackground(new Color(255, 153, 51));
 		btnVerMas.setToolTipText("Ver mas");
-		btnVerMas.setBounds(416, 74, 20, 20);
-		add(btnVerMas);
+		btnVerMas.setBounds(170, 72, 20, 20);
+		panelIzquierdo.add(btnVerMas);
 	}
 	
 	public boolean estaSeleccionado() 

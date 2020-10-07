@@ -121,6 +121,7 @@ public class VentanaUbicaciones extends JDialog
 		iniPanelLocalidad();
 		
 		scrollPanePrincipal = new JScrollPane();
+		scrollPanePrincipal.getVerticalScrollBar().setUnitIncrement(20);
 		getContentPane().add(scrollPanePrincipal, BorderLayout.CENTER);
 
 		chksPaisesBorrar = new ArrayList<JCheckBox>();
@@ -516,6 +517,9 @@ public class VentanaUbicaciones extends JDialog
 	
 	public void mostrar() 
 	{
+		setBounds(new Rectangle(200, 50, 500, 600));
+		setLocationRelativeTo(null);
+		
 		mostrarPanelPais();
 		this.setVisible(true);
 	}
@@ -527,15 +531,17 @@ public class VentanaUbicaciones extends JDialog
 		btnLocalidades.setBackground(Color.WHITE);
 		
 		scrollPanePrincipal.setViewportView(panelPais);
+		scrollPanePrincipal.getVerticalScrollBar().setValue(0);
 	}
 	
 	public void mostrarPanelProvincia() 
-	{
+	{		
 		btnProvincias.setBackground(new Color(255, 153, 51));
 		btnPaises.setBackground(Color.WHITE);
 		btnLocalidades.setBackground(Color.WHITE);
 		
 		scrollPanePrincipal.setViewportView(panelProvincia);
+		scrollPanePrincipal.getVerticalScrollBar().setValue(0);
 	}
 	
 	public void mostrarPanelLocalidad() 
@@ -545,6 +551,7 @@ public class VentanaUbicaciones extends JDialog
 		btnProvincias.setBackground(Color.WHITE);
 		
 		scrollPanePrincipal.setViewportView(panelLocalidad);
+		scrollPanePrincipal.getVerticalScrollBar().setValue(0);
 	}
 	
 	public void cargarPaises(List<PaisDTO> paises) 
