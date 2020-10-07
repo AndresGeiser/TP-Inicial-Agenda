@@ -110,12 +110,8 @@ public class VentanaPersona extends JFrame
 		txtTelefono.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent evt) {
-				 char car = evt.getKeyChar();
-				 if(!Character.isDigit(car)){
-					 evt.consume();
-					 getToolkit().beep();
-				 }
-				 if(txtTelefono.getText().length() > 11) {
+				 char c = evt.getKeyChar();
+				 if(!Character.isDigit(c)){
 					 evt.consume();
 					 getToolkit().beep();
 				 }
@@ -522,7 +518,6 @@ public class VentanaPersona extends JFrame
 	{
 		for (int i = 1; i < combo.getItemCount(); i++) 
 		{
-			System.out.println(i);
 			if(combo.getItemAt(i).equalsIgnoreCase(cadena))
 			{
 				combo.setSelectedIndex(i);

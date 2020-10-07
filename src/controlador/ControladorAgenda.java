@@ -275,10 +275,8 @@ public class ControladorAgenda implements ActionListener
 		
 		//Validacion nombre
 		String nombre = ventanaPersona.getTxtNombre().getText().trim();
-		String tel = ventanaPersona.getTxtTelefono().getText().trim();
-		if (nombre.equals("") || tel.equals("")) 
-			mensajeAdvertencia += numMensaje++ + ") El nombre y telefono del contacto es requerido.\n";
-		
+		if (nombre.equals("")) 
+			mensajeAdvertencia += numMensaje++ + ") El nombre del contacto es requerido.\n";
 		if (nombre.length() > 20)
 			mensajeAdvertencia += numMensaje++ + ") Nombre de contacto muy largo. (Maximo 20 caracteres)\\n";
 		else 
@@ -292,6 +290,13 @@ public class ControladorAgenda implements ActionListener
 				}
 			}
 		}
+		
+		//Validacion telefono
+		String tel = ventanaPersona.getTxtTelefono().getText().trim();
+		if(tel.equals("")) 
+			mensajeAdvertencia += numMensaje++ + ") El número de telefono del contacto es requerido.\n";
+		if (tel.length() > 15 || tel.length() > 7)
+			mensajeAdvertencia += numMensaje++ + ") El número invalido. (Minimo 7 numeros y maximo 15)\n";
 		
 		//Validacion correo
 		String correo = ventanaPersona.getTxtCorreo().getText().trim();
@@ -333,11 +338,11 @@ public class ControladorAgenda implements ActionListener
 				mensajeAdvertencia += numMensaje++ + ") No puede agregar un domicilio sin escoger un pais.\n";
 		}
 		
-		
-		if (!mensajeAdvertencia.equals("")) 
+		boolean noHayErrores = (mensajeAdvertencia.equals("")) ? true : false; 
+		if (noHayErrores == false) 
 			JOptionPane.showMessageDialog(null, "Se encontraron los siguientes errores en los campos:\n\n" + mensajeAdvertencia, "Aviso", JOptionPane.WARNING_MESSAGE); 
 
-		return (mensajeAdvertencia.equals("")) ? true : false;
+		return noHayErrores;
 	}
 	
 	/**
@@ -363,6 +368,7 @@ public class ControladorAgenda implements ActionListener
 			contacto.getBtnVerMas().addActionListener(t -> ventanaDetalles(t));
 	}
 	
+	
 	public void actualizarPaises() 
 	{
 		this.paises = agenda.obtenerPaises();
@@ -379,7 +385,6 @@ public class ControladorAgenda implements ActionListener
 			ventanaPersona.cargarProvincias(provincias);
 		}
 	}
-
 
 	private void actualizarLocalidades(ActionEvent ae) 
 	{

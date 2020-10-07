@@ -203,7 +203,6 @@ public class ControladorUbicaciones implements ActionListener
 			else 
 			{
 				int idPais = pais.getId();
-				System.out.println(idPais);
 				agenda.agregarProvincia(new ProvinciaDTO(0, nombreProvincia, idPais));
 				refrescar();
 				JOptionPane.showMessageDialog(null, "Nueva provincia agregada al pais '" + pais.getNombre() + "'.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
@@ -397,7 +396,6 @@ public class ControladorUbicaciones implements ActionListener
 			
 			if (respuesta == 0) 
 			{
-				System.out.println(localidades);
 				//Recorremos y eliminamos los tipos que corresponden a los indices seleccionados
 				for (Integer indice : indicesSelec) 
 					agenda.borrarLocalidad(localidades.get(indice));
@@ -433,7 +431,6 @@ public class ControladorUbicaciones implements ActionListener
 				provinciasLocalidad = agenda.obtenerProvincias(pais);
 				ventanaUbicaciones.cargarProvinciasPanelLocalidad(provinciasLocalidad);
 			}
-			System.out.println(provinciasLocalidad.size());
 		}
 		
 		else if (ae.getSource() == ventanaUbicaciones.getCbxProvinciasLocalidad())
