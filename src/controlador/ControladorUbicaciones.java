@@ -456,12 +456,15 @@ public class ControladorUbicaciones implements ActionListener
 	private void refrescar()
 	{
 		paises = agenda.obtenerPaises();
+		
+		//Actualizamos la vista de la ventana de ubicaciones
 		ventanaUbicaciones.cargarPaises(paises);
 		ventanaUbicaciones.limpiarCampos();
 		
+		//LLamamos al otro controlador para que actualice los datos de las otras ventanas
 		ControladorAgenda ctrlAgenda = ControladorAgenda.getInstance(null, null);
 		ctrlAgenda.refrescarLista();
-		ctrlAgenda.actualizarPaisesVentanaPersona();
+		ctrlAgenda.actualizarPaises();
 	}
 	
 	

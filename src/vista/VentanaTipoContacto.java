@@ -217,6 +217,9 @@ public class VentanaTipoContacto extends JDialog
 			panelChksBorrar.add(chk);
 			chksBorrar.add(chk);
 		}
+		
+		panelChksBorrar.revalidate();
+		panelChksBorrar.repaint();
 	}
 	
 	public void limpiarCampos() 

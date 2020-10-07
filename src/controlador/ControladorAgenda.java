@@ -91,10 +91,9 @@ public class ControladorAgenda implements ActionListener
 	
 	public void inicializar()
 	{
-		actualizarPaisesVentanaPersona();
+		actualizarPaises();
 		
 		this.ventanaPersona.cargarTiposDeContacto(tipos);
-		
 		this.ventanaTipoContacto.cargarTipos(tipos);
 		
 		refrescarLista();
@@ -229,16 +228,7 @@ public class ControladorAgenda implements ActionListener
 			personaSeleccionada = null;
 		}
 	}
-	
-	/**
-	 * Muestra la ventana con un reporte generado
-	 */
-	private void mostrarReporte(ActionEvent ae) 
-	{
-		ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
-		reporte.mostrar();
-	}
-	
+
 
 	/**
 	 * Borra los contactos seleccionados
@@ -351,6 +341,16 @@ public class ControladorAgenda implements ActionListener
 	}
 	
 	/**
+	 * Muestra la ventana con un reporte generado
+	 */
+	private void mostrarReporte(ActionEvent ae) 
+	{
+		ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
+		reporte.mostrar();
+	}
+	
+	
+	/**
 	 * Actualiza la lista de contactos de la agenda
 	 */
 	public void refrescarLista()
@@ -360,10 +360,10 @@ public class ControladorAgenda implements ActionListener
 		
 		//Agregamos la funcion para ver los detalles del contacto a cada boton
 		for (Contacto contacto : ventanaAgenda.getContactos())
-			contacto.getBtnVerMas().addActionListener(t->mostrarDetalles(t));
+			contacto.getBtnVerMas().addActionListener(t -> ventanaDetalles(t));
 	}
 	
-	public void actualizarPaisesVentanaPersona() 
+	public void actualizarPaises() 
 	{
 		this.paises = agenda.obtenerPaises();
 		this.ventanaPersona.cargarPaises(paises);
@@ -408,7 +408,7 @@ public class ControladorAgenda implements ActionListener
 	/**
 	 * Muestra la ventana de detalles de un contacto
 	 */
-	private void mostrarDetalles(ActionEvent ae) 
+	private void ventanaDetalles(ActionEvent ae) 
 	{
 		for (int i = 0; i < ventanaAgenda.getContactos().size(); i++) 
 		{
@@ -424,8 +424,9 @@ public class ControladorAgenda implements ActionListener
 		}
 	}
 
+	
 	/**
-	 * Muestra y cierra la ventana de agregar, editar o borrar un tipo de contacto.
+	 * Muestra la ventana de agregar, editar o borrar un tipo de contacto.
 	 */
 	private void ventanaTipoContacto(ActionEvent ae) 
 	{
@@ -435,32 +436,16 @@ public class ControladorAgenda implements ActionListener
 	
 	public void agregarNuevoTipo(ActionEvent ae) 
 	{
-		String nombre = ventanaTipoContacto.getTxtNombreAgregar().getText().trim();
+		String nombreTipo = ventanaTipoContacto.getTxtNombreAgregar().getText().trim();
 		
-		if (!nombre.equals("")) 
+		if(validarNombreTipoContacto(nombreTipo)) 
 		{
-			nombre = nombre.substring(0, 1).toUpperCase() + nombre.substring(1); //Convertimos la primera letra en mayuscula
-			
-			boolean existe = false;
-			for (TipoDTO tipo : tipos) 
-			{
-				if (tipo.getNombre().equals(nombre))
-					existe = true;
-			}
-			
-			if (existe)
-				JOptionPane.showMessageDialog(null, "Ya existe un tipo de contacto con el nombre '" + nombre + "'", "Aviso", JOptionPane.WARNING_MESSAGE); 
-			else 
-			{
-				agenda.agregarTipoDeContacto(new TipoDTO(0, nombre));
-				refrescarTiposDeContacto();
-				ventanaTipoContacto.limpiarCampos();
-				JOptionPane.showMessageDialog(null, "Nuevo tipo de contacto guardado.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
-			}
+			nombreTipo = nombreTipo.substring(0, 1).toUpperCase() + nombreTipo.substring(1); //Convertimos la primera letra en mayuscula
+			agenda.agregarTipoDeContacto(new TipoDTO(0, nombreTipo));
+			refrescarTiposDeContacto();
+			ventanaTipoContacto.limpiarCampos();
+			JOptionPane.showMessageDialog(null, "Nuevo tipo de contacto guardado.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
 		}
-		else
-			JOptionPane.showMessageDialog(null, "El campo esta vacio.", "Aviso", JOptionPane.WARNING_MESSAGE); 
-		
 	}
 	
 	public void editarTipo(ActionEvent ae) 
@@ -468,39 +453,24 @@ public class ControladorAgenda implements ActionListener
 		int seleccionado = ventanaTipoContacto.getCbxTiposEditar().getSelectedIndex();
 		String nombreNuevo = ventanaTipoContacto.getTxtNombreEditar().getText().trim();
 		
-		if (!nombreNuevo.equals("")) 
+		if(validarNombreTipoContacto(nombreNuevo)) 
 		{
-			nombreNuevo = nombreNuevo.substring(0, 1).toUpperCase() + nombreNuevo.substring(1); //Convertimos la primera letra en mayuscula
+			TipoDTO tipo = tipos.get(seleccionado);
+			String nombreViejo = tipo.getNombre();
 			
-			boolean existe = false;
-			for (TipoDTO tipo : tipos) {
-				if (tipo.getNombre().equals(nombreNuevo))
-					existe = true;
-			}
+			int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan el tipo '" + nombreViejo + "' seran afectados.\n¿Estas seguro de cambiar el tipo '" + nombreViejo + "' por '" + nombreNuevo + "' ?", "Confirmacion para editar", JOptionPane.YES_NO_OPTION);
 			
-			if (existe)
-				JOptionPane.showMessageDialog(null, "Ya existe un tipo de contacto con el nombre '" + nombreNuevo + "'", "Aviso", JOptionPane.WARNING_MESSAGE); 
-			else 
+			if (respuesta == 0) 
 			{
-				TipoDTO tipo = tipos.get(seleccionado);
-				String nombreViejo = tipo.getNombre();
+				tipo.setNombre(nombreNuevo);
+				agenda.editarTipoDeContacto(tipo);
 				
-				int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan el tipo '" + nombreViejo + "' seran afectados.\n¿Estas seguro de cambiar el tipo '" + nombreViejo + "' por '" + nombreNuevo + "' ?", "Confirmacion para editar", JOptionPane.YES_NO_OPTION);
-				
-				if (respuesta == 0) 
-				{
-					tipo.setNombre(nombreNuevo);
-					agenda.editarTipoDeContacto(tipo);
-					
-					refrescarTiposDeContacto();
-					ventanaTipoContacto.limpiarCampos();
-					refrescarLista();
-					JOptionPane.showMessageDialog(null, "Tipo de contacto actualizado.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
-				}
+				refrescarTiposDeContacto();
+				ventanaTipoContacto.limpiarCampos();
+				refrescarLista();
+				JOptionPane.showMessageDialog(null, "Tipo de contacto actualizado.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
 			}
 		}
-		else
-			JOptionPane.showMessageDialog(null, "El campo esta vacio.", "Aviso", JOptionPane.WARNING_MESSAGE);
 	}
 	
 	public void borrarTipo(ActionEvent ae) 
@@ -541,6 +511,40 @@ public class ControladorAgenda implements ActionListener
 		
 	}
 	
+	private boolean validarNombreTipoContacto(String nombre) 
+	{
+		if (nombre.equals("")) 
+		{
+			JOptionPane.showMessageDialog(null, "El campo esta vacio.", "Aviso", JOptionPane.WARNING_MESSAGE); 
+			return false;
+		}
+		
+		if(nombre.length() > 15) 
+		{
+			JOptionPane.showMessageDialog(null, "Introduce un nombre que no supere los 15 caracteres", "Aviso", JOptionPane.WARNING_MESSAGE); 
+			return false;
+		}
+		
+		if(nombre.contains(" ")) 
+		{
+			JOptionPane.showMessageDialog(null, "Introduce un nombre que no tenga espacios", "Aviso", JOptionPane.WARNING_MESSAGE); 
+			return false;
+		}
+		
+		nombre = nombre.substring(0, 1).toUpperCase() + nombre.substring(1); //Convertimos la primera letra en mayuscula
+		
+		for (TipoDTO tipo : tipos) 
+		{
+			if (tipo.getNombre().equals(nombre)) 
+			{
+				JOptionPane.showMessageDialog(null, "Ya existe un tipo de contacto con el nombre '" + nombre + "'", "Aviso", JOptionPane.WARNING_MESSAGE); 
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	private void refrescarTiposDeContacto() 
 	{
 		tipos = agenda.obtenerTiposDeContacto();
@@ -549,6 +553,10 @@ public class ControladorAgenda implements ActionListener
 		ventanaTipoContacto.limpiarCampos();	
 	}
 	
+	
+	/**
+	 * Muestra la ventana de agregar, editar o borrar ubicaciones.
+	 */
 	private void ventanaUbicaciones(ActionEvent ae) 
 	{
 		controladorUbicaciones.iniciar();
