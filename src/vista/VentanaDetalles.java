@@ -44,7 +44,7 @@ public class VentanaDetalles extends JDialog
 	private VentanaDetalles(VentanaAgenda ventana,boolean bool) 
 	{
 		super(ventana, bool);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaDetalles.class.getResource("/icons/contactox16.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaDetalles.class.getResource("/iconos/contactox16.png")));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 420, 410);
@@ -55,7 +55,7 @@ public class VentanaDetalles extends JDialog
 		
 		JLabel lblIcon = new JLabel("");
 		lblIcon.setBounds(175, 15, 64, 64);
-		lblIcon.setIcon(new ImageIcon(VentanaDetalles.class.getResource("/icons/contactox64.png")));
+		lblIcon.setIcon(new ImageIcon(VentanaDetalles.class.getResource("/iconos/contactox64.png")));
 		panel.add(lblIcon);
 		
 		lblNombre = new JLabel("");

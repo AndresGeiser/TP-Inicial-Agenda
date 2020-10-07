@@ -34,7 +34,7 @@ public class VentanaConfigurar extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel labelIcon = new JLabel("");
-		labelIcon.setIcon(new ImageIcon(VentanaConfigurar.class.getResource("/icons/config.png")));
+		labelIcon.setIcon(new ImageIcon(VentanaConfigurar.class.getResource("/iconos/config.png")));
 		labelIcon.setBounds(186, 24, 128, 128);
 		panel.add(labelIcon);
 		

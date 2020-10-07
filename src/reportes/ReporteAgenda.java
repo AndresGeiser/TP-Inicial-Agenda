@@ -32,7 +32,7 @@ public class ReporteAgenda
 		
     	try	
     	{
-    		String rutaArchivo = "archivos/ReporteAgenda.jasper";
+    		String rutaArchivo = "jasper/ReporteAgenda.jasper";
     		ClassLoader cl = getClass().getClassLoader();
         	InputStream is = cl.getResourceAsStream(rutaArchivo);
 			this.reporteLleno = JasperFillManager.fillReport(is, parametersMap, new JRBeanCollectionDataSource(personas));

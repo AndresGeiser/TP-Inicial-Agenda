@@ -21,5 +21,6 @@
 	<classpathentry kind="lib" path="C:/Users/andu5/.p2/pool/plugins/org.eclipse.ui.forms_3.9.100.v20200413-1417.jar" sourcepath="C:/Users/andu5/.p2/pool/plugins/org.eclipse.ui.forms_3.9.100.v20200413-1417.jar"/>
 	<classpathentry kind="lib" path="D:/Cosas varias/mysql-connector-java-8.0.21/mysql-connector-java-8.0.21/mysql-connector-java-8.0.21.jar"/>
 	<classpathentry kind="lib" path="D:/Jasper Reportes/Jaspersoft Studio-6.14.0/plugins/com.jaspersoft.studio.server_6.14.0.final.jar"/>
+	<classpathentry excluding="archivos/" kind="src" path="otros"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

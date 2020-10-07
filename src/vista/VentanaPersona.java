@@ -151,7 +151,7 @@ public class VentanaPersona extends JFrame
 		panel.add(cbxTipo);
 		
 		btnConfigurarTipo = new JButton("");
-		btnConfigurarTipo.setIcon(new ImageIcon(VentanaPersona.class.getResource("/icons/configurarTipos.png")));
+		btnConfigurarTipo.setIcon(new ImageIcon(VentanaPersona.class.getResource("/iconos/configurarTipos.png")));
 		btnConfigurarTipo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnConfigurarTipo.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		btnConfigurarTipo.setToolTipText("Configurar tipos de contacto");
@@ -333,7 +333,7 @@ public class VentanaPersona extends JFrame
 		panel.add(txtDpto);
 		
 		btnConfigurarUbicaciones = new JButton("");
-		btnConfigurarUbicaciones.setIcon(new ImageIcon(VentanaPersona.class.getResource("/icons/configurarTipos.png")));
+		btnConfigurarUbicaciones.setIcon(new ImageIcon(VentanaPersona.class.getResource("/iconos/configurarTipos.png")));
 		btnConfigurarUbicaciones.setToolTipText("Configurar ubicaciones");
 		btnConfigurarUbicaciones.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		btnConfigurarUbicaciones.setBounds(153, 417, 30, 30);

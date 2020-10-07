@@ -77,13 +77,13 @@ public class VentanaAgenda extends JFrame
 		panelDerecho.add(panelDerechoSuperior, BorderLayout.NORTH);
 		
 		btnAgregar = new JButton("");
+		btnAgregar.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/iconos/agregar.png")));
 		btnAgregar.setPreferredSize(new Dimension(60, 60));
 		btnAgregar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAgregar.setToolTipText("Agregar contacto");
 		btnAgregar.setFocusable(false);
 		btnAgregar.setBackground(new Color(74, 72, 75));
 		btnAgregar.setBorderPainted(false);
-		btnAgregar.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/icons/agregar.png")));
 		btnAgregar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
@@ -99,7 +99,7 @@ public class VentanaAgenda extends JFrame
 		
 		btnEditar = new JButton("");
 		btnEditar.setPreferredSize(new Dimension(60, 60));
-		btnEditar.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/icons/editar.png")));
+		btnEditar.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/iconos/editar.png")));
 		btnEditar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEditar.setToolTipText("Editar contacto");
 		btnEditar.setFocusable(false);
@@ -128,7 +128,7 @@ public class VentanaAgenda extends JFrame
 		btnBorrar = new JButton("");
 		btnBorrar.setPreferredSize(new Dimension(60, 60));
 		btnBorrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnBorrar.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/icons/borrar.png")));
+		btnBorrar.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/iconos/borrar.png")));
 		btnBorrar.setToolTipText("Eliminar contacto");
 		btnBorrar.setFocusable(false);
 		btnBorrar.setBorderPainted(false);
@@ -148,7 +148,7 @@ public class VentanaAgenda extends JFrame
 		
 		btnReporte = new JButton("");
 		btnReporte.setPreferredSize(new Dimension(60, 60));
-		btnReporte.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/icons/reporte.png")));
+		btnReporte.setIcon(new ImageIcon(VentanaAgenda.class.getResource("/iconos/reporte.png")));
 		btnReporte.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnReporte.setToolTipText("Generar reporte");
 		btnReporte.setFocusable(false);

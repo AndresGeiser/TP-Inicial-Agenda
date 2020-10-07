@@ -79,7 +79,7 @@ public class Contacto extends JPanel
 		JLabel lblNombre = new JLabel(p.getNombre());
 		lblNombre.setBorder(new MatteBorder(0, 10, 0, 0, (Color) null));
 		lblNombre.setIconTextGap(8);
-		lblNombre.setIcon(new ImageIcon(Contacto.class.getResource("/icons/contactox16.png")));
+		lblNombre.setIcon(new ImageIcon(Contacto.class.getResource("/iconos/contactox16.png")));
 		lblNombre.setForeground(new Color(255, 153, 51));
 		lblNombre.setFont(new Font("SansSerif", Font.BOLD, 17));
 		lblNombre.setBounds(10, 12, 181, 20);
@@ -88,7 +88,7 @@ public class Contacto extends JPanel
 		JLabel lblTelefono = new JLabel(p.getTelefono());
 		lblTelefono.setBorder(new MatteBorder(0, 10, 0, 0, (Color) null));
 		lblTelefono.setIconTextGap(8);
-		lblTelefono.setIcon(new ImageIcon(Contacto.class.getResource("/icons/telefono.png")));
+		lblTelefono.setIcon(new ImageIcon(Contacto.class.getResource("/iconos/telefono.png")));
 		lblTelefono.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTelefono.setForeground(new Color(255, 153, 51));
 		lblTelefono.setFont(new Font("SansSerif", Font.BOLD, 15));
@@ -101,7 +101,7 @@ public class Contacto extends JPanel
 			JLabel lblCorreo = new JLabel(correo);
 			lblCorreo.setBorder(new MatteBorder(0, 10, 0, 0, (Color) null));
 			lblCorreo.setIconTextGap(8);
-			lblCorreo.setIcon(new ImageIcon(Contacto.class.getResource("/icons/correo.png")));
+			lblCorreo.setIcon(new ImageIcon(Contacto.class.getResource("/iconos/correo.png")));
 			lblCorreo.setForeground(new Color(255, 153, 51));
 			lblCorreo.setFont(new Font("SansSerif", Font.PLAIN, 15));
 			lblCorreo.setBounds(10, 74, 336, 17);
@@ -116,16 +116,16 @@ public class Contacto extends JPanel
 			switch (tipoNombre) 
 			{
 				case "TRABAJO":
-					lblTipo.setIcon(new ImageIcon(Contacto.class.getResource("/icons/trabajo.png")));
+					lblTipo.setIcon(new ImageIcon(Contacto.class.getResource("/iconos/trabajo.png")));
 					break;
 				case "UNIVERSIDAD":
-					lblTipo.setIcon(new ImageIcon(Contacto.class.getResource("/icons/universidad.png")));
+					lblTipo.setIcon(new ImageIcon(Contacto.class.getResource("/iconos/universidad.png")));
 					break;
 				case "AMIGOS":
-					lblTipo.setIcon(new ImageIcon(Contacto.class.getResource("/icons/amigos.png")));
+					lblTipo.setIcon(new ImageIcon(Contacto.class.getResource("/iconos/amigos.png")));
 					break;
 				case "FAMILIA":
-					lblTipo.setIcon(new ImageIcon(Contacto.class.getResource("/icons/familia.png")));
+					lblTipo.setIcon(new ImageIcon(Contacto.class.getResource("/iconos/familia.png")));
 					break;
 				default:
 					break;

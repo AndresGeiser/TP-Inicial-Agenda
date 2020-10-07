@@ -35,7 +35,7 @@ public class VentanaIngreso extends JFrame
 		panel.setLayout(null);
 		
 		JLabel labelIcon = new JLabel("");
-		labelIcon.setIcon(new ImageIcon(VentanaIngreso.class.getResource("/icons/ingreso.png")));
+		labelIcon.setIcon(new ImageIcon(VentanaIngreso.class.getResource("/iconos/ingreso.png")));
 		labelIcon.setBounds(136, 11, 128, 128);
 		panel.add(labelIcon);
 		

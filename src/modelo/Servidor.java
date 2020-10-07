@@ -59,11 +59,10 @@ public class Servidor
 	private void crearTablas() throws SQLException 
 	{
 		String contenido = "";
-		String rutaArchivo = "archivos/agenda.sql";
+		String rutaArchivo = "/sql/agenda.sql";
         BufferedReader br = null;
         try {
-        	ClassLoader cl = getClass().getClassLoader();
-        	InputStream is = cl.getResourceAsStream(rutaArchivo);
+        	InputStream is = getClass().getResourceAsStream(rutaArchivo);
         	InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
         	
         	br = new BufferedReader(isr);
