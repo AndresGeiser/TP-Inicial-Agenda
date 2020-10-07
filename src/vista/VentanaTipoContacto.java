@@ -24,6 +24,7 @@ import java.awt.BorderLayout;
 import javax.swing.border.TitledBorder;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
+import java.awt.Insets;
 
 
 public class VentanaTipoContacto extends JDialog 
@@ -99,6 +100,7 @@ public class VentanaTipoContacto extends JDialog
 		panelAgregarCentro.add(lblNombre);
 		
 		txtNombreAgregar = new JTextField();
+		txtNombreAgregar.setMargin(new Insets(2, 5, 2, 5));
 		txtNombreAgregar.setColumns(10);
 		txtNombreAgregar.setBounds(209, 11, 203, 20);
 		panelAgregarCentro.add(txtNombreAgregar);
@@ -141,6 +143,7 @@ public class VentanaTipoContacto extends JDialog
 		panelEditarCentro.add(lblIngrese);
 		
 		txtNombreEditar = new JTextField();
+		txtNombreEditar.setMargin(new Insets(2, 5, 2, 5));
 		txtNombreEditar.setColumns(10);
 		txtNombreEditar.setBounds(220, 42, 192, 20);
 		panelEditarCentro.add(txtNombreEditar);

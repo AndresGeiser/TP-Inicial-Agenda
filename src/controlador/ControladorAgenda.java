@@ -283,11 +283,9 @@ public class ControladorAgenda implements ActionListener
 		String mensajeAdvertencia = "";
 		int numMensaje = 1;
 		
+		//Validacion nombre
 		String nombre = ventanaPersona.getTxtNombre().getText().trim();
 		String tel = ventanaPersona.getTxtTelefono().getText().trim();
-		String correo = ventanaPersona.getTxtCorreo().getText().trim();
-		
-		//Validacion nombre
 		if (nombre.equals("") || tel.equals("")) 
 			mensajeAdvertencia += numMensaje++ + ") El nombre y telefono del contacto es requerido.\n";
 		
@@ -306,6 +304,7 @@ public class ControladorAgenda implements ActionListener
 		}
 		
 		//Validacion correo
+		String correo = ventanaPersona.getTxtCorreo().getText().trim();
 		if (!correo.equals("")) 
 		{
 			String emailPattern = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@" + "[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
@@ -319,11 +318,29 @@ public class ControladorAgenda implements ActionListener
 		boolean agregoDomicilio = ventanaPersona.getChckDomicilio().isSelected();
 		if (agregoDomicilio) 
 		{
-			String calle = ventanaPersona.getTxtCalle().getText().trim();
-			String altura = ventanaPersona.getTxtAltura().getText().trim();
-			
-			if (calle.equals("") || altura.equals("")) 
-				mensajeAdvertencia += numMensaje++ + ") La calle y altura del domicilio no puede quedar en blanco.\n";	
+			int cantPaises = ventanaPersona.getCbxPais().getItemCount();
+			if (cantPaises > 0) 
+			{
+				int cantProvincias = ventanaPersona.getCbxProvincia().getItemCount();
+				if(cantProvincias > 0) 
+				{
+					int cantLocalidades = ventanaPersona.getCbxLocalidad().getItemCount();
+					if(cantLocalidades > 0) 
+					{
+						String calle = ventanaPersona.getTxtCalle().getText().trim();
+						String altura = ventanaPersona.getTxtAltura().getText().trim();
+						
+						if (calle.equals("") || altura.equals("")) 
+							mensajeAdvertencia += numMensaje++ + ") No puede agregar un domicilio sin introducir la calle y altura.\n";
+					}
+					else
+						mensajeAdvertencia += numMensaje++ + ") No puede agregar un domicilio sin escoger una localidad.\n";
+				}
+				else
+					mensajeAdvertencia += numMensaje++ + ") No puede agregar un domicilio sin escoger una provincia.\n";
+			}
+			else
+				mensajeAdvertencia += numMensaje++ + ") No puede agregar un domicilio sin escoger un pais.\n";
 		}
 		
 		

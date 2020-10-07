@@ -23,8 +23,11 @@ import javax.swing.BoxLayout;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Insets;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import java.awt.Cursor;
 
 public class VentanaUbicaciones extends JDialog 
 {
@@ -96,12 +99,21 @@ public class VentanaUbicaciones extends JDialog
 		panelSuperiorBotones.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 15));
 		
 		btnPaises = new JButton("Paises");
+		btnPaises.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnPaises.setFocusPainted(false);
+		btnPaises.setBackground(Color.WHITE);
 		panelSuperiorBotones.add(btnPaises);
 		
 		btnProvincias = new JButton("Provincias");
+		btnProvincias.setFocusPainted(false);
+		btnProvincias.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnProvincias.setBackground(Color.WHITE);
 		panelSuperiorBotones.add(btnProvincias);
 		
 		btnLocalidades = new JButton("Localidades");
+		btnLocalidades.setFocusPainted(false);
+		btnLocalidades.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnLocalidades.setBackground(Color.WHITE);
 		panelSuperiorBotones.add(btnLocalidades);
 		
 		iniPanelPais();
@@ -109,12 +121,13 @@ public class VentanaUbicaciones extends JDialog
 		iniPanelLocalidad();
 		
 		scrollPanePrincipal = new JScrollPane();
-		scrollPanePrincipal.setViewportView(panelPais);
 		getContentPane().add(scrollPanePrincipal, BorderLayout.CENTER);
 
 		chksPaisesBorrar = new ArrayList<JCheckBox>();
 		chksProvinciasBorrar = new ArrayList<JCheckBox>();
 		chksLocalidadesBorrar = new ArrayList<JCheckBox>();
+		
+		mostrarPanelPais();
 	}
 	
 	private void iniPanelPais() 
@@ -154,6 +167,7 @@ public class VentanaUbicaciones extends JDialog
 		
 		txtNombrePais = new JTextField();
 		txtNombrePais.setColumns(10);
+		txtNombrePais.setMargin(new Insets(2, 5, 2, 5));
 		txtNombrePais.setBounds(209, 11, 203, 20);
 		panelAgregarPaisCentro.add(txtNombrePais);
 		
@@ -194,6 +208,7 @@ public class VentanaUbicaciones extends JDialog
 		
 		txtNombreNuevoPais = new JTextField();
 		txtNombreNuevoPais.setColumns(10);
+		txtNombreNuevoPais.setMargin(new Insets(2, 5, 2, 5));
 		txtNombreNuevoPais.setBounds(220, 42, 192, 20);
 		panelEditarPaisCentro.add(txtNombreNuevoPais);
 		
@@ -283,6 +298,7 @@ public class VentanaUbicaciones extends JDialog
 		
 		txtNombreProvincia = new JTextField();
 		txtNombreProvincia.setColumns(10);
+		txtNombreProvincia.setMargin(new Insets(2, 5, 2, 5));
 		txtNombreProvincia.setBounds(241, 12, 174, 20);
 		panelAgregarProvinciaCentro.add(txtNombreProvincia);
 		
@@ -323,6 +339,7 @@ public class VentanaUbicaciones extends JDialog
 		
 		txtNombreNuevoProvincia = new JTextField();
 		txtNombreNuevoProvincia.setColumns(10);
+		txtNombreNuevoProvincia.setMargin(new Insets(2, 5, 2, 5));
 		txtNombreNuevoProvincia.setBounds(245, 42, 167, 20);
 		panelEditarProvinciaCentro.add(txtNombreNuevoProvincia);
 		
@@ -416,6 +433,7 @@ public class VentanaUbicaciones extends JDialog
 		
 		txtNombreLocalidad = new JTextField();
 		txtNombreLocalidad.setColumns(10);
+		txtNombreLocalidad.setMargin(new Insets(2, 5, 2, 5));
 		txtNombreLocalidad.setBounds(241, 12, 174, 20);
 		panelAgregarLocalidadCentro.add(txtNombreLocalidad);
 		
@@ -456,6 +474,7 @@ public class VentanaUbicaciones extends JDialog
 		
 		txtNombreNuevoLocalidad = new JTextField();
 		txtNombreNuevoLocalidad.setColumns(10);
+		txtNombreNuevoLocalidad.setMargin(new Insets(2, 5, 2, 5));
 		txtNombreNuevoLocalidad.setBounds(252, 42, 160, 20);
 		panelEditarLocalidadCentro.add(txtNombreNuevoLocalidad);
 		
@@ -497,22 +516,34 @@ public class VentanaUbicaciones extends JDialog
 	
 	public void mostrar() 
 	{
-		scrollPanePrincipal.setViewportView(panelPais);
+		mostrarPanelPais();
 		this.setVisible(true);
 	}
 	
 	public void mostrarPanelPais() 
 	{
+		btnPaises.setBackground(new Color(255, 153, 51));
+		btnProvincias.setBackground(Color.WHITE);
+		btnLocalidades.setBackground(Color.WHITE);
+		
 		scrollPanePrincipal.setViewportView(panelPais);
 	}
 	
 	public void mostrarPanelProvincia() 
 	{
+		btnProvincias.setBackground(new Color(255, 153, 51));
+		btnPaises.setBackground(Color.WHITE);
+		btnLocalidades.setBackground(Color.WHITE);
+		
 		scrollPanePrincipal.setViewportView(panelProvincia);
 	}
 	
 	public void mostrarPanelLocalidad() 
 	{
+		btnLocalidades.setBackground(new Color(255, 153, 51));
+		btnPaises.setBackground(Color.WHITE);
+		btnProvincias.setBackground(Color.WHITE);
+		
 		scrollPanePrincipal.setViewportView(panelLocalidad);
 	}
 	
