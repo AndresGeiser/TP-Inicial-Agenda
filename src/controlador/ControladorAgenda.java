@@ -154,8 +154,8 @@ public class ControladorAgenda implements ActionListener
 			
 			PersonaDTO nuevaPersona = new PersonaDTO(0, nombre, tel, correo, tipo, cumple, domicilio);
 			agenda.agregarPersona(nuevaPersona);
-			refrescarLista();
 			ventanaPersona.cerrar();	
+			refrescarLista();
 		}
 	}
 
@@ -166,21 +166,25 @@ public class ControladorAgenda implements ActionListener
 	{
 		List<Contacto> contactos = ventanaAgenda.getContactos();
 		
+		int cantSeleccionados = 0;
 		for (int i = 0; i < contactos.size(); i++) 
 		{
 			if (contactos.get(i).estaSeleccionado()) 
 			{
 				personaSeleccionada = personasEnLista.get(i);
-				break;
+				cantSeleccionados++;
 			}
 		}
 		
-		if (personaSeleccionada == null) 
+		if(cantSeleccionados == 0)
 			JOptionPane.showMessageDialog(null, "Seleccione el contacto que desea editar.", "Aviso", JOptionPane.WARNING_MESSAGE);
-		else 
+		else if (cantSeleccionados > 1)
+		{
+			JOptionPane.showMessageDialog(null, "No puede tener mas de un contacto seleccionado para editar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+			personaSeleccionada = null;
+		}
+		else
 			ventanaPersona.mostrarVentanaConDatos(personaSeleccionada);
-		
-		this.refrescarLista();
 	}
 	
 	public void editarPersona(ActionEvent ae)
@@ -234,6 +238,7 @@ public class ControladorAgenda implements ActionListener
 			refrescarLista();
 			ventanaPersona.cerrar();
 			personaSeleccionada = null;
+			JOptionPane.showMessageDialog(null, "Contacto actualizado.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
@@ -246,31 +251,31 @@ public class ControladorAgenda implements ActionListener
 		List<Contacto> contactos = ventanaAgenda.getContactos();
 	
 		boolean selecciono = false;
-		for (int i = 0; i < contactos.size(); i++)
+		for (Contacto contacto : contactos) 
 		{
-			if (contactos.get(i).estaSeleccionado()) 
+			if (contacto.estaSeleccionado()) 
 			{
 				selecciono = true;
 				break;
 			}
 		}
 		
-		if (selecciono) 
+		if(!selecciono) 
 		{
-			int respuesta = JOptionPane.showConfirmDialog(null, "¿Estas seguro de eliminar los contactos seleccionados?", "Confirmacion para eliminar", JOptionPane.YES_NO_OPTION);
-			
-			if (respuesta == 0) 
-			{
-				for (int i = 0; i < contactos.size(); i++) 
-					if (contactos.get(i).estaSeleccionado()) 
-						agenda.borrarPersona(personasEnLista.get(i));
-				
-				refrescarLista();
-			}
-		}
-		else
 			JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun contacto para eliminar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+		int respuesta = JOptionPane.showConfirmDialog(null, "¿Estas seguro de eliminar los contactos seleccionados?", "Confirmacion para eliminar", JOptionPane.YES_NO_OPTION);
+		if (respuesta == 0) 
+		{
+			for (int i = 0; i < contactos.size(); i++) 
+				if (contactos.get(i).estaSeleccionado()) 
+					agenda.borrarPersona(personasEnLista.get(i));
 			
+			refrescarLista();
+			JOptionPane.showMessageDialog(null, "Contactos eliminados correctamente.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
+		}
 	}
 	
 	/**
@@ -286,24 +291,14 @@ public class ControladorAgenda implements ActionListener
 		if (nombre.equals("")) 
 			mensajeAdvertencia += numMensaje++ + ") El nombre del contacto es requerido.\n";
 		if (nombre.length() > 20)
-			mensajeAdvertencia += numMensaje++ + ") Nombre de contacto muy largo. (Maximo 20 caracteres)\\n";
-		else 
-		{
-			for (PersonaDTO personaDTO : personasEnLista) 
-			{
-				if (personaDTO.getNombre().equals(nombre) && personaDTO.getIdPersona() != personaSeleccionada.getIdPersona()) 
-				{
-					mensajeAdvertencia += numMensaje++ + ") Ya existe un contacto con el nombre: '" + nombre + "'. \n";
-					return false;
-				}
-			}
-		}
+			mensajeAdvertencia += numMensaje++ + ") Nombre de contacto muy largo. (Maximo 20 caracteres)\n";
+
 		
 		//Validacion telefono
 		String tel = ventanaPersona.getTxtTelefono().getText().trim();
 		if(tel.equals("")) 
 			mensajeAdvertencia += numMensaje++ + ") El número de telefono del contacto es requerido.\n";
-		if (tel.length() > 15 || tel.length() < 7)
+		else if (tel.length() > 15 || tel.length() < 7)
 			mensajeAdvertencia += numMensaje++ + ") El número invalido. (Minimo 7 numeros y maximo 15)\n";
 		
 		//Validacion correo
@@ -463,7 +458,7 @@ public class ControladorAgenda implements ActionListener
 		
 		if(validarNombreTipoContacto(nombreTipo)) 
 		{
-			nombreTipo = nombreTipo.substring(0, 1).toUpperCase() + nombreTipo.substring(1); //Convertimos la primera letra en mayuscula
+			nombreTipo = nombreTipo.substring(0, 1).toUpperCase() + nombreTipo.substring(1).toLowerCase(); //Convertimos la primera letra en mayuscula
 			agenda.agregarTipoDeContacto(new TipoDTO(0, nombreTipo));
 			refrescarTiposDeContacto();
 			ventanaTipoContacto.limpiarCampos();
@@ -478,6 +473,8 @@ public class ControladorAgenda implements ActionListener
 		
 		if(validarNombreTipoContacto(nombreNuevo)) 
 		{
+			nombreNuevo = nombreNuevo.substring(0, 1).toUpperCase() + nombreNuevo.substring(1).toLowerCase();
+			
 			TipoDTO tipo = tipos.get(seleccionado);
 			String nombreViejo = tipo.getNombre();
 			
@@ -554,11 +551,10 @@ public class ControladorAgenda implements ActionListener
 			return false;
 		}
 		
-		nombre = nombre.substring(0, 1).toUpperCase() + nombre.substring(1); //Convertimos la primera letra en mayuscula
-		
+		nombre = nombre.substring(0, 1).toUpperCase() + nombre.substring(1).toLowerCase();
 		for (TipoDTO tipo : tipos) 
 		{
-			if (tipo.getNombre().equals(nombre)) 
+			if (tipo.getNombre().equalsIgnoreCase(nombre)) 
 			{
 				JOptionPane.showMessageDialog(null, "Ya existe un tipo de contacto con el nombre '" + nombre + "'", "Aviso", JOptionPane.WARNING_MESSAGE); 
 				return false;

@@ -87,66 +87,68 @@ public class ControladorUbicaciones implements ActionListener
 		ventanaUbicaciones.mostrarPanelLocalidad();
 	}
 
+	
+	//ABM PAIS
 	private void agregarPais() 
 	{
 		String nombrePais = ventanaUbicaciones.getTxtNombrePais().getText().trim();
 		
-		if (!nombrePais.equals("")) 
+		if (nombrePais.equals(""))
 		{
-			nombrePais = nombrePais.substring(0, 1).toUpperCase() + nombrePais.substring(1); //Convertimos la primera letra en mayuscula
-			
-			boolean existe = false;
-			for (PaisDTO pais : paises) 
-				if (pais.getNombre().equals(nombrePais))
-					existe = true;
-			
-			if (existe)
-				JOptionPane.showMessageDialog(null, "Ya existe un pais con el nombre '" + nombrePais + "'", "Aviso", JOptionPane.WARNING_MESSAGE); 
-			else 
-			{
-				agenda.agregarPais(new PaisDTO(0, nombrePais));
-				refrescar();
-				JOptionPane.showMessageDialog(null, "Nuevo pais guardado.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
-			}
+			JOptionPane.showMessageDialog(null, "El campo esta vacio.", "Aviso", JOptionPane.WARNING_MESSAGE);
+			return;
 		}
-		else
-			JOptionPane.showMessageDialog(null, "El campo esta vacio.", "Aviso", JOptionPane.WARNING_MESSAGE); 
+		
+		boolean existe = false;
+		for (PaisDTO pais : paises) 
+			if (pais.getNombre().equalsIgnoreCase(nombrePais))
+				existe = true;
+		
+		if (existe)
+		{
+			JOptionPane.showMessageDialog(null, "Ya existe un pais con el nombre '" + nombrePais + "'", "Aviso", JOptionPane.WARNING_MESSAGE); 
+			return;
+		}
+			
+		agenda.agregarPais(new PaisDTO(0, nombrePais));
+		refrescar();
+		JOptionPane.showMessageDialog(null, "Nuevo pais guardado.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
 	}
 
 	private void editarPais() 
 	{
 		int seleccionado = ventanaUbicaciones.getCbxPaisesEditar().getSelectedIndex();
-		String nombreNuevo = ventanaUbicaciones.getTxtNombreNuevoPais().getText().trim();
+		PaisDTO pais = paises.get(seleccionado);
 		
-		if (!nombreNuevo.equals("")) 
+		String nombreNuevo = ventanaUbicaciones.getTxtNombreNuevoPais().getText().trim();
+		String nombreViejo = pais.getNombre();
+		
+		if (nombreNuevo.equals(""))
 		{
-			nombreNuevo = nombreNuevo.substring(0, 1).toUpperCase() + nombreNuevo.substring(1); //Convertimos la primera letra en mayuscula
-			
-			boolean existe = false;
-			for (PaisDTO pais : paises) 
-				if (pais.getNombre().equals(nombreNuevo))
-					existe = true;
-			
-			if (existe)
-				JOptionPane.showMessageDialog(null, "Ya existe un pais con el nombre '" + nombreNuevo + "'", "Aviso", JOptionPane.WARNING_MESSAGE); 
-			else 
-			{
-				PaisDTO pais = paises.get(seleccionado);
-				String nombreViejo = pais.getNombre();
-				
-				int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan este pais asignado a su domicilio seran afectados.\n¿Estas seguro de cambiar el tipo '" + nombreViejo + "' por '" + nombreNuevo + "' ?", "Confirmacion para editar", JOptionPane.YES_NO_OPTION);
-				
-				if (respuesta == 0) 
-				{
-					pais.setNombre(nombreNuevo);
-					agenda.editarPais(pais);
-					refrescar();
-					JOptionPane.showMessageDialog(null, "Pais actualizado con exito.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
-				}
-			}
-		}
-		else
 			JOptionPane.showMessageDialog(null, "El campo esta vacio.", "Aviso", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+		boolean existe = false;
+		for (PaisDTO p : paises) 
+			if (p.getNombre().equalsIgnoreCase(nombreNuevo) && p.getId() != pais.getId())
+				existe = true;
+		
+		if (existe)
+		{
+			JOptionPane.showMessageDialog(null, "Ya existe un pais con el nombre '" + nombreNuevo + "'", "Aviso", JOptionPane.WARNING_MESSAGE); 
+			return;
+		}
+			
+		int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan este pais asignado a su domicilio seran afectados.\n¿Estas seguro de cambiar el nombre del pais '" + nombreViejo + "' a '" + nombreNuevo + "' ?", "Confirmacion para editar", JOptionPane.YES_NO_OPTION);
+		
+		if (respuesta == 0) 
+		{
+			pais.setNombre(nombreNuevo);
+			agenda.editarPais(pais);
+			refrescar();
+			JOptionPane.showMessageDialog(null, "Pais actualizado con exito.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
+		}
 	}
 	
 	private void borrarPais() 
@@ -182,6 +184,7 @@ public class ControladorUbicaciones implements ActionListener
 	}
 	
 	
+	//ABM PROVINCIA
 	private void agregarProvincia() 
 	{
 		int i = ventanaUbicaciones.getCbxPaisesProvincia().getSelectedIndex();
@@ -189,27 +192,27 @@ public class ControladorUbicaciones implements ActionListener
 
 		String nombreProvincia = ventanaUbicaciones.getTxtNombreProvincia().getText().trim();
 		
-		if (!nombreProvincia.equals("")) 
+		if (nombreProvincia.equals("")) 
 		{
-			nombreProvincia = nombreProvincia.substring(0, 1).toUpperCase() + nombreProvincia.substring(1).toLowerCase(); //Convertimos la primera letra en mayuscula
-			
-			boolean existe = false;
-			for (ProvinciaDTO provincia : provincias) 
-				if (provincia.getNombre().equals(nombreProvincia))
-					existe = true;
-			
-			if (existe)
-				JOptionPane.showMessageDialog(null, "Ya existe una provincia con el nombre '" + nombreProvincia + "' en el pais '" + pais.getNombre() + "'.", "Aviso", JOptionPane.WARNING_MESSAGE); 
-			else 
-			{
-				int idPais = pais.getId();
-				agenda.agregarProvincia(new ProvinciaDTO(0, nombreProvincia, idPais));
-				refrescar();
-				JOptionPane.showMessageDialog(null, "Nueva provincia agregada al pais '" + pais.getNombre() + "'.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
-			}
-		}
-		else
 			JOptionPane.showMessageDialog(null, "El campo esta vacio.", "Aviso", JOptionPane.WARNING_MESSAGE); 
+			return;
+		}	
+			
+		boolean existe = false;
+		for (ProvinciaDTO provincia : provincias) 
+			if (provincia.getNombre().equalsIgnoreCase(nombreProvincia))
+				existe = true;
+		
+		if (existe)
+		{
+			JOptionPane.showMessageDialog(null, "Ya existe una provincia con el nombre '" + nombreProvincia + "' en el pais '" + pais.getNombre() + "'.", "Aviso", JOptionPane.WARNING_MESSAGE); 
+			return ;
+		}
+		
+		int idPais = pais.getId();
+		agenda.agregarProvincia(new ProvinciaDTO(0, nombreProvincia, idPais));
+		refrescar();
+		JOptionPane.showMessageDialog(null, "Nueva provincia agregada al pais '" + pais.getNombre() + "'.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
 	}
 	
 	private void editarProvincia() 
@@ -220,38 +223,40 @@ public class ControladorUbicaciones implements ActionListener
 			return;
 		}
 		
-		int seleccionado = ventanaUbicaciones.getCbxProvinciasEditar().getSelectedIndex();
+		int indexPais = ventanaUbicaciones.getCbxPaisesProvincia().getSelectedIndex();
+		PaisDTO pais = paises.get(indexPais);
+		
+		int indexProv = ventanaUbicaciones.getCbxProvinciasEditar().getSelectedIndex();
+		ProvinciaDTO provincia = provincias.get(indexProv);
+		
+		String nombreViejo = provincia.getNombre();
 		String nombreNuevo = ventanaUbicaciones.getTxtNombreNuevoProvincia().getText().trim();
 		
-		if (!nombreNuevo.equals("")) 
+		if (nombreNuevo.equals("")) 
 		{
-			nombreNuevo = nombreNuevo.substring(0, 1).toUpperCase() + nombreNuevo.substring(1).toLowerCase(); //Convertimos la primera letra en mayuscula
+			JOptionPane.showMessageDialog(null, "El campo esta vacio.", "Aviso", JOptionPane.WARNING_MESSAGE); 
+			return;
+		}	
 			
-			boolean existe = false;
-			for (ProvinciaDTO provincia : provincias) 
-				if (provincia.getNombre().equals(nombreNuevo))
-					existe = true;
-			
-			if (existe)
-				JOptionPane.showMessageDialog(null, "Ya existe una provincia con el nombre '" + nombreNuevo + "'.", "Aviso", JOptionPane.WARNING_MESSAGE); 
-			else 
-			{
-				ProvinciaDTO provincia = provincias.get(seleccionado);
-				String nombreViejo = provincia.getNombre();
-				
-				int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan esta provincia asignada a su domicilio seran afectados.\n¿Estas seguro de cambiar el nombre de '" + nombreViejo + "' a '" + nombreNuevo + "' ?", "Confirmacion para editar", JOptionPane.YES_NO_OPTION);
-				
-				if (respuesta == 0) 
-				{
-					provincia.setNombre(nombreNuevo);
-					agenda.editarProvincia(provincia);
-					refrescar();
-					JOptionPane.showMessageDialog(null, "Provincia actualizada con exito.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
-				}
-			}
+		boolean existe = false;
+		for (ProvinciaDTO p : provincias) 
+			if (p.getNombre().equalsIgnoreCase(nombreNuevo) && p.getId() != provincia.getId())
+				existe = true;
+		
+		if (existe)
+		{
+			JOptionPane.showMessageDialog(null, "Ya existe una provincia con el nombre '" + nombreNuevo + "' en el pais '" + pais.getNombre() + "'.", "Aviso", JOptionPane.WARNING_MESSAGE); 
+			return ;
 		}
-		else
-			JOptionPane.showMessageDialog(null, "El campo esta vacio.", "Aviso", JOptionPane.WARNING_MESSAGE);
+		
+		int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan esta provincia asignada a su domicilio seran afectados.\n¿Estas seguro de cambiar el nombre de '" + nombreViejo + "' a '" + nombreNuevo + "' ?", "Confirmacion para editar", JOptionPane.YES_NO_OPTION);
+		if (respuesta == 0) 
+		{
+			provincia.setNombre(nombreNuevo);
+			agenda.editarProvincia(provincia);
+			refrescar();
+			JOptionPane.showMessageDialog(null, "Provincia actualizada con exito.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
+		}
 	}
 	
 	private void borrarProvincia() 
@@ -272,26 +277,27 @@ public class ControladorUbicaciones implements ActionListener
 		
 		if (indicesSelec.size() > 0) //Verificamos si selecciono alguno 
 		{
-			int respuesta = JOptionPane.showConfirmDialog(null, "Al confirmar esta accion tambien se eliminaran:\n"
-															+ "1) Las localidades correspondientes a las provincias seleccionadas.\n"
-															+ "2) La informacion del domicilio de los contactos que tengan asignado alguno de las pprovincias."
-															, "Confirmacion para eliminar", JOptionPane.YES_NO_OPTION);
-			
-			if (respuesta == 0) 
-			{
-				//Recorremos y eliminamos los tipos que corresponden a los indices seleccionados
-				for (Integer indice : indicesSelec) 
-					agenda.borrarProvincia(provincias.get(indice));
-				
-				refrescar();
-				JOptionPane.showMessageDialog(null, "Las provincias seleccionadas fueron eliminados correctamente.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
-			}
-		}
-		else
 			JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna provincia.", "Aviso", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+		int respuesta = JOptionPane.showConfirmDialog(null, "Al confirmar esta accion tambien se eliminaran:\n"
+														+ "1) Las localidades correspondientes a las provincias seleccionadas.\n"
+														+ "2) La informacion del domicilio de los contactos que tengan asignado alguno de las pprovincias."
+														, "Confirmacion para eliminar", JOptionPane.YES_NO_OPTION);
+		if (respuesta == 0) 
+		{
+			//Recorremos y eliminamos los tipos que corresponden a los indices seleccionados
+			for (Integer indice : indicesSelec) 
+				agenda.borrarProvincia(provincias.get(indice));
+			
+			refrescar();
+			JOptionPane.showMessageDialog(null, "Las provincias seleccionadas fueron eliminados correctamente.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
+		}
 	}
 	
 	
+	//ABM LOCALIDAD
 	private void agregarLocalidad() 
 	{
 		if(provinciasLocalidad.size() == 0) 
@@ -300,33 +306,32 @@ public class ControladorUbicaciones implements ActionListener
 			return;
 		}
 		
-		int i = ventanaUbicaciones.getCbxProvinciasLocalidad().getSelectedIndex();
-		ProvinciaDTO provincia = provinciasLocalidad.get(i);
+		int indexProv = ventanaUbicaciones.getCbxProvinciasLocalidad().getSelectedIndex();
+		ProvinciaDTO provincia = provinciasLocalidad.get(indexProv);
 
 		String nombreLocalidad = ventanaUbicaciones.getTxtNombreLocalidad().getText().trim();
 		
-		if (!nombreLocalidad.equals("")) 
+		if (nombreLocalidad.equals("")) 
 		{
-			nombreLocalidad = nombreLocalidad.substring(0, 1).toUpperCase() + nombreLocalidad.substring(1).toLowerCase(); //Convertimos la primera letra en mayuscula
-			
-			boolean existe = false;
-			for (LocalidadDTO localidad : localidades) 
-				if (localidad.getNombre().equals(nombreLocalidad))
-					existe = true;
-			
-			if (existe)
-				JOptionPane.showMessageDialog(null, "Ya existe una localidad con el nombre '" + nombreLocalidad + "' en la provincia '" + provincia.getNombre() + "'.", "Aviso", JOptionPane.WARNING_MESSAGE); 
-			else 
-			{
-				int idProvincia = provincia.getId();
-				agenda.agregarLocalidad(new LocalidadDTO(0, nombreLocalidad, idProvincia));
-				refrescar();
-				JOptionPane.showMessageDialog(null, "Nueva localidad agregada a la provincia '" + provincia.getNombre() + "'.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
-			}
-		}
-		else
 			JOptionPane.showMessageDialog(null, "El campo esta vacio.", "Aviso", JOptionPane.WARNING_MESSAGE); 
+			return;
+		}
 		
+		boolean existe = false;
+		for (LocalidadDTO localidad : localidades) 
+			if (localidad.getNombre().equalsIgnoreCase(nombreLocalidad))
+				existe = true;
+		
+		if (existe)
+		{
+			JOptionPane.showMessageDialog(null, "Ya existe una localidad con el nombre '" + nombreLocalidad + "' en la provincia '" + provincia.getNombre() + "'.", "Aviso", JOptionPane.WARNING_MESSAGE); 
+			return;
+		}
+		
+		int idProvincia = provincia.getId();
+		agenda.agregarLocalidad(new LocalidadDTO(0, nombreLocalidad, idProvincia));
+		refrescar();
+		JOptionPane.showMessageDialog(null, "Nueva localidad agregada a la provincia '" + provincia.getNombre() + "'.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
 	}
 
 	private void editarLocalidad() 
@@ -337,38 +342,40 @@ public class ControladorUbicaciones implements ActionListener
 			return;
 		}
 		
-		int seleccionado = ventanaUbicaciones.getCbxLocalidadesEditar().getSelectedIndex();
+		int indexProv = ventanaUbicaciones.getCbxProvinciasLocalidad().getSelectedIndex();
+		ProvinciaDTO provincia = provinciasLocalidad.get(indexProv);
+		
+		int indexLoc = ventanaUbicaciones.getCbxLocalidadesEditar().getSelectedIndex();
+		LocalidadDTO localidad = localidades.get(indexLoc);
+		
+		String nombreViejo = localidad.getNombre();
 		String nombreNuevo = ventanaUbicaciones.getTxtNombreNuevoLocalidad().getText().trim();
 		
-		if (!nombreNuevo.equals("")) 
+		if (nombreNuevo.equals("")) 
 		{
-			nombreNuevo = nombreNuevo.substring(0, 1).toUpperCase() + nombreNuevo.substring(1).toLowerCase(); //Convertimos la primera letra en mayuscula
-			
-			boolean existe = false;
-			for (LocalidadDTO localidad : localidades) 
-				if (localidad.getNombre().equals(nombreNuevo))
-					existe = true;
-			
-			if (existe)
-				JOptionPane.showMessageDialog(null, "Ya existe una localidad con el nombre '" + nombreNuevo + "'.", "Aviso", JOptionPane.WARNING_MESSAGE); 
-			else 
-			{
-				LocalidadDTO localidad = localidades.get(seleccionado);
-				String nombreViejo = localidad.getNombre();
-				
-				int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan esta localidad asignada a su domicilio seran afectados.\n¿Estas seguro de cambiar el nombre de '" + nombreViejo + "' a '" + nombreNuevo + "' ?", "Confirmacion para editar", JOptionPane.YES_NO_OPTION);
-				
-				if (respuesta == 0) 
-				{
-					localidad.setNombre(nombreNuevo);
-					agenda.editarLocalidad(localidad);
-					refrescar();
-					JOptionPane.showMessageDialog(null, "Localidad actualizada con exito.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
-				}
-			}
+			JOptionPane.showMessageDialog(null, "El campo esta vacio.", "Aviso", JOptionPane.WARNING_MESSAGE); 
+			return;
 		}
-		else
-			JOptionPane.showMessageDialog(null, "El campo esta vacio.", "Aviso", JOptionPane.WARNING_MESSAGE);
+		
+		boolean existe = false;
+		for (LocalidadDTO l : localidades) 
+			if (l.getNombre().equalsIgnoreCase(nombreNuevo) && l.getId() != localidad.getId())
+				existe = true;
+		
+		if (existe)
+		{
+			JOptionPane.showMessageDialog(null, "Ya existe una localidad con el nombre '" + nombreNuevo + "' en la provincia '" + provincia.getNombre() + "'.", "Aviso", JOptionPane.WARNING_MESSAGE); 
+			return ;
+		}
+		
+		int respuesta = JOptionPane.showConfirmDialog(null, "Los contactos que tengan esta localidad asignada a su domicilio seran afectados.\n¿Estas seguro de cambiar el nombre de '" + nombreViejo + "' a '" + nombreNuevo + "' ?", "Confirmacion para editar", JOptionPane.YES_NO_OPTION);
+		if (respuesta == 0) 
+		{
+			localidad.setNombre(nombreNuevo);
+			agenda.editarLocalidad(localidad);
+			refrescar();
+			JOptionPane.showMessageDialog(null, "Localidad actualizada con exito.", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
+		}
 	}
 
 	private void borrarLocalidad() 
@@ -407,6 +414,7 @@ public class ControladorUbicaciones implements ActionListener
 		else
 			JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna localidad.", "Aviso", JOptionPane.WARNING_MESSAGE);
 	}
+	
 	
 	
 	private void actualizarPanelProvincia() 

@@ -113,13 +113,20 @@ public class VentanaPersona extends JFrame
 		txtTelefono.setColumns(10);
 		txtTelefono.setBounds(10, 134, 325, 30);
 		txtTelefono.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent evt) {
-				 char c = evt.getKeyChar();
-				 if(!Character.isDigit(c)){
-					 evt.consume();
-					 getToolkit().beep();
-				 }
+			@Override 
+			public void keyTyped(KeyEvent e) 
+			{
+				char c = e.getKeyChar();
+				if(!Character.isDigit(c))
+					e.consume();
+			}
+			@Override 
+			public void keyPressed(KeyEvent e) 
+			{ 
+				 char c = e.getKeyChar();
+				 if(!Character.isDigit(c) )
+					 if(e.getKeyCode() != KeyEvent.VK_BACK_SPACE)
+						 getToolkit().beep();
 			}
 		});
 		panel.add(txtTelefono);
@@ -242,14 +249,21 @@ public class VentanaPersona extends JFrame
 			@Override
 			public void keyTyped(KeyEvent evt) {
 				 char car = evt.getKeyChar();
-				 if(!Character.isDigit(car)){
+				 if(!Character.isDigit(car))
 					 evt.consume();
-					 getToolkit().beep();
-				 }
+				 
 				 if(txtAltura.getText().length() > 6) {
 					 evt.consume();
 					 getToolkit().beep();
 				 }
+			}
+			@Override 
+			public void keyPressed(KeyEvent e) 
+			{ 
+				 char c = e.getKeyChar();
+				 if(!Character.isDigit(c) )
+					 if(e.getKeyCode() != KeyEvent.VK_BACK_SPACE)
+						 getToolkit().beep();
 			}
 		});
 		panel.add(txtAltura);
@@ -286,14 +300,21 @@ public class VentanaPersona extends JFrame
 			@Override
 			public void keyTyped(KeyEvent evt) {
 				 char car = evt.getKeyChar();
-				 if(!Character.isDigit(car)){
+				 if(!Character.isDigit(car))
 					 evt.consume();
-					 getToolkit().beep();
-				 }
+					 
 				 if(txtPiso.getText().length() > 3) {
 					 evt.consume();
 					 getToolkit().beep();
 				 }
+			}
+			@Override 
+			public void keyPressed(KeyEvent e) 
+			{ 
+				 char c = e.getKeyChar();
+				 if(!Character.isDigit(c) )
+					 if(e.getKeyCode() != KeyEvent.VK_BACK_SPACE)
+						 getToolkit().beep();
 			}
 		});
 		panel.add(txtPiso);
@@ -308,16 +329,24 @@ public class VentanaPersona extends JFrame
 		txtDpto.setEnabled(false);
 		txtDpto.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyTyped(KeyEvent evt) {
+			public void keyTyped(KeyEvent evt) 
+			{
 				 char car = evt.getKeyChar();
-				 if(!Character.isDigit(car)){
+				 if(!Character.isDigit(car))
 					 evt.consume();
-					 getToolkit().beep();
-				 }
+					 
 				 if(txtDpto.getText().length() > 3) {
 					 evt.consume();
 					 getToolkit().beep();
 				 }
+			}
+			@Override 
+			public void keyPressed(KeyEvent e) 
+			{ 
+				 char c = e.getKeyChar();
+				 if(!Character.isDigit(c) )
+					 if(e.getKeyCode() != KeyEvent.VK_BACK_SPACE)
+						 getToolkit().beep();
 			}
 		});
 		txtDpto.setMargin(new Insets(2, 5, 2, 5));

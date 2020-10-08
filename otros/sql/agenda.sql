@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS tipos (
 
 CREATE TABLE IF NOT EXISTS contactos (
 	id int NOT NULL AUTO_INCREMENT,
-	nombre varchar(20) NOT NULL  UNIQUE,
+	nombre varchar(20) NOT NULL,
 	telefono varchar(15) NOT NULL,
 	correo varchar(100),
 	idTipo int,
