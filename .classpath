@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="archivos/" kind="src" path="otros"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-14">
 		<attributes>
 			<attribute name="module" value="true"/>
@@ -21,6 +22,15 @@
 	<classpathentry kind="lib" path="C:/Users/andu5/.p2/pool/plugins/org.eclipse.ui.forms_3.9.100.v20200413-1417.jar" sourcepath="C:/Users/andu5/.p2/pool/plugins/org.eclipse.ui.forms_3.9.100.v20200413-1417.jar"/>
 	<classpathentry kind="lib" path="D:/Cosas varias/mysql-connector-java-8.0.21/mysql-connector-java-8.0.21/mysql-connector-java-8.0.21.jar"/>
 	<classpathentry kind="lib" path="D:/Jasper Reportes/Jaspersoft Studio-6.14.0/plugins/com.jaspersoft.studio.server_6.14.0.final.jar"/>
-	<classpathentry excluding="archivos/" kind="src" path="otros"/>
+	<classpathentry kind="lib" path="C:/Users/andu5/Desktop/Uni Andres/2-2020/Laboratorio de construcción de Software 2-2020/Primer TP - Agenda/libs/itext-2.1.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/andu5/Desktop/Uni Andres/2-2020/Laboratorio de construcción de Software 2-2020/Primer TP - Agenda/libs/jcommon-1.0.16.jar"/>
+	<classpathentry kind="lib" path="C:/Users/andu5/Desktop/Uni Andres/2-2020/Laboratorio de construcción de Software 2-2020/Primer TP - Agenda/libs/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="D:/Cosas varias/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/andu5/Desktop/Uni Andres/2-2020/Laboratorio de construcción de Software 2-2020/Primer TP - Agenda/Librerias_Jasper/Librerias Jasper/commons-beanutils-1.9.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/andu5/Desktop/Uni Andres/2-2020/Laboratorio de construcción de Software 2-2020/Primer TP - Agenda/Librerias_Jasper/Librerias Jasper/commons-collections-3.2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/andu5/Desktop/Uni Andres/2-2020/Laboratorio de construcción de Software 2-2020/Primer TP - Agenda/Librerias_Jasper/Librerias Jasper/commons-collections4-4.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/andu5/Desktop/Uni Andres/2-2020/Laboratorio de construcción de Software 2-2020/Primer TP - Agenda/Librerias_Jasper/Librerias Jasper/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/andu5/Desktop/Uni Andres/2-2020/Laboratorio de construcción de Software 2-2020/Primer TP - Agenda/Librerias_Jasper/Librerias Jasper/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/andu5/Desktop/Uni Andres/2-2020/Laboratorio de construcción de Software 2-2020/Primer TP - Agenda/Librerias_Jasper/Librerias Jasper/jasperreports-6.14.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

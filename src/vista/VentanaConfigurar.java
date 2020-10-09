@@ -19,10 +19,14 @@ import javax.swing.ImageIcon;
 public class VentanaConfigurar extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
+	private static VentanaConfigurar INSTANCE;
+
 	
 	private JTextField txtUsuario;
 	private JTextField txtContraseña;
 	private JButton btnConfigurar;
+	private JTextField txtHost;
+	private JTextField txtPuerto;
 	
 	public VentanaConfigurar() 
 	{
@@ -46,33 +50,81 @@ public class VentanaConfigurar extends JFrame {
 		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUsuario.setBounds(150, 182, 200, 20);
+		lblUsuario.setBounds(-30, 182, 200, 20);
 		panel.add(lblUsuario);
 		
 		txtUsuario = new JTextField();
 		txtUsuario.setFont(new Font("SansSerif", Font.PLAIN, 12));
-		txtUsuario.setBounds(170, 213, 160, 30);
+		txtUsuario.setBounds(47, 213, 160, 30);
 		panel.add(txtUsuario);
 		txtUsuario.setColumns(10);
 		
 		JLabel lblContraseña = new JLabel("Contraseña");
 		lblContraseña.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		lblContraseña.setHorizontalAlignment(SwingConstants.CENTER);
-		lblContraseña.setBounds(150, 254, 200, 20);
+		lblContraseña.setBounds(-18, 254, 200, 20);
 		panel.add(lblContraseña);
 		
 		txtContraseña = new JTextField();
 		txtContraseña.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		txtContraseña.setColumns(10);
-		txtContraseña.setBounds(170, 285, 160, 30);
+		txtContraseña.setBounds(47, 285, 160, 30);
 		panel.add(txtContraseña);
 		
 		btnConfigurar = new JButton("Configurar");
 		btnConfigurar.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		btnConfigurar.setBounds(187, 370, 110, 30);
 		panel.add(btnConfigurar);
+		
+		JLabel lblHost = new JLabel("Host");
+		lblHost.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHost.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		lblHost.setBounds(189, 182, 200, 20);
+		panel.add(lblHost);
+		
+		txtHost = new JTextField();
+		txtHost.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		txtHost.setColumns(10);
+		txtHost.setBounds(269, 213, 160, 30);
+		panel.add(txtHost);
+		
+		txtPuerto = new JTextField();
+		txtPuerto.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		txtPuerto.setColumns(10);
+		txtPuerto.setBounds(269, 285, 160, 30);
+		panel.add(txtPuerto);
+		
+		JLabel lblPuerto = new JLabel("Puerto");
+		lblPuerto.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPuerto.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		lblPuerto.setBounds(189, 258, 200, 20);
+		panel.add(lblPuerto);
 	}
 	
+	public String getTxtHost() {
+		return txtHost.getText();
+	}
+
+	public void setTxtHost(String txtHost) {
+		this.txtHost.setText(txtHost);
+	}
+
+	public String getTxtPuerto() {
+		return txtPuerto.getText();
+	}
+
+	public void setTxtPuerto(String txtPuerto) {
+		this.txtPuerto.setText(txtPuerto);
+	}
+
+	public void setTxtUsuario(String txtUsuario) {
+		this.txtUsuario.setText(txtUsuario);
+	}
+
+	public void setTxtContraseña(String txtContraseña) {
+		this.txtContraseña.setText(txtContraseña);
+	}
+
 	public void mostrar() 
 	{
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -95,19 +147,31 @@ public class VentanaConfigurar extends JFrame {
 		setVisible(true);
 	}
 	
-	public JTextField getTxtUsuario() 
+	public void cerrar()
 	{
-		return txtUsuario;
+		setVisible(false);
 	}
 	
-	public JTextField getTxtContraseña() 
+	public String getTxtUsuario() 
 	{
-		return txtContraseña;
+		return txtUsuario.getText();
+	}
+	
+	public String getTxtContraseña() 
+	{
+		return txtContraseña.getText();
 	}
 	
 	public JButton getBtnConfigurar() 
 	{
 		return btnConfigurar;
 	}
-	
+
+	public static VentanaConfigurar getInstance() 
+	{
+		if(INSTANCE == null)
+			INSTANCE = new VentanaConfigurar(); 	
+		
+		return INSTANCE;
+	}
 }

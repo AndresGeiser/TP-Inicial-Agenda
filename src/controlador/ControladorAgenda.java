@@ -15,12 +15,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import modelo.Agenda;
+import persistencia.Conexion;
 import reportes.ReporteAgenda;
 import vista.Contacto;
 import vista.VentanaPersona;
 import vista.VentanaTipoContacto;
 import vista.VentanaUbicaciones;
 import vista.VentanaAgenda;
+import vista.VentanaConfigurar;
 import vista.VentanaDetalles;
 import dto.DomicilioDTO;
 import dto.LocalidadDTO;
@@ -37,6 +39,7 @@ public class ControladorAgenda implements ActionListener
 	private VentanaPersona ventanaPersona;
 	private VentanaDetalles ventanaDetalles;
 	private VentanaTipoContacto ventanaTipoContacto;
+	private VentanaConfigurar ventanaConfigurar;
 	
 	private ControladorUbicaciones controladorUbicaciones;
 	
@@ -62,11 +65,15 @@ public class ControladorAgenda implements ActionListener
 	
 	private ControladorAgenda(VentanaAgenda vista, Agenda agenda)
 	{
+		this.ventanaConfigurar = VentanaConfigurar.getInstance();
+		this.ventanaConfigurar.getBtnConfigurar().addActionListener(a -> actualizarDatos(a));
+		
 		this.ventanaAgenda = vista;
 		this.ventanaAgenda.getBtnAgregar().addActionListener(a -> ventanaAgregarPersona(a));
 		this.ventanaAgenda.getBtnBorrar().addActionListener(a -> borrarContactos(a));
 		this.ventanaAgenda.getBtnReporte().addActionListener(a -> mostrarReporte(a));
 		this.ventanaAgenda.getBtnEditar().addActionListener(a -> ventanaEditarPersona(a));
+		this.ventanaAgenda.getBtnConfigurar().addActionListener(a -> ventanaConfigurar(a));
 					
 		this.ventanaPersona = VentanaPersona.getInstance();
 		this.ventanaPersona.getBtnActualizarPersona().addActionListener(a -> editarPersona(a));
@@ -91,6 +98,36 @@ public class ControladorAgenda implements ActionListener
 		this.agenda = agenda;
 		this.tipos = agenda.obtenerTiposDeContacto();
 	}
+	
+	
+	private void ventanaConfigurar(ActionEvent ae)
+	{
+		Conexion con = Conexion.getConexion();
+		
+		this.ventanaConfigurar.setTxtUsuario(con.getData().getPropiedad("user"));
+		this.ventanaConfigurar.setTxtContraseña(con.getData().getPropiedad("password"));
+		this.ventanaConfigurar.setTxtPuerto(con.getData().getPropiedad("port"));
+		this.ventanaConfigurar.setTxtHost(con.getData().getPropiedad("host"));
+
+		this.ventanaConfigurar.mostrar();
+	}
+
+	private void actualizarDatos(ActionEvent ae) 
+	{
+		Conexion con = Conexion.getConexion();
+		
+		con.getData().setPropiedad("user", this.ventanaConfigurar.getTxtUsuario());
+		con.getData().setPropiedad("password", this.ventanaConfigurar.getTxtContraseña());
+		con.getData().setPropiedad("host", this.ventanaConfigurar.getTxtHost());
+		con.getData().setPropiedad("port", this.ventanaConfigurar.getTxtPuerto());
+		
+		con.getData().crearConfig();
+		
+		JOptionPane.showMessageDialog(null, "Las configuraciones se aplicaran al reiniciar", "Aviso", JOptionPane.WARNING_MESSAGE);
+		this.ventanaConfigurar.cerrar();
+	}
+
+	
 	
 	public void inicializar()
 	{

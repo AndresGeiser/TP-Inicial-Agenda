@@ -25,6 +25,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.border.MatteBorder;
+import java.awt.Font;
 
 
 public class VentanaAgenda extends JFrame
@@ -38,6 +39,7 @@ public class VentanaAgenda extends JFrame
 	private JButton btnEditar;
 	private JButton btnBorrar;
 	private JButton btnReporte;
+	private JButton btnConfigurar;
 
 	
 	public static VentanaAgenda getInstance()
@@ -72,7 +74,7 @@ public class VentanaAgenda extends JFrame
 		
 		JPanel panelDerechoSuperior = new JPanel();
 		panelDerechoSuperior.setBackground(Color.DARK_GRAY);
-		panelDerechoSuperior.setPreferredSize(new Dimension(80, 140));
+		panelDerechoSuperior.setPreferredSize(new Dimension(80, 200));
 		panelDerechoSuperior.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		panelDerecho.add(panelDerechoSuperior, BorderLayout.NORTH);
 		
@@ -117,6 +119,15 @@ public class VentanaAgenda extends JFrame
 			}
 		});
 		panelDerechoSuperior.add(btnEditar);
+		
+		btnConfigurar = new JButton("Configurar");
+		btnConfigurar.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnConfigurar.setToolTipText("Configurar conexion");
+		btnConfigurar.setPreferredSize(new Dimension(60, 60));
+		btnConfigurar.setFocusable(false);
+		btnConfigurar.setBorderPainted(false);
+		btnConfigurar.setBackground(new Color(74, 72, 75));
+		panelDerechoSuperior.add(btnConfigurar);
 		
 		
 		JPanel panelDerechoInferior = new JPanel();
@@ -235,5 +246,8 @@ public class VentanaAgenda extends JFrame
 	public JButton getBtnBorrar() { return btnBorrar; }
 	
 	public JButton getBtnReporte() { return btnReporte; }
+	
+	public JButton getBtnConfigurar() {return btnConfigurar;}
+
 	
 }

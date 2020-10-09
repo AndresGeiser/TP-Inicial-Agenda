@@ -31,7 +31,7 @@ public class Servidor
 	}
 
 	
-	public void configurar(String usuario, String contraseña)	//HAY QUE USAR LOS STRINGS PARA CREAR EL USUARIO 
+	public void configurar()	//HAY QUE USAR LOS STRINGS PARA CREAR EL USUARIO 
 	{	try 
 		{
 			crearDB();

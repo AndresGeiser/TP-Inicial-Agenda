@@ -4,21 +4,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
+import modelo.Agenda;
 import modelo.Servidor;
+import persistencia.Conexion;
+import vista.VentanaAgenda;
 import vista.VentanaConfigurar;
-import vista.VentanaIngreso;
 
 public class ControladorConfigurar implements ActionListener {
 	
-	private VentanaConfigurar vtnConfigurar;
 	private Servidor servidor;
+
+
 	
-	public ControladorConfigurar(Servidor servidor, VentanaConfigurar vtnConfigurar) throws SQLException 
+	public ControladorConfigurar(Servidor servidor)
 	{
-		this.vtnConfigurar = vtnConfigurar;
 		this.servidor = servidor;
-		
-		this.vtnConfigurar.getBtnConfigurar().addActionListener(a-> configurarServidor(a));
+		configurarServidor();
 	}
 	
 	public void iniciar()
@@ -27,37 +28,23 @@ public class ControladorConfigurar implements ActionListener {
 		
 		if(esPrimeraEjcucion) 
 		{
-			vtnConfigurar.mostrar();
+			//vtnConfigurar.mostrar();
 		}
 		else
 		{	
 			//Abrimos la ventana de ingreso
-			mostrarVentanaDeIngreso();
+			//mostrarVentanaDeIngreso();
 		}
 	}
 	
-	private void configurarServidor(ActionEvent p)
+	private void configurarServidor()
 	{
-		String usuario = vtnConfigurar.getTxtUsuario().getText().trim();
-		String contraseña = vtnConfigurar.getTxtContraseña().getText().trim();
-		
-		servidor.configurar(usuario, contraseña);
-		
-		//Cerramos la ventana de configuracion
-		vtnConfigurar.dispose();
-		
-		//Abrimos la ventana de ingreso
-		mostrarVentanaDeIngreso();
-	}
-	
-	private void mostrarVentanaDeIngreso() 
-	{
-		VentanaIngreso vista = new VentanaIngreso();
-		ControladorIngreso controlador = new ControladorIngreso(servidor, vista);
-		controlador.iniciar();
-	}
-	
+		servidor.configurar();
 
+		ControladorIngreso controlador = new ControladorIngreso(servidor);
+	};
+
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) 
 	{
