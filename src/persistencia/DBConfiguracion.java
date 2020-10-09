@@ -19,7 +19,7 @@ public class DBConfiguracion
 		propiedadesDB = new Properties();
 		try 
 		{
-			propiedadesDB.load(new FileInputStream("otros/sql/configDB.properties")); 
+			propiedadesDB.load(new FileInputStream("./configDB.properties")); 
 		} 
 		catch (IOException e) 
 		{
@@ -47,7 +47,7 @@ public class DBConfiguracion
 		 FileOutputStream arch = null;	   	    
 			try 
 			{
-			  arch=new FileOutputStream("otros/sql/configDB.properties"); 
+			  arch=new FileOutputStream("./configDB.properties");
 			  propiedadesDB.store(arch, "Fichero de Propiedades de la conexion");
 			}
 			catch(IOException ioe) 
